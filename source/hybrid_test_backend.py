@@ -75,7 +75,12 @@ class MainWindow(QtWidgets.QMainWindow):
         self.abort_btn.clicked.connect(self._abort_btn)
         self.run_btn.clicked.connect(self._run_btn)
 
+
     def setup_timers(self):
+        # See setup_buttons() for more details. We're doing the same
+        # thing but first creating a timer and connecting it's .timeout signal
+        # to a method that runs some code.
+
         # Timer to update the "Date/Time" QlineEdit with current system time
         self.date_time_timer = QTimer()
         self.date_time_timer.timeout.connect(self._date_time)
