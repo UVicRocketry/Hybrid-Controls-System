@@ -10,7 +10,12 @@ class MainWindow(QtWidgets.QMainWindow):
         super(MainWindow, self).__init__(*args, **kwargs)
         uic.loadUi('hybrid_test_gui.ui', self)
         self.setup_buttons_etc()
-        
+
+    def()
+
+
+
+    ################################ BUTTONS ####################################
 
     def setup_buttons_etc(self):
         # Alright so basically since there is not a "loop" to put methods in that
@@ -51,7 +56,10 @@ class MainWindow(QtWidgets.QMainWindow):
         self.run_btn.clicked.connect(self._run_btn)
 
     def _connect_btn(self):
-        print("Hello World")
+        # Create an instance of the Server class. This is what will allow our
+        # communication between the backend and the server
+        print()
+        client_server = server.Server()
     
     def _disconnect_btn(self):
         print("Hello World")
