@@ -1,4 +1,5 @@
 from PyQt5 import QtWidgets, uic, QtCore
+from PyQt5.QtCore import QTimer,QDateTime
 import sys
 import server
 
@@ -9,8 +10,10 @@ class MainWindow(QtWidgets.QMainWindow):
         # This only works if the .ui file is in the same directory
         super(MainWindow, self).__init__(*args, **kwargs)
         uic.loadUi('hybrid_test_gui.ui', self)
-        self.setup_buttons_etc()
         
+        self.setup_buttons()
+        self.setup_timers()
+
         ############################ STATES ###############################
         # These will get updated by the GUI if the user clicks a button or
         # if the server changes something. Any time one of these is changed,
@@ -29,9 +32,11 @@ class MainWindow(QtWidgets.QMainWindow):
             "run" : False
         }
 
-    ################################ BUTTONS ####################################
+        
 
-    def setup_buttons_etc(self):
+    ################################ SETUP ####################################
+
+    def setup_buttons(self):
         # Alright so basically since there is not a "loop" to put methods in that
         # you want to update based on things that have changed in the GUI,
         # PyQt has these things called signals and slots. They let you connect
@@ -70,8 +75,14 @@ class MainWindow(QtWidgets.QMainWindow):
         self.abort_btn.clicked.connect(self._abort_btn)
         self.run_btn.clicked.connect(self._run_btn)
 
+    def setup_timers(self):
+        # Timer to update the "Date/Time" QlineEdit with current system time
+        self.date_time_timer = QTimer()
+        self.date_time_timer.timeout.connect(self._date_time)
+        self.date_time_timer.start(1000)
 
     ############################# BACKEND ###############################
+
 
     # Create an instance of the Server class. This is what will allow our
     # communication between the backend and the server   
@@ -163,6 +174,10 @@ class MainWindow(QtWidgets.QMainWindow):
     # text to. It will contain a log of all the things that have happened in the gui
     def add_system_status(self, msg):
         self.statusbox.appendPlainText(msg)
+
+    ############################### METHODS ON TIMERS ##################################
+    def _date_time(self):
+        self.date_time.setText(QDateTime.currentDateTime().toString())
 
     
 

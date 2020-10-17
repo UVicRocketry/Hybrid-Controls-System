@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1393</width>
+    <width>1392</width>
     <height>1167</height>
    </rect>
   </property>
@@ -1155,7 +1155,7 @@ color: #7f849a</string>
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="label_date">
+              <widget class="QLabel" name="label_date_time">
                <property name="font">
                 <font>
                  <pointsize>10</pointsize>
@@ -1167,12 +1167,12 @@ color: #7f849a</string>
                 <string notr="true">color: #7f849a</string>
                </property>
                <property name="text">
-                <string>Time/Date</string>
+                <string>Date/Time</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="lineEdit_date">
+              <widget class="QLineEdit" name="date_time">
                <property name="minimumSize">
                 <size>
                  <width>300</width>
@@ -1188,12 +1188,14 @@ color: #7f849a</string>
                 </font>
                </property>
                <property name="styleSheet">
-                <string notr="true">background: #181b2e;border-radius: 10px;</string>
+                <string notr="true">background: #181b2e;
+border-radius: 10px;
+color: #7f849a;</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="label_update">
+              <widget class="QLabel" name="label_last_update">
                <property name="font">
                 <font>
                  <pointsize>10</pointsize>
@@ -1210,7 +1212,7 @@ color: #7f849a</string>
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="lineEdit_update">
+              <widget class="QLineEdit" name="last_update">
                <property name="minimumSize">
                 <size>
                  <width>300</width>
