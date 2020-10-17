@@ -1241,7 +1241,18 @@ color: #7f849a</string>
              <bool>false</bool>
             </property>
             <property name="styleSheet">
-             <string notr="true">background: #181b2e;border-radius: 10px;</string>
+             <string notr="true">background: #181b2e;
+border-radius: 10px;
+color: #7f849a;</string>
+            </property>
+            <property name="verticalScrollBarPolicy">
+             <enum>Qt::ScrollBarAlwaysOff</enum>
+            </property>
+            <property name="horizontalScrollBarPolicy">
+             <enum>Qt::ScrollBarAlwaysOff</enum>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
