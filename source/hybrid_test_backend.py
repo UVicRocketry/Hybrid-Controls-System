@@ -11,7 +11,8 @@ class MainWindow(QtWidgets.QMainWindow):
         uic.loadUi('hybrid_test_gui.ui', self)
         self.setup_buttons_etc()
 
-    def()
+    def add_system_status(self, msg):
+        
 
 
 
