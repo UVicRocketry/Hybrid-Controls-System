@@ -39,3 +39,8 @@ class Server:
         self.server.close()
         self.client.close()
 
+    def send_states(self, msg):
+        """
+        Reads a string in the form: STATE VALUE and sends it over the socket
+        STATE is the valve, stepper etc and VALUE is it's state (True, False, 1, 2, 10 etc)
+        """

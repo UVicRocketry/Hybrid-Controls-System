@@ -13,26 +13,21 @@ class MainWindow(QtWidgets.QMainWindow):
         
         ############################ STATES ###############################
         # These will get updated by the GUI if the user clicks a button or
-        # if the server changes something.
-        self.state_connected = False
-        self.state_igniter = False
-        self.state_MEV = False
-        self.state_N2OV = False
-        self.state_N2O = False
-        self.state_N2 = False
-        self.state_NCV = False
-        self.state_RV = False
-        self.state_VV = False
-        self.state_abort = False
-        self.state_run = False
-
-    # The "System Status" box on the gui is a QPlainTextEdit that we can add
-    # text to. It will contain a log of all the things that have happened in the gui
-    def add_system_status(self, msg):
-        self.statusbox.appendPlainText(msg)
-
-
-
+        # if the server changes something. Any time one of these is changed,
+        # it will be sent over to the server using send_states()
+        self.system_states = {
+            "connected" : False,
+            "igniter" : False,
+            "MEV" : "closed",
+            "N2OV" : "closed",
+            "N2O" : "closed",
+            "N2" : "closed",
+            "NCV" : "closed",
+            "RV" : "closed",
+            "VV" : "closed",
+            "abort" : False,
+            "run" : False
+        }
 
     ################################ BUTTONS ####################################
 
@@ -75,32 +70,47 @@ class MainWindow(QtWidgets.QMainWindow):
         self.abort_btn.clicked.connect(self._abort_btn)
         self.run_btn.clicked.connect(self._run_btn)
 
+
+    ############################# BACKEND ###############################
+
     # Create an instance of the Server class. This is what will allow our
     # communication between the backend and the server   
     def _connect_btn(self):
-        self.client_server = server.Server(999, 999)
+        # Get our IP from the box on the GUI, instantiate a Server with it
+        self.client_server = server.Server(self.lineEdit_IPaddress.text(), 9999)
 
-        if(self.client_server.address != None):
-            self.add_system_status(f"Connection Successful on HOST:PORT {self.client_server.HOST} : {self.client_server.PORT}") 
+        # Attempt connection to the Server on the rPi
+        if(self.client_server.client != None):
+            self.add_system_status(f"Connection Successful on HOST:PORT {self.client_server.HOST}:{self.client_server.PORT}") 
+            self.system_states["connected"] = True
+            self.client_server.send_states("connected True")
         else:
-            self.add_system_status("Connection Unsuccessful")
+            self.add_system_status("Connection Unsuccessful. Is the IP address correct?")
     
-    # Disconnect from the server
+
+    # Disconnect from the Server on the rPi
     def _disconnect_btn(self):
-        self.client_server.end_connection()
-
-        # TODO need to check if the server exists before we disconnect from it or we crash
-        if(self.client_server.address == None):
-            self.add_system_status("Disconnection Successful") 
-        else:
-            self.add_system_status("Disconnection Unsuccessful")
-
-    def _igniter_btn_toggle(self):
-        self.add_system_status("Igniting!")
-        self.state_igniter = True
-
-    def _MEV_btn_off(self):
+        try:
+            self.client_server.end_connection() # TODO This always fails for some reason.
+            self.add_system_status("Disconnection Successful")
+            self.system_states["connected"] = False
         
+        # This error throws if you try to disconnect before making a connection
+        except AttributeError:
+            self.add_system_status("Disconnection Unsuccessful. Does the connection exist?")
+
+    # Turns the igniter on or off.
+    def _igniter_btn_toggle(self):
+        # This whacky bit of code is because the button is a toggle
+        toggle = self.system_states["igniter"]
+        toggle = not bool(toggle)
+        self.client_server.send_states(f"igniter {toggle}")
+        if(toggle):
+            self.add_system_status("Igniting!")
+        else:
+            self.add_system_status("Un-igniting!")
+
+    def _MEV_btn_off(self):  
         print("Hello World")
 
     def _MEV_btn_on(self):
@@ -147,6 +157,14 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def _run_btn(self):
         print("Hello World")
+
+
+    # The "System Status" box on the gui is a QPlainTextEdit that we can add
+    # text to. It will contain a log of all the things that have happened in the gui
+    def add_system_status(self, msg):
+        self.statusbox.appendPlainText(msg)
+
+    
 
 def main():
     app = QtWidgets.QApplication(sys.argv)

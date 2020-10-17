@@ -87,7 +87,7 @@ border: none;color: #7f849a</string>
           <item>
            <widget class="QPushButton" name="igniter_btn_toggle">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="styleSheet">
              <string notr="true">font: 12pt &quot;Segoe UI&quot;;
@@ -1065,15 +1065,25 @@ background: #0f111d</string>
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="lineEdit_IPadress">
+              <widget class="QLineEdit" name="lineEdit_IPaddress">
                <property name="minimumSize">
                 <size>
                  <width>300</width>
                  <height>30</height>
                 </size>
                </property>
+               <property name="font">
+                <font>
+                 <family>Consolas</family>
+                 <pointsize>12</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
                <property name="styleSheet">
-                <string notr="true">background: #181b2e;border-radius: 10px;</string>
+                <string notr="true">background: #181b2e;
+border-radius: 10px;
+color: #7f849a;</string>
                </property>
               </widget>
              </item>
@@ -1169,6 +1179,14 @@ color: #7f849a</string>
                  <height>30</height>
                 </size>
                </property>
+               <property name="font">
+                <font>
+                 <family>Consolas</family>
+                 <pointsize>12</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
                <property name="styleSheet">
                 <string notr="true">background: #181b2e;border-radius: 10px;</string>
                </property>
@@ -1198,6 +1216,14 @@ color: #7f849a</string>
                  <width>300</width>
                  <height>30</height>
                 </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Consolas</family>
+                 <pointsize>12</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
                </property>
                <property name="styleSheet">
                 <string notr="true">background: #181b2e;border-radius: 10px;</string>
