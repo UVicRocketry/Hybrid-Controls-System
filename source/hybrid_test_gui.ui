@@ -6,15 +6,18 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1189</width>
-    <height>1145</height>
+    <width>1393</width>
+    <height>1167</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(245, 245, 245);</string>
+   <string notr="true">background: #0f111d</string>
   </property>
   <property name="toolButtonStyle">
    <enum>Qt::ToolButtonIconOnly</enum>
@@ -35,8 +38,11 @@
    <layout class="QHBoxLayout" name="horizontalLayout_5">
     <item>
      <widget class="QFrame" name="sys_controls">
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(253, 253, 253);</string>
+       <string notr="true">color: #0f111d;border: 0px</string>
       </property>
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
@@ -45,10 +51,13 @@
        <enum>QFrame::Sunken</enum>
       </property>
       <layout class="QGridLayout" name="gridLayout">
-       <item row="5" column="2">
-        <widget class="QFrame" name="VV_frame">
+       <property name="spacing">
+        <number>20</number>
+       </property>
+       <item row="4" column="1">
+        <widget class="QFrame" name="IG_frame">
          <property name="styleSheet">
-          <string notr="true">border: 2.5px solid #F5AA1C;</string>
+          <string notr="true">border: 0px;background: #181b2e;border-radius: 10px;</string>
          </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
@@ -56,20 +65,30 @@
          <property name="frameShadow">
           <enum>QFrame::Plain</enum>
          </property>
-         <layout class="QVBoxLayout" name="verticalLayout_8">
+         <layout class="QVBoxLayout" name="verticalLayout_3">
           <item>
-           <widget class="QLabel" name="label_VV">
+           <widget class="QLabel" name="label_PV_3">
+            <property name="font">
+             <font>
+              <pointsize>12</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
             <property name="styleSheet">
-             <string notr="true">font: 11pt &quot;MS Shell Dlg 2&quot;;
-border: none;</string>
+             <string notr="true">
+border: none;color: #7f849a</string>
             </property>
             <property name="text">
-             <string>VENT VALVE</string>
+             <string>IGNITOR</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="VV_btn_off">
+           <widget class="QPushButton" name="igniter_btn_toggle">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="styleSheet">
              <string notr="true">font: 12pt &quot;Segoe UI&quot;;
 display:inline-block;
@@ -81,84 +100,178 @@ box-sizing: border-box;
 text-decoration:none;
 font-family:'Roboto',sans-serif;
 font-weight:300;
-color: #545454;
+color: #437596;
 text-align:center;
 transition: all 0.2s;</string>
             </property>
             <property name="text">
-             <string>OFF</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="VV_btn_on">
-            <property name="styleSheet">
-             <string notr="true">font: 12pt &quot;Segoe UI&quot;;
-display:inline-block;
-padding:0.35em 1.2em;
-border:0.1em solid #3f3f3f;
-margin:0 0.3em 0.3em 0;
-border-radius:0.12em;
-box-sizing: border-box;
-text-decoration:none;
-font-family:'Roboto',sans-serif;
-font-weight:300;
-color: #545454;
-text-align:center;
-transition: all 0.2s;</string>
-            </property>
-            <property name="text">
-             <string>ON</string>
+             <string>IGNITOR (TOGGLE)</string>
             </property>
            </widget>
           </item>
          </layout>
         </widget>
        </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="valve_control_label">
+       <item row="6" column="1">
+        <widget class="QFrame" name="RV_frame">
          <property name="styleSheet">
-          <string notr="true">font: 18pt &quot;MS Shell Dlg 2&quot;;</string>
+          <string notr="true">border: 0px;background: #181b2e</string>
          </property>
-         <property name="text">
-          <string> System Controls </string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="1" rowspan="4">
-        <widget class="Line" name="line">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(0, 0, 0);
-background-color: rgb(73, 73, 73);</string>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
          </property>
          <property name="frameShadow">
-          <enum>QFrame::Sunken</enum>
+          <enum>QFrame::Plain</enum>
          </property>
-         <property name="lineWidth">
-          <number>0</number>
-         </property>
-         <property name="midLineWidth">
-          <number>1</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_6">
+          <item>
+           <widget class="QLabel" name="label_RV">
+            <property name="font">
+             <font>
+              <pointsize>12</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">
+border: none;color: #7f849a</string>
+            </property>
+            <property name="text">
+             <string>RELIEF VALVE </string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="RV_btn_off">
+            <property name="styleSheet">
+             <string notr="true">font: 12pt &quot;Segoe UI&quot;;
+display:inline-block;
+padding:0.35em 1.2em;
+border:0.1em solid #3f3f3f;
+margin:0 0.3em 0.3em 0;
+border-radius:0.12em;
+box-sizing: border-box;
+text-decoration:none;
+font-family:'Roboto',sans-serif;
+font-weight:300;
+color: #437596;
+text-align:center;
+transition: all 0.2s;</string>
+            </property>
+            <property name="text">
+             <string>CLOSED</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="RV_btn_on">
+            <property name="styleSheet">
+             <string notr="true">font: 12pt &quot;Segoe UI&quot;;
+display:inline-block;
+padding:0.35em 1.2em;
+border:0.1em solid #3f3f3f;
+margin:0 0.3em 0.3em 0;
+border-radius:0.12em;
+box-sizing: border-box;
+text-decoration:none;
+font-family:'Roboto',sans-serif;
+font-weight:300;
+color: #437596;
+text-align:center;
+transition: all 0.2s;</string>
+            </property>
+            <property name="text">
+             <string>OPEN</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="test_parms_label">
+       <item row="7" column="1">
+        <widget class="QFrame" name="N2OV_frame">
          <property name="styleSheet">
-          <string notr="true">font: 20pt &quot;MS Shell Dlg 2&quot;;</string>
+          <string notr="true">border: 0px;background: #181b2e;border-radius: 10px;</string>
          </property>
-         <property name="text">
-          <string>Test Parameters</string>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
          </property>
+         <property name="frameShadow">
+          <enum>QFrame::Plain</enum>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_5">
+          <item>
+           <widget class="QLabel" name="label_PV_2">
+            <property name="font">
+             <font>
+              <family>MS Shell Dlg 2</family>
+              <pointsize>12</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">
+border: none;color: #7f849a</string>
+            </property>
+            <property name="text">
+             <string>N2O VENT VALVE  </string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="N2OV_btn_off">
+            <property name="styleSheet">
+             <string notr="true">font: 12pt &quot;Segoe UI&quot;;
+display:inline-block;
+padding:0.35em 1.2em;
+border:0.1em solid #3f3f3f;
+margin:0 0.3em 0.3em 0;
+border-radius:0.12em;
+box-sizing: border-box;
+text-decoration:none;
+font-family:'Roboto',sans-serif;
+font-weight:300;
+color: #437596;
+text-align:center;
+transition: all 0.2s;</string>
+            </property>
+            <property name="text">
+             <string>CLOSED</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="N2OV_btn_on">
+            <property name="styleSheet">
+             <string notr="true">font: 12pt &quot;Segoe UI&quot;;
+display:inline-block;
+padding:0.35em 1.2em;
+border:0.1em solid #3f3f3f;
+margin:0 0.3em 0.3em 0;
+border-radius:0.12em;
+box-sizing: border-box;
+text-decoration:none;
+font-family:'Roboto',sans-serif;
+font-weight:300;
+color: #437596;
+text-align:center;
+transition: all 0.2s;</string>
+            </property>
+            <property name="text">
+             <string>OPEN</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
        <item row="4" column="0">
         <widget class="QFrame" name="N2O_frame">
          <property name="styleSheet">
-          <string notr="true">border: 2.5px solid #005493;</string>
+          <string notr="true">border: 0px;background: #181b2e;border-radius: 15px;</string>
          </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
@@ -169,9 +282,18 @@ background-color: rgb(73, 73, 73);</string>
          <layout class="QVBoxLayout" name="verticalLayout_2">
           <item>
            <widget class="QLabel" name="label_N2O">
+            <property name="font">
+             <font>
+              <family>MS Shell Dlg 2</family>
+              <pointsize>12</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+             </font>
+            </property>
             <property name="styleSheet">
-             <string notr="true">font: 11pt &quot;MS Shell Dlg 2&quot;;
-border: none;</string>
+             <string notr="true">
+border: none;color: #7f849a</string>
             </property>
             <property name="text">
              <string>N2O FLOW</string>
@@ -197,12 +319,12 @@ box-sizing: border-box;
 text-decoration:none;
 font-family:'Roboto',sans-serif;
 font-weight:300;
-color: #545454;
+color: #437596;
 text-align:center;
 transition: all 0.2s;</string>
             </property>
             <property name="text">
-             <string>OFF</string>
+             <string>CLOSED</string>
             </property>
             <property name="checkable">
              <bool>false</bool>
@@ -222,22 +344,22 @@ box-sizing: border-box;
 text-decoration:none;
 font-family:'Roboto',sans-serif;
 font-weight:300;
-color: #545454;
+color: #437596;
 text-align:center;
 transition: all 0.2s;</string>
             </property>
             <property name="text">
-             <string>ON</string>
+             <string>OPEN</string>
             </property>
            </widget>
           </item>
          </layout>
         </widget>
        </item>
-       <item row="6" column="2">
-        <widget class="QFrame" name="RV_frame">
+       <item row="5" column="1">
+        <widget class="QFrame" name="VV_frame">
          <property name="styleSheet">
-          <string notr="true">border: 2.5px solid #F5AA1C;</string>
+          <string notr="true">border: 0px;background: #181b2e;border-radius: 10px;</string>
          </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
@@ -245,20 +367,29 @@ transition: all 0.2s;</string>
          <property name="frameShadow">
           <enum>QFrame::Plain</enum>
          </property>
-         <layout class="QVBoxLayout" name="verticalLayout_6">
+         <layout class="QVBoxLayout" name="verticalLayout_8">
           <item>
-           <widget class="QLabel" name="label_RV">
+           <widget class="QLabel" name="label_VV">
+            <property name="font">
+             <font>
+              <family>MS Shell Dlg 2</family>
+              <pointsize>12</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+             </font>
+            </property>
             <property name="styleSheet">
-             <string notr="true">font: 11pt &quot;MS Shell Dlg 2&quot;;
-border: none;</string>
+             <string notr="true">;
+border: none;color: #7f849a</string>
             </property>
             <property name="text">
-             <string>RELIEF VALVE </string>
+             <string>VENT VALVE</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="RV_btn_on">
+           <widget class="QPushButton" name="VV_btn_off">
             <property name="styleSheet">
              <string notr="true">font: 12pt &quot;Segoe UI&quot;;
 display:inline-block;
@@ -270,17 +401,17 @@ box-sizing: border-box;
 text-decoration:none;
 font-family:'Roboto',sans-serif;
 font-weight:300;
-color: #545454;
+color: #437596;
 text-align:center;
 transition: all 0.2s;</string>
             </property>
             <property name="text">
-             <string>ON</string>
+             <string>CLOSED</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="RV_btn_off">
+           <widget class="QPushButton" name="VV_btn_on">
             <property name="styleSheet">
              <string notr="true">font: 12pt &quot;Segoe UI&quot;;
 display:inline-block;
@@ -292,435 +423,54 @@ box-sizing: border-box;
 text-decoration:none;
 font-family:'Roboto',sans-serif;
 font-weight:300;
-color: #545454;
+color: #437596;
 text-align:center;
 transition: all 0.2s;</string>
             </property>
             <property name="text">
-             <string>OFF</string>
+             <string>OPEN</string>
             </property>
            </widget>
           </item>
          </layout>
         </widget>
        </item>
-       <item row="4" column="2">
-        <widget class="QFrame" name="IG_frame">
+       <item row="2" column="0">
+        <widget class="QLabel" name="valve_control_label">
          <property name="styleSheet">
-          <string notr="true">border: 2.5px solid #002754;</string>
+          <string notr="true">font: 18pt &quot;MS Shell Dlg 2&quot;;181b2e</string>
          </property>
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
+         <property name="text">
+          <string> System Controls </string>
          </property>
-         <property name="frameShadow">
-          <enum>QFrame::Plain</enum>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_3">
-          <item>
-           <widget class="QLabel" name="label_PV_3">
-            <property name="styleSheet">
-             <string notr="true">font: 11pt &quot;MS Shell Dlg 2&quot;;
-border: none;</string>
-            </property>
-            <property name="text">
-             <string>IGNITOR</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="igniter_btn_toggle">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">font: 12pt &quot;Segoe UI&quot;;
-display:inline-block;
-padding:0.35em 1.2em;
-border:0.1em solid #3f3f3f;
-margin:0 0.3em 0.3em 0;
-border-radius:0.12em;
-box-sizing: border-box;
-text-decoration:none;
-font-family:'Roboto',sans-serif;
-font-weight:300;
-color: #545454;
-text-align:center;
-transition: all 0.2s;</string>
-            </property>
-            <property name="text">
-             <string>IGNITOR (TOGGLE)</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
         </widget>
        </item>
-       <item row="7" column="2">
-        <widget class="QFrame" name="N2OV_frame">
+       <item row="0" column="0">
+        <widget class="QLabel" name="test_parms_label">
+         <property name="font">
+          <font>
+           <family>MS Shell Dlg 2</family>
+           <pointsize>22</pointsize>
+           <weight>75</weight>
+           <italic>false</italic>
+           <bold>true</bold>
+          </font>
+         </property>
          <property name="styleSheet">
-          <string notr="true">border: 2.5px solid #F5AA1C;</string>
+          <string notr="true">color: #7f849a;</string>
          </property>
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
+         <property name="text">
+          <string>Test Parameters</string>
          </property>
-         <property name="frameShadow">
-          <enum>QFrame::Plain</enum>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_5">
-          <item>
-           <widget class="QLabel" name="label_PV_2">
-            <property name="styleSheet">
-             <string notr="true">font: 11pt &quot;MS Shell Dlg 2&quot;;
-border: none;</string>
-            </property>
-            <property name="text">
-             <string>N2O VENT VALVE  </string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="N2OV_btn_on">
-            <property name="styleSheet">
-             <string notr="true">font: 12pt &quot;Segoe UI&quot;;
-display:inline-block;
-padding:0.35em 1.2em;
-border:0.1em solid #3f3f3f;
-margin:0 0.3em 0.3em 0;
-border-radius:0.12em;
-box-sizing: border-box;
-text-decoration:none;
-font-family:'Roboto',sans-serif;
-font-weight:300;
-color: #545454;
-text-align:center;
-transition: all 0.2s;</string>
-            </property>
-            <property name="text">
-             <string>ON</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="N2OV_btn_off">
-            <property name="styleSheet">
-             <string notr="true">font: 12pt &quot;Segoe UI&quot;;
-display:inline-block;
-padding:0.35em 1.2em;
-border:0.1em solid #3f3f3f;
-margin:0 0.3em 0.3em 0;
-border-radius:0.12em;
-box-sizing: border-box;
-text-decoration:none;
-font-family:'Roboto',sans-serif;
-font-weight:300;
-color: #545454;
-text-align:center;
-transition: all 0.2s;</string>
-            </property>
-            <property name="text">
-             <string>OFF</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
         </widget>
        </item>
-       <item row="1" column="0" colspan="3">
-        <widget class="QFrame" name="test_parms_frame">
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Plain</enum>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_2">
-          <item row="2" column="1">
-           <widget class="QFrame" name="BD_frame_2">
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_6">
-             <item>
-              <widget class="QLabel" name="BD_label_2">
-               <property name="text">
-                <string>MEV OPEN (%)</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="BD_lineEdit_2"/>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QFrame" name="BD_frame">
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_3">
-             <item>
-              <widget class="QLabel" name="BD_label">
-               <property name="text">
-                <string>BURN DURATION (s)</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="BD_lineEdit"/>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item row="0" column="2">
-           <widget class="QFrame" name="ID_frame">
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_4">
-             <item>
-              <widget class="QLabel" name="ID_label">
-               <property name="text">
-                <string>IGNITOR DELAY (s)</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="lineEdit_3"/>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item row="2" column="2">
-           <widget class="QFrame" name="BD_frame_3">
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_7">
-             <item>
-              <widget class="QLabel" name="BD_label_3">
-               <property name="text">
-                <string>SYSTEM OPEN (%)</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="BD_lineEdit_3"/>
-             </item>
-            </layout>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="5" column="0">
-        <widget class="QFrame" name="N2_frame">
-         <property name="styleSheet">
-          <string notr="true">border: 2.5px solid #005493;</string>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Plain</enum>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout">
-          <item>
-           <widget class="QLabel" name="label_N2">
-            <property name="styleSheet">
-             <string notr="true">font: 11pt &quot;MS Shell Dlg 2&quot;;
-border: none;</string>
-            </property>
-            <property name="text">
-             <string>N2 FLOW</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="N2_btn_off">
-            <property name="styleSheet">
-             <string notr="true">font: 12pt &quot;Segoe UI&quot;;
-display:inline-block;
-padding:0.35em 1.2em;
-border:0.1em solid #3f3f3f;
-margin:0 0.3em 0.3em 0;
-border-radius:0.12em;
-box-sizing: border-box;
-text-decoration:none;
-font-family:'Roboto',sans-serif;
-font-weight:300;
-color: #545454;
-text-align:center;
-transition: all 0.2s;</string>
-            </property>
-            <property name="text">
-             <string>OFF</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="N2_btn_on">
-            <property name="styleSheet">
-             <string notr="true">font: 12pt &quot;Segoe UI&quot;;
-display:inline-block;
-padding:0.35em 1.2em;
-border:0.1em solid #3f3f3f;
-margin:0 0.3em 0.3em 0;
-border-radius:0.12em;
-box-sizing: border-box;
-text-decoration:none;
-font-family:'Roboto',sans-serif;
-font-weight:300;
-color: #545454;
-text-align:center;
-transition: all 0.2s;</string>
-            </property>
-            <property name="text">
-             <string>ON</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="6" column="0">
-        <widget class="QFrame" name="NCV_frame">
-         <property name="styleSheet">
-          <string notr="true">border: 2.5px solid #005493;
-</string>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Plain</enum>
-         </property>
-         <property name="lineWidth">
-          <number>0</number>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_7">
-          <item>
-           <widget class="QLabel" name="label">
-            <property name="styleSheet">
-             <string notr="true">font: 11pt &quot;MS Shell Dlg 2&quot;;
-border: none;</string>
-            </property>
-            <property name="text">
-             <string>NORMALLY CLOSED VALVE</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="NCV_btn_toggle">
-            <property name="styleSheet">
-             <string notr="true">font: 12pt &quot;Segoe UI&quot;;
-display:inline-block;
-padding:0.35em 1.2em;
-border:0.1em solid #3f3f3f;
-margin:0 0.3em 0.3em 0;
-border-radius:0.12em;
-box-sizing: border-box;
-text-decoration:none;
-font-family:'Roboto',sans-serif;
-font-weight:300;
-color: #545454;
-text-align:center;
-transition: all 0.2s;</string>
-            </property>
-            <property name="text">
-             <string>NCV (TOGGLE)</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="7" column="0">
-        <widget class="QFrame" name="MEV_frame">
-         <property name="styleSheet">
-          <string notr="true">border: 2.5px solid #005493;</string>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Plain</enum>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_4">
-          <item>
-           <widget class="QLabel" name="label_MEV">
-            <property name="styleSheet">
-             <string notr="true">font: 11pt &quot;MS Shell Dlg 2&quot;;
-border: none;</string>
-            </property>
-            <property name="text">
-             <string>MAIN ENGINE VALVE</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="MEV_btn_on">
-            <property name="styleSheet">
-             <string notr="true">font: 12pt &quot;Segoe UI&quot;;
-display:inline-block;
-padding:0.35em 1.2em;
-border:0.1em solid #3f3f3f;
-margin:0 0.3em 0.3em 0;
-border-radius:0.12em;
-box-sizing: border-box;
-text-decoration:none;
-font-family:'Roboto',sans-serif;
-font-weight:300;
-color: #545454;
-text-align:center;
-transition: all 0.2s;</string>
-            </property>
-            <property name="text">
-             <string>ON</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="MEV_btn_off">
-            <property name="styleSheet">
-             <string notr="true">font: 12pt &quot;Segoe UI&quot;;
-display:inline-block;
-padding:0.35em 1.2em;
-border:0.1em solid #3f3f3f;
-margin:0 0.3em 0.3em 0;
-border-radius:0.12em;
-box-sizing: border-box;
-text-decoration:none;
-font-family:'Roboto',sans-serif;
-font-weight:300;
-color: #545454;
-text-align:center;
-transition: all 0.2s;</string>
-            </property>
-            <property name="text">
-             <string>OFF</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="8" column="0" rowspan="2" colspan="3">
+       <item row="8" column="0" rowspan="2" colspan="2">
         <widget class="QFrame" name="sys_info_frame_2">
          <property name="autoFillBackground">
           <bool>false</bool>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background: #181b2e;border-radius: 10px;</string>
          </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
@@ -745,41 +495,6 @@ transition: all 0.2s;</string>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_2">
              <item>
-              <widget class="QFrame" name="frame_2">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="frameShape">
-                <enum>QFrame::StyledPanel</enum>
-               </property>
-               <property name="frameShadow">
-                <enum>QFrame::Raised</enum>
-               </property>
-               <layout class="QVBoxLayout" name="verticalLayout_12">
-                <item>
-                 <widget class="QLabel" name="label_4">
-                  <property name="text">
-                   <string>Test Name:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLineEdit" name="lineEdit">
-                  <property name="maximumSize">
-                   <size>
-                    <width>100</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </widget>
-             </item>
-             <item>
               <widget class="QPushButton" name="run_btn">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -787,20 +502,29 @@ transition: all 0.2s;</string>
                  <verstretch>0</verstretch>
                 </sizepolicy>
                </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>90</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <pointsize>18</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
                <property name="styleSheet">
-                <string notr="true">font: 20pt &quot;MS Shell Dlg 2&quot;;
-background-color: rgb(76, 187, 23);
+                <string notr="true">background-color: rgb(76, 187, 23);
 display:inline-block;
 padding:0.5em 0.5em;
-border:0.1em solid  rgb(76, 187, 23);
-border-radius:0.12em;
 box-sizing: border-box;
 text-decoration:none;
-font-family:'Roboto',sans-serif;
-font-weight:300;
-color: white;
+color:#000000;
 text-align:center;
-transition: all 0.2s;</string>
+transition: all 0.2s;
+border-radius: 10px;</string>
                </property>
                <property name="text">
                 <string>RUN</string>
@@ -818,24 +542,411 @@ transition: all 0.2s;</string>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>90</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>18</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
             <property name="styleSheet">
-             <string notr="true">font: 20pt &quot;MS Shell Dlg 2&quot;;
-display:inline-block;
+             <string notr="true">display:inline-block;
 padding:0.5em 0.5em;
 background-color: rgb(255,0,0);
-border:0.1em solid  rgb(255,0,0);
-border-radius:0.12em;
 box-sizing: border-box;
 text-decoration:none;
-font-family:'Roboto',sans-serif;
-font-weight:300;
-color: white;
+color:#000000;
 text-align:center;
 transition: all 0.2s;
 </string>
             </property>
             <property name="text">
              <string>ABORT</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QFrame" name="N2_frame">
+         <property name="styleSheet">
+          <string notr="true">border: 0px;background: #181b2e;border-radius: 10px;</string>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Plain</enum>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <item>
+           <widget class="QLabel" name="label_N2">
+            <property name="font">
+             <font>
+              <pointsize>12</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">
+border: none;color: #7f849a</string>
+            </property>
+            <property name="text">
+             <string>N2 FLOW</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="N2_btn_off">
+            <property name="styleSheet">
+             <string notr="true">font: 12pt &quot;Segoe UI&quot;;
+display:inline-block;
+padding:0.35em 1.2em;
+border:0.1em solid #3f3f3f;
+margin:0 0.3em 0.3em 0;
+border-radius:0.12em;
+box-sizing: border-box;
+text-decoration:none;
+font-family:'Roboto',sans-serif;
+font-weight:300;
+color: #437596;
+text-align:center;
+transition: all 0.2s;</string>
+            </property>
+            <property name="text">
+             <string>CLOSED</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="N2_btn_on">
+            <property name="styleSheet">
+             <string notr="true">font: 12pt &quot;Segoe UI&quot;;
+display:inline-block;
+padding:0.35em 1.2em;
+border:0.1em solid #3f3f3f;
+margin:0 0.3em 0.3em 0;
+border-radius:0.12em;
+box-sizing: border-box;
+text-decoration:none;
+font-family:'Roboto',sans-serif;
+font-weight:300;
+color: #437596;
+text-align:center;
+transition: all 0.2s;</string>
+            </property>
+            <property name="text">
+             <string>OPEN</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="1" column="0" colspan="2">
+        <widget class="QFrame" name="test_parms_frame">
+         <property name="styleSheet">
+          <string notr="true">background: #181b2e;border-radius: 10px;</string>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Plain</enum>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_2">
+          <item row="2" column="1">
+           <widget class="QFrame" name="BD_frame_2">
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_6">
+             <item>
+              <widget class="QLabel" name="BD_label_2">
+               <property name="font">
+                <font>
+                 <pointsize>10</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: #7f849a</string>
+               </property>
+               <property name="text">
+                <string>MEV OPEN (%)</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="BD_lineEdit_2"/>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QFrame" name="BD_frame">
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_3">
+             <item>
+              <widget class="QLabel" name="BD_label">
+               <property name="font">
+                <font>
+                 <pointsize>10</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: #7f849a</string>
+               </property>
+               <property name="text">
+                <string>BURN DURATION (s)</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="BD_lineEdit"/>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QFrame" name="ID_frame">
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_4">
+             <item>
+              <widget class="QLabel" name="ID_label">
+               <property name="font">
+                <font>
+                 <pointsize>10</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: #7f849a</string>
+               </property>
+               <property name="text">
+                <string>IGNITOR DELAY (s)</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="lineEdit_3"/>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="2" column="2">
+           <widget class="QFrame" name="BD_frame_3">
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_7">
+             <item>
+              <widget class="QLabel" name="BD_label_3">
+               <property name="font">
+                <font>
+                 <pointsize>10</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: #7f849a</string>
+               </property>
+               <property name="text">
+                <string>SYSTEM OPEN (%)</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="BD_lineEdit_3"/>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="6" column="0">
+        <widget class="QFrame" name="NCV_frame">
+         <property name="styleSheet">
+          <string notr="true">border: 0px;background: #181b2e;border-radius: 10px;</string>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Plain</enum>
+         </property>
+         <property name="lineWidth">
+          <number>0</number>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_7">
+          <item>
+           <widget class="QLabel" name="label">
+            <property name="font">
+             <font>
+              <family>MS Shell Dlg 2</family>
+              <pointsize>12</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">
+border: none;color: #7f849a</string>
+            </property>
+            <property name="text">
+             <string>NORMALLY CLOSED VALVE</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="NCV_btn_off">
+            <property name="styleSheet">
+             <string notr="true">font: 12pt &quot;Segoe UI&quot;;
+display:inline-block;
+padding:0.35em 1.2em;
+border:0.1em solid #3f3f3f;
+margin:0 0.3em 0.3em 0;
+border-radius:0.12em;
+box-sizing: border-box;
+text-decoration:none;
+font-family:'Roboto',sans-serif;
+font-weight:300;
+color: #437596;
+text-align:center;
+transition: all 0.2s;</string>
+            </property>
+            <property name="text">
+             <string>CLOSED</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="NCV_btn_on">
+            <property name="styleSheet">
+             <string notr="true">font: 12pt &quot;Segoe UI&quot;;
+display:inline-block;
+padding:0.35em 1.2em;
+border:0.1em solid #3f3f3f;
+margin:0 0.3em 0.3em 0;
+border-radius:0.12em;
+box-sizing: border-box;
+text-decoration:none;
+font-family:'Roboto',sans-serif;
+font-weight:300;
+color: #437596;
+text-align:center;
+transition: all 0.2s;</string>
+            </property>
+            <property name="text">
+             <string>OPEN</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="7" column="0">
+        <widget class="QFrame" name="MEV_frame">
+         <property name="styleSheet">
+          <string notr="true">border: 0px;background: #181b2e;border-radius: 10px;</string>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Plain</enum>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_4">
+          <item>
+           <widget class="QLabel" name="label_MEV">
+            <property name="font">
+             <font>
+              <pointsize>12</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">
+border: none;color: #7f849a</string>
+            </property>
+            <property name="text">
+             <string>MAIN ENGINE VALVE</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="MEV_btn_off">
+            <property name="styleSheet">
+             <string notr="true">font: 12pt &quot;Segoe UI&quot;;
+display:inline-block;
+padding:0.35em 1.2em;
+border:0.1em solid #3f3f3f;
+margin:0 0.3em 0.3em 0;
+border-radius:0.12em;
+box-sizing: border-box;
+text-decoration:none;
+font-family:'Roboto',sans-serif;
+font-weight:300;
+color: #437596;
+text-align:center;
+transition: all 0.2s;</string>
+            </property>
+            <property name="text">
+             <string>CLOSED</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="MEV_btn_on">
+            <property name="styleSheet">
+             <string notr="true">font: 12pt &quot;Segoe UI&quot;;
+display:inline-block;
+padding:0.35em 1.2em;
+border:0.1em solid #3f3f3f;
+margin:0 0.3em 0.3em 0;
+border-radius:0.12em;
+box-sizing: border-box;
+text-decoration:none;
+font-family:'Roboto',sans-serif;
+font-weight:300;
+color: #437596;
+text-align:center;
+transition: all 0.2s;</string>
+            </property>
+            <property name="text">
+             <string>OPEN</string>
             </property>
            </widget>
           </item>
@@ -850,7 +961,7 @@ transition: all 0.2s;
       <property name="styleSheet">
        <string notr="true">min-width: 300px;
 max-width: 500px;
-background-color: rgb(253, 253, 253);</string>
+background: #0f111d</string>
       </property>
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
@@ -885,6 +996,9 @@ background-color: rgb(253, 253, 253);</string>
          <property name="layoutDirection">
           <enum>Qt::LeftToRight</enum>
          </property>
+         <property name="styleSheet">
+          <string notr="true">border: 0px</string>
+         </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
          </property>
@@ -897,8 +1011,15 @@ background-color: rgb(253, 253, 253);</string>
           </property>
           <item>
            <widget class="QLabel" name="label_sys_info">
+            <property name="font">
+             <font>
+              <pointsize>20</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
             <property name="styleSheet">
-             <string notr="true">font: 18pt &quot;MS Shell Dlg 2&quot;;</string>
+             <string notr="true">color: #7f849a</string>
             </property>
             <property name="text">
              <string>System Information</string>
@@ -916,6 +1037,9 @@ background-color: rgb(253, 253, 253);</string>
             <property name="frameShadow">
              <enum>QFrame::Sunken</enum>
             </property>
+            <property name="lineWidth">
+             <number>0</number>
+            </property>
             <layout class="QVBoxLayout" name="verticalLayout_10">
              <property name="topMargin">
               <number>9</number>
@@ -925,29 +1049,61 @@ background-color: rgb(253, 253, 253);</string>
              </property>
              <item>
               <widget class="QLabel" name="label_3">
+               <property name="font">
+                <font>
+                 <pointsize>10</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: #7f849a</string>
+               </property>
                <property name="text">
-                <string>IP Adress</string>
+                <string>IP Address</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="lineEdit_IPadress"/>
+              <widget class="QLineEdit" name="lineEdit_IPadress">
+               <property name="minimumSize">
+                <size>
+                 <width>300</width>
+                 <height>30</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background: #181b2e;border-radius: 10px;</string>
+               </property>
+              </widget>
              </item>
              <item>
               <widget class="QPushButton" name="disconnect_btn">
+               <property name="minimumSize">
+                <size>
+                 <width>309</width>
+                 <height>50</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <pointsize>12</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                 <underline>false</underline>
+                 <strikeout>false</strikeout>
+                </font>
+               </property>
                <property name="styleSheet">
-                <string notr="true">font: 12pt &quot;Segoe UI&quot;;
-display:inline-block;
+                <string notr="true">display:inline-block;
 border:0.1em solid black;
 margin:0 0.3em 0.3em 0;
 border-radius:0.12em;
 box-sizing: border-box;
 text-decoration:none;
-font-family:'Roboto',sans-serif;
-font-weight:300;
-color: black;
 text-align:center;
-transition: all 0.2s;</string>
+transition: all 0.2s;
+color: #7f849a</string>
                </property>
                <property name="text">
                 <string>Disconnect</string>
@@ -956,19 +1112,32 @@ transition: all 0.2s;</string>
              </item>
              <item>
               <widget class="QPushButton" name="connect_btn">
+               <property name="minimumSize">
+                <size>
+                 <width>309</width>
+                 <height>50</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>MS Shell Dlg 2</family>
+                 <pointsize>12</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                 <underline>false</underline>
+                 <strikeout>false</strikeout>
+                </font>
+               </property>
                <property name="styleSheet">
-                <string notr="true">font: 12pt &quot;Segoe UI&quot;;
-display:inline-block;
+                <string notr="true">display:inline-block;
 border:0.1em solid black;
 margin:0 0.3em 0.3em 0;
 border-radius:0.12em;
 box-sizing: border-box;
 text-decoration:none;
-font-family:'Roboto',sans-serif;
-font-weight:300;
-color: black;
 text-align:center;
-transition: all 0.2s;</string>
+transition: all 0.2s;
+color: #7f849a</string>
                </property>
                <property name="text">
                 <string>Connect</string>
@@ -977,16 +1146,46 @@ transition: all 0.2s;</string>
              </item>
              <item>
               <widget class="QLabel" name="label_date">
+               <property name="font">
+                <font>
+                 <pointsize>10</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: #7f849a</string>
+               </property>
                <property name="text">
                 <string>Time/Date</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="lineEdit_date"/>
+              <widget class="QLineEdit" name="lineEdit_date">
+               <property name="minimumSize">
+                <size>
+                 <width>300</width>
+                 <height>30</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background: #181b2e;border-radius: 10px;</string>
+               </property>
+              </widget>
              </item>
              <item>
               <widget class="QLabel" name="label_update">
+               <property name="font">
+                <font>
+                 <pointsize>10</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: #7f849a</string>
+               </property>
                <property name="text">
                 <string>Last Update</string>
                </property>
@@ -994,6 +1193,15 @@ transition: all 0.2s;</string>
              </item>
              <item>
               <widget class="QLineEdit" name="lineEdit_update">
+               <property name="minimumSize">
+                <size>
+                 <width>300</width>
+                 <height>30</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background: #181b2e;border-radius: 10px;</string>
+               </property>
                <property name="text">
                 <string/>
                </property>
@@ -1004,8 +1212,17 @@ transition: all 0.2s;</string>
           </item>
           <item>
            <widget class="QLabel" name="label_sys_status">
+            <property name="font">
+             <font>
+              <family>MS Shell Dlg 2</family>
+              <pointsize>20</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+             </font>
+            </property>
             <property name="styleSheet">
-             <string notr="true">font: 75 18pt &quot;MS Shell Dlg 2&quot;;</string>
+             <string notr="true">color: #7f849a</string>
             </property>
             <property name="text">
              <string>System Status</string>
@@ -1013,7 +1230,31 @@ transition: all 0.2s;</string>
            </widget>
           </item>
           <item>
-           <widget class="QPlainTextEdit" name="statusbox"/>
+           <widget class="QPlainTextEdit" name="statusbox">
+            <property name="font">
+             <font>
+              <family>Consolas</family>
+              <pointsize>16</pointsize>
+             </font>
+            </property>
+            <property name="autoFillBackground">
+             <bool>false</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background: #181b2e;
+border-radius: 10px;
+color: #7f849a;</string>
+            </property>
+            <property name="verticalScrollBarPolicy">
+             <enum>Qt::ScrollBarAlwaysOff</enum>
+            </property>
+            <property name="horizontalScrollBarPolicy">
+             <enum>Qt::ScrollBarAlwaysOff</enum>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
           </item>
           <item alignment="Qt::AlignHCenter">
            <widget class="QLabel" name="label_2">
@@ -1024,7 +1265,7 @@ transition: all 0.2s;</string>
              <string/>
             </property>
             <property name="pixmap">
-             <pixmap>../../../Users/lemie/Downloads/ENGR 120/uvic_rocketry_logo.png</pixmap>
+             <pixmap>../../lemie/Downloads/ENGR 120/uvic_rocketry_logo.png</pixmap>
             </property>
            </widget>
           </item>
@@ -1040,16 +1281,6 @@ transition: all 0.2s;</string>
      </widget>
     </item>
    </layout>
-  </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>1189</width>
-     <height>26</height>
-    </rect>
-   </property>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
