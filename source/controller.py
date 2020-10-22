@@ -15,7 +15,7 @@ class EncryptEngine:
     This class gets the information from the engine or client and
     encrypts it in a way to send to send to the client.
     """
-    __init__(self):
+    def __init__(self):
         self.server = client.Client(999,999)#connect client to get information from the gui
 
         # client._initialize_connection() 
@@ -34,7 +34,7 @@ class RunStepper:
     """
     This class will do all the operations of moving a stepper motor
     """
-    __init__(self):
+    def __init__(self):
 
 
     

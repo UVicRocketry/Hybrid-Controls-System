@@ -29,6 +29,7 @@ class Server:
         :return:
         """
         self.server.bind(self.address)  # binds the server object to the HOST and PORT
+        print(self.address)
         self.server.listen(5)  # waits for a connection from the client
         self.client, self.c_address = self.server.accept()  # when a successful connection is made
 

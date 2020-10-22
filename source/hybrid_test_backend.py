@@ -2,6 +2,9 @@ from PyQt5 import QtWidgets, uic, QtCore
 from PyQt5.QtCore import QTimer,QDateTime
 import sys
 import server
+import threading
+
+PORT = 9999
 
 class MainWindow(QtWidgets.QMainWindow):
 
@@ -93,7 +96,8 @@ class MainWindow(QtWidgets.QMainWindow):
     # communication between the backend and the server   
     def _connect_btn(self):
         # Get our IP from the box on the GUI, instantiate a Server with it
-        self.client_server = server.Server(self.lineEdit_IPaddress.text(), 9999)
+        self.client_server = server.Server(self.lineEdit_IPaddress.text(), PORT)
+        self.client_server.initialize_connection()
 
         # Attempt connection to the Server on the rPi
         if(self.client_server.client != None):
