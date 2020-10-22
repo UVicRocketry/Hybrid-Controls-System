@@ -1228,7 +1228,9 @@ color: #7f849a;</string>
                 </font>
                </property>
                <property name="styleSheet">
-                <string notr="true">background: #181b2e;border-radius: 10px;</string>
+                <string notr="true">background: #181b2e;
+border-radius: 10px;
+color: #7f849a;</string>
                </property>
                <property name="text">
                 <string/>

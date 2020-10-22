@@ -127,58 +127,91 @@ class MainWindow(QtWidgets.QMainWindow):
             self.add_system_status("Un-igniting!")
 
     def _MEV_btn_off(self):  
-        print("Hello World")
+        self.add_system_status("Closing MEV")
+        self.system_states["MEV"] = "closed"
+        self.client_server.send_states("MEV closed")
 
     def _MEV_btn_on(self):
-        print("Hello World")
+        self.add_system_status("Opening MEV")
+        self.system_states["MEV"] = "open"
+        self.client_server.send_states("MEV open")
 
     def _N2OV_btn_off(self):
-        print("Hello World")
+        self.add_system_status("Closing N2O Vent")
+        self.system_states["N2OV"] = "closed"
+        self.client_server.send_states("N2OV closed")
         
     def _N2OV_btn_on(self):
-        print("Hello World")
+        self.add_system_status("Opening N2O Vent")
+        self.system_states["N2OV"] = "open"
+        self.client_server.send_states("N2OV open")
 
     def _N2O_btn_off(self):
-        print("Hello World")
+        self.add_system_status("Closing N2O Valve")
+        self.system_states["N2O"] = "closed"
+        self.client_server.send_states("N2O closed")
 
     def _N2O_btn_on(self):
-        print("Hello World")
+        self.add_system_status("Opening N2O Valve")
+        self.system_states["N2O"] = "open"
+        self.client_server.send_states("N2O open")
 
     def _N2_btn_off(self):
-        print("Hello World")
+        self.add_system_status("Closing N2 Valve")
+        self.system_states["N2"] = "closed"
+        self.client_server.send_states("N2 closed")
 
     def _N2_btn_on(self):
-        print("Hello World")
+        self.add_system_status("Opening N2 Valve")
+        self.system_states["N2"] = "open"
+        self.client_server.send_states("N2 open")
 
     def _NCV_btn_off(self):
-        print("Hello World")
+        self.add_system_status("Closing NC Valve")
+        self.system_states["NCV"] = "closed"
+        self.client_server.send_states("NCV closed")
 
     def _NCV_btn_on(self):
-        print("Hello World")
+        self.add_system_status("Opening NC Valve")
+        self.system_states["NCV"] = "open"
+        self.client_server.send_states("NCV open")
 
     def _RV_btn_off(self):
-        print("Hello World")
+        self.add_system_status("Closing Relief Valve")
+        self.system_states["RV"] = "closed"
+        self.client_server.send_states("RV closed")
 
     def _RV_btn_on(self):
-        print("Hello World")
+        self.add_system_status("Opening Relief Valve")
+        self.system_states["RV"] = "open"
+        self.client_server.send_states("RV open")
 
     def _VV_btn_off(self):
-        print("Hello World")
+        self.add_system_status("Closing Vent Valve")
+        self.system_states["VV"] = "closed"
+        self.client_server.send_states("VV closed")
 
     def _VV_btn_on(self):
-        print("Hello World")
+        self.add_system_status("Opening Vent Valve")
+        self.system_states["VV"] = "open"
+        self.client_server.send_states("VV open")
 
     def _abort_btn(self):
-        print("Hello World")
+        self.add_system_status("ABORTING")
+        self.system_states["abort"] = True
+        self.client_server.send_states("abort True")
 
     def _run_btn(self):
-        print("Hello World")
+        self.add_system_status("RUNNING")
+        self.system_states["run"] = True
+        self.client_server.send_states("run True")
 
 
     # The "System Status" box on the gui is a QPlainTextEdit that we can add
     # text to. It will contain a log of all the things that have happened in the gui
     def add_system_status(self, msg):
         self.statusbox.appendPlainText(msg)
+
 
     ############################### METHODS ON TIMERS ##################################
     def _date_time(self):
