@@ -8,7 +8,7 @@ can read and send it through client.py.
 #assume everything is a dictionary
 # 
 
-import client 
+import client
 
 class EncryptEngine:
     """

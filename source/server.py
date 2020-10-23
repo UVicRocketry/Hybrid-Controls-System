@@ -9,7 +9,7 @@ class Server:
         Initializes the server object
         Creates an address tuple from the given host and port
         :param host: The IP of the server, will be received form the GUI
-        :param port: The port that the socket will be connecting on, will be received from GUI
+        :param port: The port that the socket will be connecting on, is hard coded to 9999
         """
         self.HOST = host  # the host IP
         self.PORT = port  # the host port
