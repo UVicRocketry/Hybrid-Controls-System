@@ -35,8 +35,6 @@ class MainWindow(QtWidgets.QMainWindow):
             "run" : False
         }
 
-        
-
     ################################ SETUP ####################################
 
     def setup_buttons(self):
@@ -130,6 +128,10 @@ class MainWindow(QtWidgets.QMainWindow):
         else:
             self.add_system_status("Un-igniting!")
 
+    # All these buttons do the basically the same thing
+        # Add a message to the "System Status" panel on the GUI.
+        # Update our system_states dictionary
+        # Send the new state over the client_server Server object
     def _MEV_btn_off(self):  
         self.add_system_status("Closing MEV")
         self.system_states["MEV"] = "closed"
