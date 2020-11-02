@@ -3,8 +3,8 @@ from PyQt5.QtCore import QTimer,QDateTime
 import sys
 import server
 import threading
-
-PORT = 9999
+HOST = '127.0.0.1'
+PORT = 9998
 
 class MainWindow(QtWidgets.QMainWindow):
 
@@ -94,6 +94,10 @@ class MainWindow(QtWidgets.QMainWindow):
     # communication between the backend and the server   
     def _connect_btn(self):
         # Get our IP from the box on the GUI, instantiate a Server with it
+        # PORT is hard coded in at the top of the file, if you change PORT here, you must also change
+        # it in client
+        self.add_system_status(f"Attempting to initialize connection on HOST:PORT "
+                               f"{self.lineEdit_IPaddress.text()}:{PORT}")
         self.client_server = server.Server(self.lineEdit_IPaddress.text(), PORT)
         self.client_server.initialize_connection()
 
@@ -109,7 +113,8 @@ class MainWindow(QtWidgets.QMainWindow):
     # Disconnect from the Server on the rPi
     def _disconnect_btn(self):
         try:
-            self.client_server.end_connection() # TODO This always fails for some reason.
+            self.client_server.send_states("connected false")
+            self.client_server.end_connection()
             self.add_system_status("Disconnection Successful")
             self.system_states["connected"] = False
         
@@ -122,6 +127,7 @@ class MainWindow(QtWidgets.QMainWindow):
         # This whacky bit of code is because the button is a toggle
         toggle = self.system_states["igniter"]
         toggle = not bool(toggle)
+        self.system_states["igniter"] = toggle
         self.client_server.send_states(f"igniter {toggle}")
         if(toggle):
             self.add_system_status("Igniting!")
@@ -223,7 +229,20 @@ class MainWindow(QtWidgets.QMainWindow):
     def _date_time(self):
         self.date_time.setText(QDateTime.currentDateTime().toString())
 
-    
+    ############################### SERVER COMMUNICATION METHODS ##################################
+
+    def update_states(self):
+        """
+        Runs in a thread to constantly provide status updates from the client
+        Is in charge of updating the status messages shown on the GUI
+        """
+        while True:
+            """TODO: Implement threading on this loop"""
+            self.client_server.receive_states() # Will hang up on this line until it receives something from client
+            while self.client_server.feedback_queue.qsize() > 0:    # clears the queue and pops output to GUI
+                """TODO: Check what exactly needs to be updated"""
+                self.add_system_status(f"{self.client_server.feedback_queue.get()} "
+                                       f"{self.client_server.feedback_queue.get()}")
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
