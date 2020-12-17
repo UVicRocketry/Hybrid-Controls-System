@@ -2,7 +2,7 @@ import socket
 import queue
 
 HOST = '127.0.0.1'  # The server's hostname or IP address
-PORT = 9998        # The port used by the server
+PORT = 9999       # The port used by the server
 
 
 class Client:
@@ -25,7 +25,6 @@ class Client:
         Connects the the server. The server must be running first in order to make this work
         """
         self.client.connect(self.address)   # connects the client to the server, server must be running first
-        self.client.sendall("connected".encode())   # Initial connection message
 
     def end_connection(self):
         """
@@ -50,6 +49,8 @@ class Client:
         data = data.split(" ")  # splits string into a list using spaces as the delimiter
         for i in data:  # loops through the created list
             self.feedback_queue.put(i)  # adds each list entry to the queue
+
+
 
 if __name__ == '__main__':
     c = Client(HOST, PORT)

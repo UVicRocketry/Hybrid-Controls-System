@@ -1,10 +1,67 @@
 from PyQt5 import QtWidgets, uic, QtCore
-from PyQt5.QtCore import QTimer,QDateTime
+from PyQt5.QtCore import QTimer, QDateTime, QThread, pyqtSignal
 import sys
 import server
-import threading
-HOST = '127.0.0.1'
-PORT = 9998
+HOST = '192.168.0.117'
+PORT = 9999
+
+
+class GetStatusThread(QThread):
+
+    """
+    Thread that is in charge of constantly checking to see if we have recieved any data from the client
+    If so, pop off the data and change our states
+    """
+
+    status_signal = pyqtSignal(object)
+
+    def __init__(self, server_ob, states):
+        """
+        Initializes the thread
+        :param server_ob: the object representing the connection to the server
+        :param states: the dictionary of states
+        """
+        self.client_server = server_ob
+        self.states = states
+        QThread.__init__(self)
+
+    def __del__(self):
+        self.wait()
+
+    def run(self):
+        """
+        Runs in a thread to constantly provide status updates from the client
+        Is in charge of updating the status messages shown on the GUI
+        """
+        while True:
+
+            try:
+                self.client_server.receive_states() # Will hang up on this line until it receives something from client
+            except server.NoConnection:
+                return
+            param = None
+            state = None
+            while self.client_server.feedback_queue.qsize() > 0:    # clears the queue and pops output to GUI
+
+                try:
+                    token = self.client_server.feedback_queue.get(True, 3)
+                    param = token[0]
+                    state = token[1]
+                except server.queue.Empty: # if we have a mix up with our queue something bad has happened
+                    self.status_signal.emit(f'Failed to parse arguments: {param}, {state}')
+                    continue
+                except IndexError:
+                    self.status_signal.emit(f'Failed to parse arguments: {param}, {state}')
+                    self.status_signal.emit(f'Reattempting...')
+                    continue
+
+                if param not in self.states.keys():  # checks to make sure parameter is valid
+                    self.status_signal.emit(f'Invalid parameter {param}')
+                    continue
+
+                self.states[param] = state
+                self.status_signal.emit(f'{param} {state}')
+
 
 class MainWindow(QtWidgets.QMainWindow):
 
@@ -16,6 +73,8 @@ class MainWindow(QtWidgets.QMainWindow):
         
         self.setup_buttons()
         self.setup_timers()
+        self.client_server = None
+        self.status_thread = None
 
         ############################ STATES ###############################
         # These will get updated by the GUI if the user clicks a button or
@@ -96,24 +155,40 @@ class MainWindow(QtWidgets.QMainWindow):
         # Get our IP from the box on the GUI, instantiate a Server with it
         # PORT is hard coded in at the top of the file, if you change PORT here, you must also change
         # it in client
-        self.add_system_status(f"Attempting to initialize connection on HOST:PORT "
-                               f"{self.lineEdit_IPaddress.text()}:{PORT}")
-        self.client_server = server.Server(self.lineEdit_IPaddress.text(), PORT)
-        self.client_server.initialize_connection()
+
+        if self.client_server is not None:
+            if self.client_server.client is not None:
+                return
+
+        if self.lineEdit_IPaddress.text() == "":   # this if statement checks to see if we havent entered an IP
+            self.add_system_status("Invalid IP")
+            return
+        try:
+            self.client_server = server.Server(self.lineEdit_IPaddress.text(), PORT)
+            self.client_server.initialize_connection()
+        except Exception as e:
+            print(f'line 171 {e}')
+
 
         # Attempt connection to the Server on the rPi
         if(self.client_server.client != None):
             self.add_system_status(f"Connection Successful on HOST:PORT {self.client_server.HOST}:{self.client_server.PORT}") 
             self.system_states["connected"] = True
-            self.client_server.send_states("connected True")
+            self.send_states("connected True")
+            try:
+                self.status_thread = GetStatusThread(self.client_server, self.system_states)
+                self.status_thread.status_signal.connect(self.add_system_status)
+                self.status_thread.start()
+            except Exception as e:
+                print(f'line 184 {e}')
         else:
             self.add_system_status("Connection Unsuccessful. Is the IP address correct?")
-    
+            self.client_server = None
 
     # Disconnect from the Server on the rPi
     def _disconnect_btn(self):
         try:
-            self.client_server.send_states("connected false")
+            self.send_states("connected false")
             self.client_server.end_connection()
             self.add_system_status("Disconnection Successful")
             self.system_states["connected"] = False
@@ -128,95 +203,95 @@ class MainWindow(QtWidgets.QMainWindow):
         toggle = self.system_states["igniter"]
         toggle = not bool(toggle)
         self.system_states["igniter"] = toggle
-        self.client_server.send_states(f"igniter {toggle}")
-        if(toggle):
+        self.send_states(f"igniter {toggle}")
+        """if(toggle):
             self.add_system_status("Igniting!")
         else:
-            self.add_system_status("Un-igniting!")
+            self.add_system_status("Un-igniting!") """
 
     # All these buttons do the basically the same thing
         # Add a message to the "System Status" panel on the GUI.
         # Update our system_states dictionary
         # Send the new state over the client_server Server object
     def _MEV_btn_off(self):  
-        self.add_system_status("Closing MEV")
+        #self.add_system_status("Closing MEV")
         self.system_states["MEV"] = "closed"
-        self.client_server.send_states("MEV closed")
+        self.send_states("MEV closed")
 
     def _MEV_btn_on(self):
-        self.add_system_status("Opening MEV")
+        #self.add_system_status("Opening MEV")
         self.system_states["MEV"] = "open"
-        self.client_server.send_states("MEV open")
+        self.send_states("MEV open")
 
     def _N2OV_btn_off(self):
-        self.add_system_status("Closing N2O Vent")
+        #self.add_system_status("Closing N2O Vent")
         self.system_states["N2OV"] = "closed"
-        self.client_server.send_states("N2OV closed")
+        self.send_states("N2OV closed")
         
     def _N2OV_btn_on(self):
-        self.add_system_status("Opening N2O Vent")
+        #self.add_system_status("Opening N2O Vent")
         self.system_states["N2OV"] = "open"
-        self.client_server.send_states("N2OV open")
+        self.send_states("N2OV open")
 
     def _N2O_btn_off(self):
-        self.add_system_status("Closing N2O Valve")
+        #self.add_system_status("Closing N2O Valve")
         self.system_states["N2O"] = "closed"
-        self.client_server.send_states("N2O closed")
+        self.send_states("N2O closed")
 
     def _N2O_btn_on(self):
-        self.add_system_status("Opening N2O Valve")
+        #self.add_system_status("Opening N2O Valve")
         self.system_states["N2O"] = "open"
-        self.client_server.send_states("N2O open")
+        self.send_states("N2O open")
 
     def _N2_btn_off(self):
-        self.add_system_status("Closing N2 Valve")
+        #self.add_system_status("Closing N2 Valve")
         self.system_states["N2"] = "closed"
-        self.client_server.send_states("N2 closed")
+        self.send_states("N2 closed")
 
     def _N2_btn_on(self):
-        self.add_system_status("Opening N2 Valve")
+        #self.add_system_status("Opening N2 Valve")
         self.system_states["N2"] = "open"
-        self.client_server.send_states("N2 open")
+        self.send_states("N2 open")
 
     def _NCV_btn_off(self):
-        self.add_system_status("Closing NC Valve")
+        #self.add_system_status("Closing NC Valve")
         self.system_states["NCV"] = "closed"
-        self.client_server.send_states("NCV closed")
+        self.send_states("NCV closed")
 
     def _NCV_btn_on(self):
-        self.add_system_status("Opening NC Valve")
+        #self.add_system_status("Opening NC Valve")
         self.system_states["NCV"] = "open"
-        self.client_server.send_states("NCV open")
+        self.send_states("NCV open")
 
     def _RV_btn_off(self):
-        self.add_system_status("Closing Relief Valve")
+        #self.add_system_status("Closing Relief Valve")
         self.system_states["RV"] = "closed"
-        self.client_server.send_states("RV closed")
+        self.send_states("RV closed")
 
     def _RV_btn_on(self):
-        self.add_system_status("Opening Relief Valve")
+        #self.add_system_status("Opening Relief Valve")
         self.system_states["RV"] = "open"
-        self.client_server.send_states("RV open")
+        self.send_states("RV open")
 
     def _VV_btn_off(self):
-        self.add_system_status("Closing Vent Valve")
+        #self.add_system_status("Closing Vent Valve")
         self.system_states["VV"] = "closed"
-        self.client_server.send_states("VV closed")
+        self.send_states("VV closed")
 
     def _VV_btn_on(self):
-        self.add_system_status("Opening Vent Valve")
+       # self.add_system_status("Opening Vent Valve")
         self.system_states["VV"] = "open"
-        self.client_server.send_states("VV open")
+        self.send_states("VV open")
 
     def _abort_btn(self):
-        self.add_system_status("ABORTING")
+        #self.add_system_status("ABORTING")
         self.system_states["abort"] = True
-        self.client_server.send_states("abort True")
+        self.send_states("abort True")
 
     def _run_btn(self):
-        self.add_system_status("RUNNING")
+        #self.add_system_status("RUNNING")
         self.system_states["run"] = True
-        self.client_server.send_states("run True")
+        self.send_states("run True")
 
 
     # The "System Status" box on the gui is a QPlainTextEdit that we can add
@@ -231,18 +306,21 @@ class MainWindow(QtWidgets.QMainWindow):
 
     ############################### SERVER COMMUNICATION METHODS ##################################
 
-    def update_states(self):
+    def send_states(self, msg):
         """
-        Runs in a thread to constantly provide status updates from the client
-        Is in charge of updating the status messages shown on the GUI
+        Sends a message from the server to the client
+
+        msg: The message being sent, message is of the form "system_property state"
+             for example "abort True"
         """
-        while True:
-            """TODO: Implement threading on this loop"""
-            self.client_server.receive_states() # Will hang up on this line until it receives something from client
-            while self.client_server.feedback_queue.qsize() > 0:    # clears the queue and pops output to GUI
-                """TODO: Check what exactly needs to be updated"""
-                self.add_system_status(f"{self.client_server.feedback_queue.get()} "
-                                       f"{self.client_server.feedback_queue.get()}")
+        if self.client_server is None:
+            self.add_system_status("ERROR[1]: Connection Not Initialized")
+            return
+        try:
+            self.client_server.send_states(msg)
+        except WindowsError as e:
+            self.add_system_status(f"ERROR[1]: Connection Not Initialized {e}")
+            self.client_server = None
 
 def main():
     app = QtWidgets.QApplication(sys.argv)

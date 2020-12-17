@@ -2,6 +2,20 @@ import socket
 import queue
 
 
+class NoConnection(Exception):
+    """
+    A custom exception raised when attempting to utilize the server when no connection has been made
+    """
+    pass
+
+
+class InvalidIp(Exception):
+    """
+    A custom exception raised when an invalid IP is provided when creating the server
+    """
+    pass
+
+
 class Server:
 
     def __init__(self, host, port):
@@ -20,6 +34,7 @@ class Server:
         self.c_address = None  # just a placeholder for now, becomes the client when a successfully connected
         self.feedback_queue = queue.Queue()  # used to store feedback from client
 
+
     def initialize_connection(self):
         """
         Binds the server socket to the address
@@ -28,7 +43,11 @@ class Server:
         self.c_address is the address of the client
         :return:
         """
-        self.server.bind(self.address)  # binds the server object to the HOST and PORT
+        try:
+            self.server.bind(self.address)  # binds the server object to the HOST and PORT
+
+        except socket.gaierror: # this is an exception raised if the ip is invalid
+            raise InvalidIp
         self.server.listen(5)  # waits for a connection from the client
         self.client, self.c_address = self.server.accept()  # when a successful connection is made
 
@@ -37,9 +56,11 @@ class Server:
         cleans up the sockets when we are done with them, leaving them open can cause problems
         :return: nothing
         """
-
         self.server.close()
         self.client.close()
+
+        self.server = None
+        self.client = None
 
     def send_states(self, data):
         """
@@ -47,6 +68,7 @@ class Server:
         :param data: The state being sent
         :return: nothing
         """
+
         self.client.sendall(data.encode())
 
     def receive_states(self):
@@ -54,8 +76,13 @@ class Server:
         Receive data from client and tokenize it, then add it to the instruction queue
         :return: nothing
         """
-        data = self.client.recv(1024).decode()  # receives data which it decodes() into a string
-        data = data.split(" ")  # splits string into a list using spaces as the delimiter
-        for i in data:  # loops through the created list
-            self.feedback_queue.put(i)  # adds each list entry to the queue
-
+        if self.client is None:
+            raise NoConnection
+        try:
+            data = self.client.recv(1024).decode()  # receives data which it decodes() into a string
+            print(data)
+            data = data.split(" ")  # splits string into a list using spaces as the delimiter
+            data = tuple(data)
+            self.feedback_queue.put(data)  # adds each list entry to the queue
+        except Exception as e:
+            print(f'line 92 {e}')
