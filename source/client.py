@@ -47,8 +47,8 @@ class Client:
         """
         data = self.client.recv(1024).decode()  # receives data which it decodes() into a string
         data = data.split(" ")  # splits string into a list using spaces as the delimiter
-        for i in data:  # loops through the created list
-            self.feedback_queue.put(i)  # adds each list entry to the queue
+        data = tuple(data)
+        self.feedback_queue.put(data)  # adds each list entry to the queue
 
 
 
@@ -60,15 +60,13 @@ if __name__ == '__main__':
         c.receive_states()
 
         while c.feedback_queue.qsize() > 0:
-            d = c.feedback_queue.get()
-            if d == 'connected':
-                print(d)
-                d = c.feedback_queue.get()
-                if d == 'false':
-                    print(d)
-                    exit()
+            token = c.feedback_queue.get()
+            d = token[0]
+            b = token[1]
+            if d == 'connected' and b == 'false':
+                exit()
             print(d)
-        c.send_states('test response')
+        c.send_states(f'{d} {b}')
 
 
 

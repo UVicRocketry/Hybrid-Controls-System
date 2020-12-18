@@ -2,7 +2,7 @@ from PyQt5 import QtWidgets, uic, QtCore
 from PyQt5.QtCore import QTimer, QDateTime, QThread, pyqtSignal
 import sys
 import server
-HOST = '192.168.0.117'
+HOST = '192.168.0.124'
 PORT = 9999
 
 
@@ -24,9 +24,6 @@ class GetStatusThread(QThread):
         self.client_server = server_ob
         self.states = states
         QThread.__init__(self)
-
-    def __del__(self):
-        self.wait()
 
     def run(self):
         """
@@ -158,6 +155,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         if self.client_server is not None:
             if self.client_server.client is not None:
+                self.add_system_status("Connection already active")
                 return
 
         if self.lineEdit_IPaddress.text() == "":   # this if statement checks to see if we havent entered an IP
