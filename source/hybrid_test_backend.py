@@ -69,10 +69,10 @@ class MainWindow(QtWidgets.QMainWindow):
         # Load the UI Page. uic is the thing that lets us use a .ui file
         # This only works if the .ui file is in the same directory
         super(MainWindow, self).__init__(*args, **kwargs)
-        uic.loadUi('hybrid_test_gui.ui', self)
+        uic.loadUi('new_hybrid_controls_gui.ui', self)
         
-        self.setup_buttons()
-        self.setup_timers()
+        #self.setup_buttons()
+       # self.setup_timers()
         self.client_server = None
         self.status_thread = None
 
