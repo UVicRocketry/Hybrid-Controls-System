@@ -83,11 +83,11 @@ color: #7f849a;</string>
                    <enum>QFrame::Raised</enum>
                   </property>
                   <layout class="QGridLayout" name="gridLayout_14">
-                   <item row="0" column="0">
+                   <item row="1" column="0">
                     <widget class="QWidget" name="widget" native="true">
                      <layout class="QGridLayout" name="gridLayout_13">
                       <item row="1" column="4">
-                       <widget class="QLineEdit" name="lineEdit_7">
+                       <widget class="QLineEdit" name="ignitor_delay">
                         <property name="sizePolicy">
                          <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
                           <horstretch>0</horstretch>
@@ -114,7 +114,7 @@ color: #7f849a;</string>
                        </widget>
                       </item>
                       <item row="2" column="4">
-                       <widget class="QLineEdit" name="lineEdit_8">
+                       <widget class="QLineEdit" name="mev_open_speed">
                         <property name="sizePolicy">
                          <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
                           <horstretch>0</horstretch>
@@ -141,12 +141,17 @@ color: #7f849a;</string>
                        </widget>
                       </item>
                       <item row="0" column="4">
-                       <widget class="QCheckBox" name="checkBox">
+                       <widget class="QCheckBox" name="test_used">
                         <property name="sizePolicy">
                          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                           <horstretch>0</horstretch>
                           <verstretch>0</verstretch>
                          </sizepolicy>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <pointsize>10</pointsize>
+                         </font>
                         </property>
                         <property name="layoutDirection">
                          <enum>Qt::RightToLeft</enum>
@@ -160,12 +165,17 @@ color: #7f849a;</string>
                        </widget>
                       </item>
                       <item row="1" column="0">
-                       <widget class="QLabel" name="label_8">
+                       <widget class="QLabel" name="burn_duration_label">
                         <property name="sizePolicy">
                          <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
                           <horstretch>0</horstretch>
                           <verstretch>0</verstretch>
                          </sizepolicy>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <pointsize>10</pointsize>
+                         </font>
                         </property>
                         <property name="styleSheet">
                          <string notr="true">color: #7f849a</string>
@@ -179,12 +189,19 @@ color: #7f849a;</string>
                        </widget>
                       </item>
                       <item row="0" column="0">
-                       <widget class="QPushButton" name="pushButton_3">
+                       <widget class="QPushButton" name="load_test_btn">
                         <property name="sizePolicy">
                          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                           <horstretch>0</horstretch>
-                          <verstretch>0</verstretch>
+                          <verstretch>30</verstretch>
                          </sizepolicy>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <pointsize>10</pointsize>
+                          <weight>75</weight>
+                          <bold>true</bold>
+                         </font>
                         </property>
                         <property name="styleSheet">
                          <string notr="true">display:inline-block;
@@ -203,12 +220,17 @@ color: #7f849a</string>
                        </widget>
                       </item>
                       <item row="2" column="2">
-                       <widget class="QLabel" name="label_11">
+                       <widget class="QLabel" name="mev_open_speed_label">
                         <property name="sizePolicy">
                          <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
                           <horstretch>0</horstretch>
                           <verstretch>0</verstretch>
                          </sizepolicy>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <pointsize>10</pointsize>
+                         </font>
                         </property>
                         <property name="styleSheet">
                          <string notr="true">color: #7f849a;</string>
@@ -222,12 +244,17 @@ color: #7f849a</string>
                        </widget>
                       </item>
                       <item row="1" column="2">
-                       <widget class="QLabel" name="label_10">
+                       <widget class="QLabel" name="ignitor_delay_label">
                         <property name="sizePolicy">
                          <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
                           <horstretch>0</horstretch>
                           <verstretch>0</verstretch>
                          </sizepolicy>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <pointsize>10</pointsize>
+                         </font>
                         </property>
                         <property name="styleSheet">
                          <string notr="true">color: #7f849a;</string>
@@ -241,7 +268,7 @@ color: #7f849a</string>
                        </widget>
                       </item>
                       <item row="2" column="1">
-                       <widget class="QLineEdit" name="lineEdit_6">
+                       <widget class="QLineEdit" name="mev_open">
                         <property name="sizePolicy">
                          <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
                           <horstretch>0</horstretch>
@@ -268,12 +295,17 @@ color: #7f849a;</string>
                        </widget>
                       </item>
                       <item row="2" column="0">
-                       <widget class="QLabel" name="label_9">
+                       <widget class="QLabel" name="mev_ope_label">
                         <property name="sizePolicy">
                          <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
                           <horstretch>0</horstretch>
                           <verstretch>0</verstretch>
                          </sizepolicy>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <pointsize>10</pointsize>
+                         </font>
                         </property>
                         <property name="styleSheet">
                          <string notr="true">color: #7f849a;</string>
@@ -287,7 +319,7 @@ color: #7f849a;</string>
                        </widget>
                       </item>
                       <item row="0" column="1" colspan="2">
-                       <widget class="QLineEdit" name="lineEdit_4">
+                       <widget class="QLineEdit" name="file_path">
                         <property name="sizePolicy">
                          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                           <horstretch>0</horstretch>
@@ -308,7 +340,7 @@ color: #7f849a;</string>
                        </widget>
                       </item>
                       <item row="1" column="1">
-                       <widget class="QLineEdit" name="lineEdit_5">
+                       <widget class="QLineEdit" name="burn_duration">
                         <property name="sizePolicy">
                          <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
                           <horstretch>0</horstretch>
@@ -337,16 +369,29 @@ color: #7f849a;</string>
                      </layout>
                     </widget>
                    </item>
-                   <item row="0" column="1">
+                   <item row="1" column="1">
                     <widget class="QWidget" name="widget" native="true">
                      <layout class="QVBoxLayout" name="verticalLayout_9">
                       <item>
-                       <widget class="QPushButton" name="pushButton_5">
+                       <widget class="QPushButton" name="man_btn">
                         <property name="sizePolicy">
                          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                           <horstretch>0</horstretch>
                           <verstretch>0</verstretch>
                          </sizepolicy>
+                        </property>
+                        <property name="minimumSize">
+                         <size>
+                          <width>75</width>
+                          <height>0</height>
+                         </size>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <pointsize>10</pointsize>
+                          <weight>75</weight>
+                          <bold>true</bold>
+                         </font>
                         </property>
                         <property name="styleSheet">
                          <string notr="true">display:inline-block;
@@ -365,12 +410,25 @@ color: #7f849a</string>
                        </widget>
                       </item>
                       <item>
-                       <widget class="QPushButton" name="pushButton_4">
+                       <widget class="QPushButton" name="auto_btn">
                         <property name="sizePolicy">
                          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                           <horstretch>0</horstretch>
                           <verstretch>0</verstretch>
                          </sizepolicy>
+                        </property>
+                        <property name="minimumSize">
+                         <size>
+                          <width>75</width>
+                          <height>0</height>
+                         </size>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <pointsize>10</pointsize>
+                          <weight>75</weight>
+                          <bold>true</bold>
+                         </font>
                         </property>
                         <property name="styleSheet">
                          <string notr="true">display:inline-block;
@@ -391,31 +449,31 @@ color: #7f849a</string>
                      </layout>
                     </widget>
                    </item>
+                   <item row="0" column="0">
+                    <widget class="QLabel" name="system_params_label">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="font">
+                      <font>
+                       <pointsize>14</pointsize>
+                       <weight>75</weight>
+                       <bold>true</bold>
+                       <underline>false</underline>
+                      </font>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">color: #7f849a;</string>
+                     </property>
+                     <property name="text">
+                      <string>SYSTEM PARAMETERS</string>
+                     </property>
+                    </widget>
+                   </item>
                   </layout>
-                 </widget>
-                </item>
-                <item row="0" column="0">
-                 <widget class="QLabel" name="label_7">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="font">
-                   <font>
-                    <pointsize>12</pointsize>
-                    <weight>75</weight>
-                    <bold>true</bold>
-                    <underline>false</underline>
-                   </font>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">color: #7f849a;</string>
-                  </property>
-                  <property name="text">
-                   <string>SYSTEM PARAMETERS</string>
-                  </property>
                  </widget>
                 </item>
                </layout>
@@ -457,42 +515,102 @@ color: #7f849a;</string>
                 <enum>QFrame::Raised</enum>
                </property>
                <layout class="QGridLayout" name="gridLayout_5">
-                <item row="1" column="0">
-                 <widget class="QLabel" name="label_13">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="font">
-                   <font>
-                    <pointsize>12</pointsize>
-                    <weight>75</weight>
-                    <bold>true</bold>
-                   </font>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">color: #7f849a;</string>
-                  </property>
-                  <property name="text">
-                   <string>MANUAL CONTROL (FOR TESTING ONLY)</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="2" column="0">
+                <item row="0" column="0">
                  <widget class="QWidget" name="widget" native="true">
                   <layout class="QGridLayout" name="gridLayout_4">
                    <item row="0" column="0">
-                    <widget class="QFrame" name="frame">
-                     <layout class="QHBoxLayout" name="horizontalLayout_2">
-                      <item>
-                       <widget class="QCheckBox" name="checkBox_5">
+                    <widget class="QLabel" name="man_con_label">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="font">
+                      <font>
+                       <pointsize>14</pointsize>
+                       <weight>75</weight>
+                       <bold>true</bold>
+                      </font>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">color: #7f849a;</string>
+                     </property>
+                     <property name="text">
+                      <string>MANUAL CONTROL (FOR TESTING ONLY)</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="1" column="0">
+                    <widget class="QWidget" name="gridWidget" native="true">
+                     <property name="minimumSize">
+                      <size>
+                       <width>30</width>
+                       <height>50</height>
+                      </size>
+                     </property>
+                     <layout class="QGridLayout" name="gridLayout">
+                      <item row="2" column="1">
+                       <widget class="QCheckBox" name="n2_vent_man">
                         <property name="sizePolicy">
-                         <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
                           <horstretch>0</horstretch>
                           <verstretch>0</verstretch>
                          </sizepolicy>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <pointsize>10</pointsize>
+                         </font>
+                        </property>
+                        <property name="layoutDirection">
+                         <enum>Qt::LeftToRight</enum>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">color: #7f849a;</string>
+                        </property>
+                        <property name="text">
+                         <string>N2
+VENT</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="2" column="0">
+                       <widget class="QCheckBox" name="mev_man">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <pointsize>10</pointsize>
+                         </font>
+                        </property>
+                        <property name="layoutDirection">
+                         <enum>Qt::LeftToRight</enum>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">color: #7f849a;</string>
+                        </property>
+                        <property name="text">
+                         <string>MEV</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="0" column="2">
+                       <widget class="QCheckBox" name="n2o_vent_man">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <pointsize>10</pointsize>
+                         </font>
                         </property>
                         <property name="layoutDirection">
                          <enum>Qt::LeftToRight</enum>
@@ -506,13 +624,68 @@ VENT</string>
                         </property>
                        </widget>
                       </item>
-                      <item>
-                       <widget class="QCheckBox" name="checkBox_2">
+                      <item row="0" column="4">
+                       <widget class="QCheckBox" name="purge_vent_man">
                         <property name="sizePolicy">
-                         <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
                           <horstretch>0</horstretch>
                           <verstretch>0</verstretch>
                          </sizepolicy>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <pointsize>10</pointsize>
+                         </font>
+                        </property>
+                        <property name="layoutDirection">
+                         <enum>Qt::LeftToRight</enum>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">color: #7f849a;</string>
+                        </property>
+                        <property name="text">
+                         <string>PURGE
+VENT</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="0" column="1">
+                       <widget class="QCheckBox" name="n2_flow_man">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <pointsize>10</pointsize>
+                         </font>
+                        </property>
+                        <property name="layoutDirection">
+                         <enum>Qt::LeftToRight</enum>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">color: #7f849a;</string>
+                        </property>
+                        <property name="text">
+                         <string>N2
+FLOW</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="2" column="2">
+                       <widget class="QCheckBox" name="n2o_flow_man">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <pointsize>10</pointsize>
+                         </font>
                         </property>
                         <property name="text">
                          <string>N20
@@ -520,53 +693,18 @@ FLOW</string>
                         </property>
                        </widget>
                       </item>
-                      <item>
-                       <widget class="QCheckBox" name="checkBox_4">
+                      <item row="2" column="4">
+                       <widget class="QCheckBox" name="ncv_man">
                         <property name="sizePolicy">
-                         <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
                           <horstretch>0</horstretch>
                           <verstretch>0</verstretch>
                          </sizepolicy>
                         </property>
-                        <property name="layoutDirection">
-                         <enum>Qt::LeftToRight</enum>
-                        </property>
-                        <property name="styleSheet">
-                         <string notr="true">color: #7f849a;</string>
-                        </property>
-                        <property name="text">
-                         <string>N2
-FLOW</string>
-                        </property>
-                       </widget>
-                      </item>
-                      <item>
-                       <widget class="QCheckBox" name="checkBox_7">
-                        <property name="sizePolicy">
-                         <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-                          <horstretch>0</horstretch>
-                          <verstretch>0</verstretch>
-                         </sizepolicy>
-                        </property>
-                        <property name="layoutDirection">
-                         <enum>Qt::LeftToRight</enum>
-                        </property>
-                        <property name="styleSheet">
-                         <string notr="true">color: #7f849a;</string>
-                        </property>
-                        <property name="text">
-                         <string>N2
-VENT</string>
-                        </property>
-                       </widget>
-                      </item>
-                      <item>
-                       <widget class="QCheckBox" name="checkBox_8">
-                        <property name="sizePolicy">
-                         <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-                          <horstretch>0</horstretch>
-                          <verstretch>0</verstretch>
-                         </sizepolicy>
+                        <property name="font">
+                         <font>
+                          <pointsize>10</pointsize>
+                         </font>
                         </property>
                         <property name="layoutDirection">
                          <enum>Qt::LeftToRight</enum>
@@ -579,42 +717,21 @@ VENT</string>
                         </property>
                        </widget>
                       </item>
-                      <item>
-                       <widget class="QCheckBox" name="checkBox_6">
+                      <item row="0" column="0">
+                       <widget class="QCheckBox" name="ignitor_man">
                         <property name="sizePolicy">
-                         <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
                           <horstretch>0</horstretch>
                           <verstretch>0</verstretch>
                          </sizepolicy>
                         </property>
-                        <property name="layoutDirection">
-                         <enum>Qt::LeftToRight</enum>
-                        </property>
-                        <property name="styleSheet">
-                         <string notr="true">color: #7f849a;</string>
-                        </property>
-                        <property name="text">
-                         <string>MEV</string>
-                        </property>
-                       </widget>
-                      </item>
-                      <item>
-                       <widget class="QCheckBox" name="checkBox_3">
-                        <property name="sizePolicy">
-                         <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-                          <horstretch>0</horstretch>
-                          <verstretch>0</verstretch>
-                         </sizepolicy>
-                        </property>
-                        <property name="layoutDirection">
-                         <enum>Qt::LeftToRight</enum>
-                        </property>
-                        <property name="styleSheet">
-                         <string notr="true">color: #7f849a;</string>
+                        <property name="font">
+                         <font>
+                          <pointsize>10</pointsize>
+                         </font>
                         </property>
                         <property name="text">
-                         <string>PURGE
-VENT</string>
+                         <string>IGNITOR</string>
                         </property>
                        </widget>
                       </item>
@@ -663,33 +780,10 @@ color: #7f849a;</string>
                 <enum>QFrame::Raised</enum>
                </property>
                <layout class="QGridLayout" name="gridLayout_7">
-                <item row="0" column="0">
-                 <widget class="QLabel" name="label_14">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="font">
-                   <font>
-                    <pointsize>12</pointsize>
-                    <weight>75</weight>
-                    <bold>true</bold>
-                   </font>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">color: #7f849a;</string>
-                  </property>
-                  <property name="text">
-                   <string>AUTO CONTROL</string>
-                  </property>
-                 </widget>
-                </item>
                 <item row="2" column="0">
                  <widget class="QWidget" name="widget" native="true">
                   <layout class="QGridLayout" name="gridLayout_6">
-                   <item row="0" column="0">
+                   <item row="1" column="0">
                     <widget class="QWidget" name="widget" native="true">
                      <layout class="QHBoxLayout" name="horizontalLayout_3">
                       <item>
@@ -704,10 +798,10 @@ color: #7f849a;</string>
                            </property>
                            <layout class="QGridLayout" name="gridLayout_10">
                             <item row="0" column="0">
-                             <widget class="QLabel" name="label_12">
+                             <widget class="QLabel" name="filling_label">
                               <property name="font">
                                <font>
-                                <pointsize>10</pointsize>
+                                <pointsize>12</pointsize>
                                 <weight>75</weight>
                                 <bold>true</bold>
                                </font>
@@ -721,7 +815,12 @@ color: #7f849a;</string>
                              <widget class="QWidget" name="horizontalWidget" native="true">
                               <layout class="QHBoxLayout" name="horizontalLayout_4">
                                <item>
-                                <widget class="QCheckBox" name="checkBox_10">
+                                <widget class="QCheckBox" name="n2o_flow_auto">
+                                 <property name="font">
+                                  <font>
+                                   <pointsize>10</pointsize>
+                                  </font>
+                                 </property>
                                  <property name="layoutDirection">
                                   <enum>Qt::LeftToRight</enum>
                                  </property>
@@ -732,7 +831,12 @@ FLOW</string>
                                 </widget>
                                </item>
                                <item>
-                                <widget class="QCheckBox" name="checkBox_9">
+                                <widget class="QCheckBox" name="n2_flow_auto">
+                                 <property name="font">
+                                  <font>
+                                   <pointsize>10</pointsize>
+                                  </font>
+                                 </property>
                                  <property name="text">
                                   <string>N2
 FLOW</string>
@@ -766,12 +870,17 @@ color: #7f849a;</string>
                              <widget class="QWidget" name="widget" native="true">
                               <layout class="QGridLayout" name="gridLayout_11">
                                <item row="1" column="0">
-                                <widget class="QCheckBox" name="checkBox_12">
+                                <widget class="QCheckBox" name="n2o_vent_auto">
                                  <property name="sizePolicy">
                                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                                    <horstretch>0</horstretch>
                                    <verstretch>0</verstretch>
                                   </sizepolicy>
+                                 </property>
+                                 <property name="font">
+                                  <font>
+                                   <pointsize>10</pointsize>
+                                  </font>
                                  </property>
                                  <property name="layoutDirection">
                                   <enum>Qt::LeftToRight</enum>
@@ -786,12 +895,17 @@ VENT</string>
                                 </widget>
                                </item>
                                <item row="1" column="1">
-                                <widget class="QCheckBox" name="checkBox_13">
+                                <widget class="QCheckBox" name="n2_vent_auto">
                                  <property name="sizePolicy">
                                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                                    <horstretch>0</horstretch>
                                    <verstretch>0</verstretch>
                                   </sizepolicy>
+                                 </property>
+                                 <property name="font">
+                                  <font>
+                                   <pointsize>10</pointsize>
+                                  </font>
                                  </property>
                                  <property name="layoutDirection">
                                   <enum>Qt::LeftToRight</enum>
@@ -806,12 +920,17 @@ VENT</string>
                                 </widget>
                                </item>
                                <item row="1" column="2">
-                                <widget class="QCheckBox" name="checkBox_14">
+                                <widget class="QCheckBox" name="purge_vent_auto">
                                  <property name="sizePolicy">
                                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                                    <horstretch>0</horstretch>
                                    <verstretch>0</verstretch>
                                   </sizepolicy>
+                                 </property>
+                                 <property name="font">
+                                  <font>
+                                   <pointsize>10</pointsize>
+                                  </font>
                                  </property>
                                  <property name="layoutDirection">
                                   <enum>Qt::LeftToRight</enum>
@@ -829,10 +948,10 @@ VENT</string>
                              </widget>
                             </item>
                             <item row="0" column="0">
-                             <widget class="QLabel" name="label_16">
+                             <widget class="QLabel" name="venting_btn">
                               <property name="font">
                                <font>
-                                <pointsize>10</pointsize>
+                                <pointsize>12</pointsize>
                                 <weight>75</weight>
                                 <bold>true</bold>
                                </font>
@@ -852,7 +971,7 @@ VENT</string>
                        </widget>
                       </item>
                       <item>
-                       <widget class="QPushButton" name="pushButton_7">
+                       <widget class="QPushButton" name="abort_btn">
                         <property name="sizePolicy">
                          <sizepolicy hsizetype="Minimum" vsizetype="MinimumExpanding">
                           <horstretch>0</horstretch>
@@ -891,7 +1010,7 @@ border-radius: 10px;</string>
                        </widget>
                       </item>
                       <item>
-                       <widget class="QPushButton" name="pushButton_8">
+                       <widget class="QPushButton" name="fire_btn">
                         <property name="sizePolicy">
                          <sizepolicy hsizetype="Minimum" vsizetype="MinimumExpanding">
                           <horstretch>0</horstretch>
@@ -930,7 +1049,7 @@ border-radius: 10px;</string>
                        </widget>
                       </item>
                       <item>
-                       <widget class="QPushButton" name="pushButton_6">
+                       <widget class="QPushButton" name="vent_all_btn">
                         <property name="sizePolicy">
                          <sizepolicy hsizetype="Minimum" vsizetype="MinimumExpanding">
                           <horstretch>0</horstretch>
@@ -972,6 +1091,29 @@ ALL</string>
                      </layout>
                     </widget>
                    </item>
+                   <item row="0" column="0">
+                    <widget class="QLabel" name="auto_con_label">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="font">
+                      <font>
+                       <pointsize>14</pointsize>
+                       <weight>75</weight>
+                       <bold>true</bold>
+                      </font>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">color: #7f849a;</string>
+                     </property>
+                     <property name="text">
+                      <string>AUTO CONTROL</string>
+                     </property>
+                    </widget>
+                   </item>
                   </layout>
                  </widget>
                 </item>
@@ -1006,7 +1148,7 @@ ALL</string>
            <widget class="QWidget" name="widget" native="true">
             <layout class="QVBoxLayout" name="verticalLayout_5">
              <item>
-              <widget class="QLabel" name="label_6">
+              <widget class="QLabel" name="schrmatic_label">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
                  <horstretch>0</horstretch>
@@ -1015,7 +1157,7 @@ ALL</string>
                </property>
                <property name="font">
                 <font>
-                 <pointsize>12</pointsize>
+                 <pointsize>14</pointsize>
                  <weight>75</weight>
                  <bold>true</bold>
                 </font>
@@ -1069,7 +1211,7 @@ ALL</string>
                </property>
                <property name="font">
                 <font>
-                 <pointsize>12</pointsize>
+                 <pointsize>14</pointsize>
                  <weight>75</weight>
                  <bold>true</bold>
                 </font>
@@ -1116,7 +1258,7 @@ ALL</string>
                         </property>
                         <property name="font">
                          <font>
-                          <pointsize>12</pointsize>
+                          <pointsize>14</pointsize>
                           <weight>75</weight>
                           <bold>true</bold>
                          </font>
@@ -1133,7 +1275,7 @@ ALL</string>
                        </widget>
                       </item>
                       <item>
-                       <widget class="QTextEdit" name="textEdit">
+                       <widget class="QTextEdit" name="statusbox">
                         <property name="sizePolicy">
                          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
                           <horstretch>0</horstretch>
@@ -1174,12 +1316,18 @@ color: #7f849a;</string>
                   </property>
                   <layout class="QGridLayout" name="gridLayout_15">
                    <item row="1" column="0">
-                    <widget class="QPushButton" name="pushButton">
+                    <widget class="QPushButton" name="connect_btn">
                      <property name="sizePolicy">
                       <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
                        <horstretch>0</horstretch>
                        <verstretch>0</verstretch>
                       </sizepolicy>
+                     </property>
+                     <property name="minimumSize">
+                      <size>
+                       <width>0</width>
+                       <height>40</height>
+                      </size>
                      </property>
                      <property name="font">
                       <font>
@@ -1210,9 +1358,10 @@ color: #7f849a</string>
                     <widget class="QWidget" name="widget" native="true">
                      <layout class="QGridLayout" name="gridLayout_8">
                       <item row="2" column="0">
-                       <widget class="QLabel" name="label_4">
+                       <widget class="QLabel" name="date_time_label">
                         <property name="font">
                          <font>
+                          <pointsize>10</pointsize>
                           <weight>75</weight>
                           <bold>true</bold>
                          </font>
@@ -1226,9 +1375,10 @@ color: #7f849a</string>
                        </widget>
                       </item>
                       <item row="4" column="0">
-                       <widget class="QLabel" name="label_5">
+                       <widget class="QLabel" name="last_update_label">
                         <property name="font">
                          <font>
+                          <pointsize>10</pointsize>
                           <weight>75</weight>
                           <bold>true</bold>
                          </font>
@@ -1242,9 +1392,10 @@ color: #7f849a</string>
                        </widget>
                       </item>
                       <item row="0" column="0">
-                       <widget class="QLabel" name="label_3">
+                       <widget class="QLabel" name="IP_address_label">
                         <property name="font">
                          <font>
+                          <pointsize>10</pointsize>
                           <weight>75</weight>
                           <bold>true</bold>
                          </font>
@@ -1258,7 +1409,7 @@ color: #7f849a</string>
                        </widget>
                       </item>
                       <item row="1" column="0">
-                       <widget class="QLineEdit" name="lineEdit">
+                       <widget class="QLineEdit" name="IPaddress">
                         <property name="sizePolicy">
                          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                           <horstretch>0</horstretch>
@@ -1279,7 +1430,7 @@ color: #7f849a;</string>
                        </widget>
                       </item>
                       <item row="3" column="0">
-                       <widget class="QLineEdit" name="lineEdit_2">
+                       <widget class="QLineEdit" name="date_time">
                         <property name="sizePolicy">
                          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                           <horstretch>0</horstretch>
@@ -1300,7 +1451,7 @@ color: #7f849a;</string>
                        </widget>
                       </item>
                       <item row="5" column="0">
-                       <widget class="QLineEdit" name="lineEdit_3">
+                       <widget class="QLineEdit" name="last_update">
                         <property name="sizePolicy">
                          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                           <horstretch>0</horstretch>
@@ -1324,12 +1475,18 @@ color: #7f849a;</string>
                     </widget>
                    </item>
                    <item row="2" column="0">
-                    <widget class="QPushButton" name="pushButton_2">
+                    <widget class="QPushButton" name="disconnect_btn">
                      <property name="sizePolicy">
                       <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
                        <horstretch>0</horstretch>
                        <verstretch>0</verstretch>
                       </sizepolicy>
+                     </property>
+                     <property name="minimumSize">
+                      <size>
+                       <width>0</width>
+                       <height>40</height>
+                      </size>
                      </property>
                      <property name="font">
                       <font>
