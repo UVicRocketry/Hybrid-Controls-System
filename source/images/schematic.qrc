@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="newPrefix">
+    <file>MULE-1_PID_for_GUI.png</file>
+  </qresource>
+</RCC>

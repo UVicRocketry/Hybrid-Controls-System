@@ -71,8 +71,8 @@ class MainWindow(QtWidgets.QMainWindow):
         super(MainWindow, self).__init__(*args, **kwargs)
         uic.loadUi('new_hybrid_controls_gui.ui', self)
         
-        #self.setup_buttons()
-       # self.setup_timers()
+        self.setup_buttons()
+        self.setup_timers()
         self.client_server = None
         self.status_thread = None
 
@@ -117,23 +117,28 @@ class MainWindow(QtWidgets.QMainWindow):
             # Add a new method in below setup_button_etc of the form "def _button_name(self):"
             # Any code in that method will be run when the button is clicked!
         self.disconnect_btn.clicked.connect(self._disconnect_btn)
-        self.igniter_btn_toggle.clicked.connect(self._igniter_btn_toggle)
-        self.MEV_btn_off.clicked.connect(self._MEV_btn_off)
-        self.MEV_btn_on.clicked.connect(self._MEV_btn_on)
-        self.N2OV_btn_off.clicked.connect(self._N2OV_btn_off)
-        self.N2OV_btn_on.clicked.connect(self._N2OV_btn_on)
-        self.N2O_btn_off.clicked.connect(self._N2O_btn_off)
-        self.N2O_btn_on.clicked.connect(self._N2O_btn_on)
-        self.N2_btn_off.clicked.connect(self._N2_btn_off)
-        self.N2_btn_on.clicked.connect(self._N2_btn_on)
-        self.NCV_btn_off.clicked.connect(self._NCV_btn_off)
-        self.NCV_btn_on.clicked.connect(self._NCV_btn_on)
-        self.RV_btn_off.clicked.connect(self._RV_btn_off)
-        self.RV_btn_on.clicked.connect(self._RV_btn_on)
-        self.VV_btn_off.clicked.connect(self._VV_btn_off)
-        self.VV_btn_on.clicked.connect(self._VV_btn_on)
+        # MANUAL CHECKBOXES
+            # checkboxes used ".isChecked" to singal a change in state. 
+            # Each function connected will check the current state of the switch.
+            
+        self.ignitor_man.stateChanged.connect(self._Ignitor_btn)
+        self.mev_man.stateChanged.connect(self._MEV_btn)
+        self.n2o_vent_man.stateChanged.connect(self._N2OV_btn)
+        self.n2o_flow_man.stateChanged.connect(self._N2O_btn)
+        self.n2_flow_man.stateChanged.connect(self._N2_btn)
+        self.n2_vent_man.stateChanged.connect(self._N2V_btn)
+        self.ncv_man.stateChanged.connect(self._NCV_btn)
+        self.purge_vent_man.stateChanged.connect(self._RV_btn)
+        # self.VV_btn_off.stateChanged.connect(self._VV_btn)#not in new gui TODO: look into why not in new gui
+
+        # AUTO CHECKBOXES
+        # self.n2o_flow_auto.isChecked.connect(self.)
+        # self.n2_flow_auto.isChecked.connect(self.)
+
+
+
         self.abort_btn.clicked.connect(self._abort_btn)
-        self.run_btn.clicked.connect(self._run_btn)
+        # self.run_btn.clicked.connect(self._run_btn)
 
 
     def setup_timers(self):
@@ -155,12 +160,11 @@ class MainWindow(QtWidgets.QMainWindow):
         # Get our IP from the box on the GUI, instantiate a Server with it
         # PORT is hard coded in at the top of the file, if you change PORT here, you must also change
         # it in client
-
         if self.client_server is not None:
             if self.client_server.client is not None:
                 return
 
-        if self.lineEdit_IPaddress.text() == "":   # this if statement checks to see if we havent entered an IP
+        if self.lineEdit_IPaddress.text() == "":   # this if statement checks to see if we haven't entered an IP
             self.add_system_status("Invalid IP")
             return
         try:
@@ -197,79 +201,87 @@ class MainWindow(QtWidgets.QMainWindow):
         except AttributeError:
             self.add_system_status("Disconnection Unsuccessful. Does the connection exist?")
 
-    # Turns the igniter on or off.
-    def _igniter_btn_toggle(self):
-        # This whacky bit of code is because the button is a toggle
-        toggle = self.system_states["igniter"]
-        toggle = not bool(toggle)
-        self.system_states["igniter"] = toggle
-        self.send_states(f"igniter {toggle}")
-        """if(toggle):
-            self.add_system_status("Igniting!")
-        else:
-            self.add_system_status("Un-igniting!") """
-
-    # All these buttons do the basically the same thing
+   
+   
+    # All these functions do the basically the same thing
         # Add a message to the "System Status" panel on the GUI.
         # Update our system_states dictionary
         # Send the new state over the client_server Server object
+    def _igniter_btn_on(self):#TODO: ignitor needs reworking talk to connor... 
+        self.add_system_status("Igniting")
+        self.system_states["igniter"] = True
+        self.send_states("igniter True")
+       
+    def _igniter_btn_off(self):
+        self.add_system_status("Un-igniting?")
+        self.system_states["igniter"] = False
+        self.send_states("igniter False")
+
     def _MEV_btn_off(self):  
-        #self.add_system_status("Closing MEV")
+        self.add_system_status("Closing MEV")
         self.system_states["MEV"] = "closed"
         self.send_states("MEV closed")
 
     def _MEV_btn_on(self):
-        #self.add_system_status("Opening MEV")
+        self.add_system_status("Opening MEV")
         self.system_states["MEV"] = "open"
         self.send_states("MEV open")
 
     def _N2OV_btn_off(self):
-        #self.add_system_status("Closing N2O Vent")
+        self.add_system_status("Closing N2O Vent")
         self.system_states["N2OV"] = "closed"
         self.send_states("N2OV closed")
         
     def _N2OV_btn_on(self):
-        #self.add_system_status("Opening N2O Vent")
+        self.add_system_status("Opening N2O Vent")
         self.system_states["N2OV"] = "open"
         self.send_states("N2OV open")
 
     def _N2O_btn_off(self):
-        #self.add_system_status("Closing N2O Valve")
+        self.add_system_status("Closing N2O Valve")
         self.system_states["N2O"] = "closed"
         self.send_states("N2O closed")
 
     def _N2O_btn_on(self):
-        #self.add_system_status("Opening N2O Valve")
+        self.add_system_status("Opening N2O Valve")
         self.system_states["N2O"] = "open"
         self.send_states("N2O open")
 
     def _N2_btn_off(self):
-        #self.add_system_status("Closing N2 Valve")
+        self.add_system_status("Closing N2 Valve")
         self.system_states["N2"] = "closed"
         self.send_states("N2 closed")
 
     def _N2_btn_on(self):
-        #self.add_system_status("Opening N2 Valve")
+        self.add_system_status("Opening N2 Valve")
         self.system_states["N2"] = "open"
         self.send_states("N2 open")
+    def _N2V_btn_off(self):
+        self.add_system_status("Closing N2 Vent Valve")
+        self.system_states["N2V"] = "closed"
+        self.send_states("N2V closed")
 
+    def _N2V_btn_on(self):
+        self.add_system_status("Opening N2 Vent Valve")
+        self.system_states["N2V"] = "open"
+        self.send_states("N2 open")
     def _NCV_btn_off(self):
-        #self.add_system_status("Closing NC Valve")
+        self.add_system_status("Closing NC Valve")
         self.system_states["NCV"] = "closed"
         self.send_states("NCV closed")
 
     def _NCV_btn_on(self):
-        #self.add_system_status("Opening NC Valve")
+        self.add_system_status("Opening NC Valve")
         self.system_states["NCV"] = "open"
         self.send_states("NCV open")
 
     def _RV_btn_off(self):
-        #self.add_system_status("Closing Relief Valve")
+        self.add_system_status("Closing Relief Valve")
         self.system_states["RV"] = "closed"
         self.send_states("RV closed")
 
     def _RV_btn_on(self):
-        #self.add_system_status("Opening Relief Valve")
+        self.add_system_status("Opening Relief Valve")
         self.system_states["RV"] = "open"
         self.send_states("RV open")
 
@@ -284,15 +296,60 @@ class MainWindow(QtWidgets.QMainWindow):
         self.send_states("VV open")
 
     def _abort_btn(self):
-        #self.add_system_status("ABORTING")
+        self.add_system_status("ABORTING")
         self.system_states["abort"] = True
         self.send_states("abort True")
 
     def _run_btn(self):
-        #self.add_system_status("RUNNING")
+        self.add_system_status("RUNNING")
         self.system_states["run"] = True
         self.send_states("run True")
-
+    #All these functions check the current state of the checkbox and run the corresponding function above.
+    # def _igniter_btn_toggle(self):
+    #     if self.igniter_man.isChecked() == True:
+    def _Ignitor_btn(self):
+        if self.ignitor_man.isChecked() == True:
+            self._igniter_btn_on()
+        else:
+            self._igniter_btn_off()
+    def _MEV_btn(self):
+        if self.mev_man.isChecked() == True:
+            self._MEV_btn_on()
+        else:
+            self._MEV_btn_off()
+    def _N2OV_btn(self):
+        if self.n2o_vent_man.isChecked() == True:
+            self._N2OV_btn_on()
+        else:
+            self._N2OV_btn_off()
+    def _N2O_btn(self):
+        if self.n2o_flow_man.isChecked() == True:
+            self._N2O_btn_on()
+        else:
+            self._N2O_btn_off()
+   
+    def _N2V_btn(self):
+        if self.n2_vent_man.isChecked() == True:
+            self._N2V_btn_on()
+        else:
+            self._N2V_btn_off() 
+    def _N2_btn(self):
+        if self.n2_flow_man.isChecked() == True:
+            self._N2_btn_on()
+        else:
+            self._N2_btn_off()
+    
+    def _NCV_btn(self):
+        if self.ncv_man.isChecked() == True:
+            self._NCV_btn_on()
+        else:
+            self._NCV_btn_off()
+    def _RV_btn(self):
+        if self.ncv_man.isChecked() == True:
+            self._RV_btn_on()#TODO: only displays closed.
+        else:
+            self._RV_btn_off()
+    # def _VV_btn(self): 
 
     # The "System Status" box on the gui is a QPlainTextEdit that we can add
     # text to. It will contain a log of all the things that have happened in the gui
