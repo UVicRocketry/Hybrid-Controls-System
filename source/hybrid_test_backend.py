@@ -1,5 +1,6 @@
 from PyQt5 import QtWidgets, uic, QtCore
 from PyQt5.QtCore import QTimer, QDateTime, QThread, pyqtSignal
+from PyQt5.QtWidgets import QFileDialog
 import sys
 import server
 HOST = '192.168.0.117'
@@ -73,6 +74,9 @@ class MainWindow(QtWidgets.QMainWindow):
         
         self.setup_buttons()
         self.setup_timers()
+        #Temperately used "global" variables for toggle buttons TODO: change to states
+        self.toggle_auto = False
+        self.toggle_man = False
         self.client_server = None
         self.status_thread = None
 
@@ -119,8 +123,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.disconnect_btn.clicked.connect(self._disconnect_btn)
         # MANUAL CHECKBOXES
             # checkboxes used ".isChecked" to singal a change in state. 
-            # Each function connected will check the current state of the switch.
-            
+            # Each function connected will check the current state of the switch.   
         self.ignitor_man.stateChanged.connect(self._Ignitor_btn)
         self.mev_man.stateChanged.connect(self._MEV_btn)
         self.n2o_vent_man.stateChanged.connect(self._N2OV_btn)
@@ -135,17 +138,16 @@ class MainWindow(QtWidgets.QMainWindow):
         self.n2o_flow_auto.stateChanged.connect(self._N2O_btn)
         self.n2_flow_auto.stateChanged.connect(self._N2_btn)
         self.n2_vent_auto.stateChanged.connect(self._N2V_btn)
-        # self.VV_btn_off.stateChanged.connect(self._VV_btn)#not in new gui TODO: look into why not in new gui
-
-       
-        # self.n2o_flow_auto.isChecked.connect(self.)
-        # self.n2_flow_auto.isChecked.connect(self.)
-
-
-
         self.abort_btn.clicked.connect(self._abort_btn)
         self.vent_all_btn.clicked.connect(self._vent_all_btn)
         self.fire_btn.clicked.connect(self._run_btn)
+        #SYSTEM PARAMETERS
+        self.test_used.clicked.connect(self._load_checked)
+        self.load_test_btn.clicked.connect(self._open_file)
+        self.man_btn.clicked.connect(self._man_btn)
+        self.auto_btn.clicked.connect(self._auto_btn)
+
+        # self.test_used
 
 
     def setup_timers(self):
@@ -382,15 +384,128 @@ class MainWindow(QtWidgets.QMainWindow):
         self.send_states("abort True")
     
 
-
     #SYSTEM PARAMETERS 
         # MANUAL and AUTO Buttons
         #these buttons will disable the other control category 
         #if Manual is toggled on then the auto buttons will be disabled
+    def _man_btn(self):#TODO:update toggles to use state params to make the toggle.
         
-        #Load test
+        if self.toggle_man == False:
+            self.toggle_man = True
+            self.man_btn.setStyleSheet("QPushButton { border:0.1em solid black; }")
+            self._disable_man()
+        else:
+            self.toggle_man = False
+            self.man_btn.setStyleSheet("QPushButton { border:0.1em solid yellow;  }")
+            self._enable_man()
 
-        #Edit line parameters
+
+    def _auto_btn(self):
+        if self.toggle_auto == False:
+            self.toggle_auto = True
+            self.auto_btn.setStyleSheet("QPushButton { border:0.1em solid black;  }")
+            self._disable_auto()
+        else:
+            self.toggle_auto = False
+            self.auto_btn.setStyleSheet("QPushButton {border:0.1em solid yellow; }")
+            self._enable_auto()
+
+    #DISABLEING and ENABLING CONTROL BOXES
+    # disable manual control box
+    def _disable_man(self):
+        self.ignitor_man.setEnabled(False)
+        self.n2_flow_man.setEnabled(False)
+        self.n2o_flow_man.setEnabled(False)
+        self.purge_vent_man.setEnabled(False)
+        self.mev_man.setEnabled(False)
+        self.n2_vent_man.setEnabled(False)
+        self.n2o_vent_man.setEnabled(False)
+        self.ncv_man.setEnabled(False)
+        
+        self.ignitor_man.setChecked(False)
+        self.n2_flow_man.setChecked(False)
+        self.n2o_flow_man.setChecked(False)
+        self.purge_vent_man.setChecked(False)
+        self.mev_man.setChecked(False)
+        self.n2_vent_man.setChecked(False)
+        self.n2o_vent_man.setChecked(False)
+        self.ncv_man.setChecked(False)
+    # Enable manual control box
+    def _enable_man(self):
+        self.ignitor_man.setEnabled(True)
+        self.n2_flow_man.setEnabled(True)
+        self.n2o_flow_man.setEnabled(True)
+        self.purge_vent_man.setEnabled(True)
+        self.mev_man.setEnabled(True)
+        self.n2_vent_man.setEnabled(True)
+        self.n2o_vent_man.setEnabled(True)
+        self.ncv_man.setEnabled(True)
+
+    #disable auto control box
+    def _disable_auto(self):
+        self.n2o_flow_auto.setEnabled(False)
+        self.n2_flow_auto.setEnabled(False)
+        self.n2o_vent_auto.setEnabled(False)
+        self.n2_vent_auto.setEnabled(False)
+        self.purge_vent_auto.setEnabled(False)
+        self.abort_btn.setEnabled(False)
+        self.fire_btn.setEnabled(False)
+        self.vent_all_btn.setEnabled(False)
+
+        self.n2o_flow_auto.setChecked(False)
+        self.n2_flow_auto.setChecked(False)
+        self.n2o_vent_auto.setChecked(False)
+        self.n2_vent_auto.setChecked(False)
+        self.purge_vent_auto.setChecked(False)
+        self.abort_btn.setChecked(False)
+        self.fire_btn.setChecked(False)
+        self.vent_all_btn.setChecked(False)
+    #Enable auto control box
+    def _enable_auto(self):
+        self.n2o_flow_auto.setEnabled(True)
+        self.n2_flow_auto.setEnabled(True)
+        self.n2o_vent_auto.setEnabled(True)
+        self.n2_vent_auto.setEnabled(True)
+        self.purge_vent_auto.setEnabled(True)
+        self.abort_btn.setEnabled(True)
+        self.fire_btn.setEnabled(True)
+        self.vent_all_btn.setEnabled(True)
+
+    #Load test
+    def _open_file(self):
+        #see strain gauge UI for documentation
+        file_name, filter_ = QFileDialog.getOpenFileName(self, 'Open File', "Data files (*.txt)")
+
+        self.file_path.setText(file_name) 
+
+    def _load_checked(self):#TODO: add actual functionality, disable params if checked
+        #run file commands... or something like that.
+        if self.test_used.isChecked() == True:
+            self.add_system_status("load file is checked")
+            self.burn_duration.setEnabled(False)
+            self.ignitor_delay.setEnabled(False)
+            self.mev_open.setEnabled(False)
+            self.mev_open_speed.setEnabled(False)
+        else:
+            self.add_system_status("load file is unchecked")
+            self.burn_duration.setEnabled(True)
+            self.ignitor_delay.setEnabled(True)
+            self.mev_open.setEnabled(True)
+            self.mev_open_speed.setEnabled(True)
+            
+    #Edit line parameters
+    # TODO: Figure out where to load this data to
+    # def _duration(self):
+        # #use "self.burn_duration.text()" to use the information from the edit line. 
+
+    # def _mev_open(self):
+        # #use "self.mev_open.text()" to use the information from the edit line. 
+
+    # def _delay(self):
+        # #use "self.ignitor_delay.text()" to use the information from the edit line. 
+
+    # def _mev_open_speed(self):
+        # #use "self.mev_open_speed.text()" to use the information from the edit line. 
 
 
 
@@ -400,7 +515,6 @@ class MainWindow(QtWidgets.QMainWindow):
     # text to. It will contain a log of all the things that have happened in the gui
     def add_system_status(self, msg):
         self.statusbox.appendPlainText(msg)
-
 
     ############################### METHODS ON TIMERS ##################################
     def _date_time(self):
