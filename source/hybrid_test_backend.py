@@ -129,16 +129,23 @@ class MainWindow(QtWidgets.QMainWindow):
         self.n2_vent_man.stateChanged.connect(self._N2V_btn)
         self.ncv_man.stateChanged.connect(self._NCV_btn)
         self.purge_vent_man.stateChanged.connect(self._RV_btn)
+        # AUTO CHECKBOXES
+        self.purge_vent_auto.stateChanged.connect(self._RV_btn)
+        self.n2o_vent_auto.stateChanged.connect(self._N2OV_btn)
+        self.n2o_flow_auto.stateChanged.connect(self._N2O_btn)
+        self.n2_flow_auto.stateChanged.connect(self._N2_btn)
+        self.n2_vent_auto.stateChanged.connect(self._N2V_btn)
         # self.VV_btn_off.stateChanged.connect(self._VV_btn)#not in new gui TODO: look into why not in new gui
 
-        # AUTO CHECKBOXES
+       
         # self.n2o_flow_auto.isChecked.connect(self.)
         # self.n2_flow_auto.isChecked.connect(self.)
 
 
 
         self.abort_btn.clicked.connect(self._abort_btn)
-        # self.run_btn.clicked.connect(self._run_btn)
+        self.vent_all_btn.clicked.connect(self._vent_all_btn)
+        self.fire_btn.clicked.connect(self._run_btn)
 
 
     def setup_timers(self):
@@ -256,6 +263,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.add_system_status("Opening N2 Valve")
         self.system_states["N2"] = "open"
         self.send_states("N2 open")
+
     def _N2V_btn_off(self):
         self.add_system_status("Closing N2 Vent Valve")
         self.system_states["N2V"] = "closed"
@@ -265,6 +273,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.add_system_status("Opening N2 Vent Valve")
         self.system_states["N2V"] = "open"
         self.send_states("N2 open")
+
     def _NCV_btn_off(self):
         self.add_system_status("Closing NC Valve")
         self.system_states["NCV"] = "closed"
@@ -286,12 +295,12 @@ class MainWindow(QtWidgets.QMainWindow):
         self.send_states("RV open")
 
     def _VV_btn_off(self):
-        #self.add_system_status("Closing Vent Valve")
+        self.add_system_status("Closing Vent Valve")
         self.system_states["VV"] = "closed"
         self.send_states("VV closed")
 
     def _VV_btn_on(self):
-       # self.add_system_status("Opening Vent Valve")
+        self.add_system_status("Opening Vent Valve")
         self.system_states["VV"] = "open"
         self.send_states("VV open")
 
@@ -304,6 +313,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.add_system_status("RUNNING")
         self.system_states["run"] = True
         self.send_states("run True")
+    #auto and manual toggle buttons
+    #The filling and Venting portions will  
     #All these functions check the current state of the checkbox and run the corresponding function above.
     # def _igniter_btn_toggle(self):
     #     if self.igniter_man.isChecked() == True:
@@ -317,24 +328,25 @@ class MainWindow(QtWidgets.QMainWindow):
             self._MEV_btn_on()
         else:
             self._MEV_btn_off()
+
     def _N2OV_btn(self):
-        if self.n2o_vent_man.isChecked() == True:
+        if self.n2o_vent_man.isChecked() == True or self.n2o_vent_auto.isChecked() == True:
             self._N2OV_btn_on()
         else:
             self._N2OV_btn_off()
     def _N2O_btn(self):
-        if self.n2o_flow_man.isChecked() == True:
+        if self.n2o_flow_man.isChecked() == True or self.n2o_flow_auto.isChecked() == True:
             self._N2O_btn_on()
         else:
             self._N2O_btn_off()
    
     def _N2V_btn(self):
-        if self.n2_vent_man.isChecked() == True:
+        if self.n2_vent_man.isChecked() == True or self.n2_vent_auto.isChecked() == True:
             self._N2V_btn_on()
         else:
             self._N2V_btn_off() 
     def _N2_btn(self):
-        if self.n2_flow_man.isChecked() == True:
+        if self.n2_flow_man.isChecked() == True or self.n2_flow_auto.isChecked() == True:
             self._N2_btn_on()
         else:
             self._N2_btn_off()
@@ -345,11 +357,44 @@ class MainWindow(QtWidgets.QMainWindow):
         else:
             self._NCV_btn_off()
     def _RV_btn(self):
-        if self.ncv_man.isChecked() == True:
-            self._RV_btn_on()#TODO: only displays closed.
+        if self.purge_vent_auto.isChecked() == True or self.purge_vent_man == True:
+            self._RV_btn_on()
         else:
             self._RV_btn_off()
-    # def _VV_btn(self): 
+
+    #auto control buttons
+    #MAIN control buttons
+    def _vent_all_btn(self): #TODO: might need to change
+        self.add_system_status("Vent Valve (vent all)")
+        toggle = self.system_states["VV"]
+        toggle = not bool(toggle)
+        self.system_states["VV"] = toggle
+        self.send_states(f"{toggle} Vent Valve (vent all)")
+
+    def _run_btn(self):
+        self.add_system_status("RUNNING")
+        self.system_states["run"] = True
+        self.send_states("run True")
+
+    def _abort_btn(self):
+        self.add_system_status("ABORTING")
+        self.system_states["abort"] = True
+        self.send_states("abort True")
+    
+
+
+    #SYSTEM PARAMETERS 
+        # MANUAL and AUTO Buttons
+        #these buttons will disable the other control category 
+        #if Manual is toggled on then the auto buttons will be disabled
+        
+        #Load test
+
+        #Edit line parameters
+
+
+
+
 
     # The "System Status" box on the gui is a QPlainTextEdit that we can add
     # text to. It will contain a log of all the things that have happened in the gui
