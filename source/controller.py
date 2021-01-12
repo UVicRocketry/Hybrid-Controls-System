@@ -1,18 +1,15 @@
 """
 This file takes input from the engine stepper motors and other elements
 from the PCB and PI and decodes the data into information that the GUI back end
-can read and send it through client.py. 
+can read and send it through a Client object from client.py.
 """
-#Throwing strings as communication protocol 
-#
-#assume everything is a dictionary
-# 
 
 import client
 import threading
 
-HOST = '192.168.0.124' # depends on IP if the server double check this for connection purposes
+HOST = '192.168.0.124' # depends on IP of the server double check this for connection purposes
 PORT = 9999 # the port that the server is using
+
 
 class Receiver:
     """
@@ -22,7 +19,7 @@ class Receiver:
         """
         Initializes the receiver and binds the client to the address, then attempts a connection
         """
-        self.client = client.Client(HOST, PORT)
+        self.client = client.Client(HOST, PORT)  # creates a client object that will connect to the server
         self.states = {
             "connected": False,
             "igniter": False,
@@ -35,7 +32,7 @@ class Receiver:
             "VV": "closed",
             "abort": False,
             "run": False
-        }
+        }  # initializes dictionary of states that will be modified by input from the server
 
         self.conn_attempt()  # attempts to initalize connection
 
@@ -45,15 +42,18 @@ class Receiver:
 
     def conn_attempt(self):
         """
-        attempts to make a connection to a server object
-        :return: None if the connection attempt times out, 1 if it is successful
+        attempts to make a connection to a server object, will stay here until a connection is successful, so make sure
+        to run it in a thread if you don't want your program to freeze here
+        :return: None
         """
         while True:
             try:
                 self.client.initialize_connection()  # attempts to make connection
                 return # if it works
-            except WindowsError as e:  # if it times out try again
-                print(e)
+            except client.ConnectionFailure:  # if it times out try again
+                pass
+            except Exception as e:  # checks for unhandled exception
+                print(e)  # if this is still just a print statement when you see this, it should not be
 
     def receive_instructions(self):
         """
@@ -65,22 +65,18 @@ class Receiver:
 
             self.client.receive_states()  # will hang up on this line until instructions are received
 
-            param = None
-            state = None
-
             while self.client.feedback_queue.qsize() > 0:  # if there are instructions in the queue
-                token = self.client.feedback_queue.get(True, 3)  # get them
+                token = self.client.feedback_queue.get(True, 3)  # get the instructions
+                # the instruction should be a tuple of length 2
+                # keeping each token self contained prevents possible errors with multiple programs
                 param = token[0] # parse the instruction in terms of parameter and state
                 state = token[1]
                 self.states[param] = state  # set our dictionary
 
 
-
-
 class Controller:
 
     pass
-
 
 
 def main():

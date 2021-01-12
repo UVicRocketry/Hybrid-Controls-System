@@ -82,7 +82,7 @@ class Server:
             data = self.client.recv(1024).decode()  # receives data which it decodes() into a string
             print(data)
             data = data.split(" ")  # splits string into a list using spaces as the delimiter
-            data = tuple(data)
+            data = tuple(data)  # convert the
             self.feedback_queue.put(data)  # adds each list entry to the queue
         except Exception as e:
             print(f'line 92 {e}')

@@ -10,9 +10,10 @@ class GetStatusThread(QThread):
 
     """
     Thread that is in charge of constantly checking to see if we have recieved any data from the client
-    If so, pop off the data and change our states
+    If so, read the data and change our states
     """
 
+    # the status_signal is what the GetStatusThread uses to communicate with the rest of the program
     status_signal = pyqtSignal(object)
 
     def __init__(self, server_ob, states):
