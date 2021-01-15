@@ -153,6 +153,7 @@ color: #7f849a;</string>
                         </property>
                         <property name="font">
                          <font>
+                          <family>Lucida Sans Unicode</family>
                           <pointsize>10</pointsize>
                          </font>
                         </property>
@@ -179,6 +180,7 @@ color: #7f849a;</string>
                         </property>
                         <property name="font">
                          <font>
+                          <family>Lucida Sans Unicode</family>
                           <pointsize>10</pointsize>
                          </font>
                         </property>
@@ -203,6 +205,7 @@ color: #7f849a;</string>
                         </property>
                         <property name="font">
                          <font>
+                          <family>Lucida Sans Unicode</family>
                           <pointsize>10</pointsize>
                           <weight>75</weight>
                           <bold>true</bold>
@@ -234,6 +237,7 @@ color: #7f849a</string>
                         </property>
                         <property name="font">
                          <font>
+                          <family>Lucida Sans Unicode</family>
                           <pointsize>10</pointsize>
                          </font>
                         </property>
@@ -258,6 +262,7 @@ color: #7f849a</string>
                         </property>
                         <property name="font">
                          <font>
+                          <family>Lucida Sans Unicode</family>
                           <pointsize>10</pointsize>
                          </font>
                         </property>
@@ -309,6 +314,7 @@ color: #7f849a;</string>
                         </property>
                         <property name="font">
                          <font>
+                          <family>Lucida Sans Unicode</family>
                           <pointsize>10</pointsize>
                          </font>
                         </property>
@@ -393,6 +399,7 @@ color: #7f849a;</string>
                         </property>
                         <property name="font">
                          <font>
+                          <family>Lucida Sans Unicode</family>
                           <pointsize>10</pointsize>
                           <weight>75</weight>
                           <bold>true</bold>
@@ -430,6 +437,7 @@ color: #7f849a</string>
                         </property>
                         <property name="font">
                          <font>
+                          <family>Lucida Sans Unicode</family>
                           <pointsize>10</pointsize>
                           <weight>75</weight>
                           <bold>true</bold>
@@ -464,6 +472,7 @@ color: #7f849a</string>
                      </property>
                      <property name="font">
                       <font>
+                       <family>Leelawadee UI</family>
                        <pointsize>14</pointsize>
                        <weight>75</weight>
                        <bold>true</bold>
@@ -522,6 +531,11 @@ color: #7f849a;</string>
                <layout class="QGridLayout" name="gridLayout_5">
                 <item row="0" column="0">
                  <widget class="QWidget" name="widget" native="true">
+                  <property name="font">
+                   <font>
+                    <family>Leelawadee UI</family>
+                   </font>
+                  </property>
                   <layout class="QGridLayout" name="gridLayout_4">
                    <item row="0" column="0">
                     <widget class="QLabel" name="man_con_label">
@@ -533,6 +547,7 @@ color: #7f849a;</string>
                      </property>
                      <property name="font">
                       <font>
+                       <family>Leelawadee UI</family>
                        <pointsize>14</pointsize>
                        <weight>75</weight>
                        <bold>true</bold>
@@ -621,6 +636,17 @@ QSlider::handle:horizontal:hover {
                          </item>
                          <item>
                           <widget class="QLabel" name="label_3">
+                           <property name="font">
+                            <font>
+                             <family>Lucida Sans</family>
+                             <pointsize>8</pointsize>
+                             <weight>50</weight>
+                             <italic>false</italic>
+                             <bold>false</bold>
+                             <underline>false</underline>
+                             <kerning>true</kerning>
+                            </font>
+                           </property>
                            <property name="text">
                             <string>IGNITOR</string>
                            </property>
@@ -698,6 +724,11 @@ QSlider::handle:horizontal:hover {
                          </item>
                          <item>
                           <widget class="QLabel" name="label_4">
+                           <property name="font">
+                            <font>
+                             <family>Lucida Sans Unicode</family>
+                            </font>
+                           </property>
                            <property name="text">
                             <string>N2
 FLOW</string>
@@ -776,6 +807,11 @@ QSlider::handle:horizontal:hover {
                          </item>
                          <item>
                           <widget class="QLabel" name="label_5">
+                           <property name="font">
+                            <font>
+                             <family>Lucida Sans Unicode</family>
+                            </font>
+                           </property>
                            <property name="text">
                             <string>N2O
  FLOW</string>
@@ -854,6 +890,11 @@ QSlider::handle:horizontal:hover {
                          </item>
                          <item>
                           <widget class="QLabel" name="label_6">
+                           <property name="font">
+                            <font>
+                             <family>Lucida Sans Unicode</family>
+                            </font>
+                           </property>
                            <property name="text">
                             <string>PURGE
 VENT</string>
@@ -932,6 +973,11 @@ QSlider::handle:horizontal:hover {
                          </item>
                          <item>
                           <widget class="QLabel" name="label_7">
+                           <property name="font">
+                            <font>
+                             <family>Lucida Sans Unicode</family>
+                            </font>
+                           </property>
                            <property name="text">
                             <string>MEV</string>
                            </property>
@@ -1009,6 +1055,11 @@ QSlider::handle:horizontal:hover {
                          </item>
                          <item>
                           <widget class="QLabel" name="label_8">
+                           <property name="font">
+                            <font>
+                             <family>Lucida Sans Unicode</family>
+                            </font>
+                           </property>
                            <property name="text">
                             <string>N2
 VENT</string>
@@ -1087,6 +1138,11 @@ QSlider::handle:horizontal:hover {
                          </item>
                          <item>
                           <widget class="QLabel" name="label_9">
+                           <property name="font">
+                            <font>
+                             <family>Lucida Sans Unicode</family>
+                            </font>
+                           </property>
                            <property name="text">
                             <string>N2O
 VENT</string>
@@ -1165,6 +1221,11 @@ QSlider::handle:horizontal:hover {
                          </item>
                          <item>
                           <widget class="QLabel" name="label_10">
+                           <property name="font">
+                            <font>
+                             <family>Lucida Sans Unicode</family>
+                            </font>
+                           </property>
                            <property name="text">
                             <string>NCV</string>
                            </property>
@@ -1242,6 +1303,7 @@ color: #7f849a;</string>
                              <widget class="QLabel" name="filling_label">
                               <property name="font">
                                <font>
+                                <family>Leelawadee UI Semilight</family>
                                 <pointsize>12</pointsize>
                                 <weight>75</weight>
                                 <bold>true</bold>
@@ -1321,6 +1383,11 @@ QSlider::handle:horizontal:hover {
                                   </item>
                                   <item>
                                    <widget class="QLabel" name="label_12">
+                                    <property name="font">
+                                     <font>
+                                      <family>Lucida Sans Unicode</family>
+                                     </font>
+                                    </property>
                                     <property name="text">
                                      <string>N2O
 FLOW</string>
@@ -1399,6 +1466,11 @@ QSlider::handle:horizontal:hover {
                                   </item>
                                   <item>
                                    <widget class="QLabel" name="label_11">
+                                    <property name="font">
+                                     <font>
+                                      <family>Lucida Sans Unicode</family>
+                                     </font>
+                                    </property>
                                     <property name="text">
                                      <string>N2
 FLOW</string>
@@ -1429,6 +1501,7 @@ color: #7f849a;</string>
                              <widget class="QLabel" name="filling_label_2">
                               <property name="font">
                                <font>
+                                <family>Leelawadee UI Semilight</family>
                                 <pointsize>12</pointsize>
                                 <weight>75</weight>
                                 <bold>true</bold>
@@ -1508,6 +1581,11 @@ QSlider::handle:horizontal:hover {
                                   </item>
                                   <item>
                                    <widget class="QLabel" name="label_13">
+                                    <property name="font">
+                                     <font>
+                                      <family>Lucida Sans Unicode</family>
+                                     </font>
+                                    </property>
                                     <property name="text">
                                      <string>N2O
 VENT</string>
@@ -1586,6 +1664,11 @@ QSlider::handle:horizontal:hover {
                                   </item>
                                   <item>
                                    <widget class="QLabel" name="label_14">
+                                    <property name="font">
+                                     <font>
+                                      <family>Lucida Sans Unicode</family>
+                                     </font>
+                                    </property>
                                     <property name="text">
                                      <string>N2
 VENT</string>
@@ -1664,6 +1747,11 @@ QSlider::handle:horizontal:hover {
                                   </item>
                                   <item>
                                    <widget class="QLabel" name="label_15">
+                                    <property name="font">
+                                     <font>
+                                      <family>Lucida Sans Unicode</family>
+                                     </font>
+                                    </property>
                                     <property name="text">
                                      <string>PURGE
 VENT</string>
@@ -1701,6 +1789,7 @@ VENT</string>
                         </property>
                         <property name="font">
                          <font>
+                          <family>Leelawadee UI</family>
                           <pointsize>12</pointsize>
                           <weight>75</weight>
                           <bold>true</bold>
@@ -1740,6 +1829,7 @@ border-radius: 10px;</string>
                         </property>
                         <property name="font">
                          <font>
+                          <family>Leelawadee UI</family>
                           <pointsize>12</pointsize>
                           <weight>75</weight>
                           <bold>true</bold>
@@ -1779,6 +1869,7 @@ border-radius: 10px;</string>
                         </property>
                         <property name="font">
                          <font>
+                          <family>Leelawadee UI</family>
                           <pointsize>12</pointsize>
                           <weight>75</weight>
                           <bold>true</bold>
@@ -1816,6 +1907,7 @@ ALL</string>
                      </property>
                      <property name="font">
                       <font>
+                       <family>Leelawadee UI</family>
                        <pointsize>14</pointsize>
                        <weight>75</weight>
                        <bold>true</bold>
@@ -1851,6 +1943,7 @@ ALL</string>
            <widget class="QLabel" name="schematic_label">
             <property name="font">
              <font>
+              <family>Leelawadee UI</family>
               <pointsize>14</pointsize>
               <weight>75</weight>
               <bold>true</bold>
@@ -1959,6 +2052,7 @@ color: #7f849a;</string>
                         </property>
                         <property name="font">
                          <font>
+                          <family>Leelawadee UI</family>
                           <pointsize>14</pointsize>
                           <weight>75</weight>
                           <bold>true</bold>
@@ -2032,6 +2126,7 @@ color: #7f849a;</string>
                      </property>
                      <property name="font">
                       <font>
+                       <family>Lucida Sans Unicode</family>
                        <pointsize>12</pointsize>
                        <weight>75</weight>
                        <bold>true</bold>
@@ -2062,6 +2157,7 @@ color: #7f849a</string>
                        <widget class="QLabel" name="date_time_label">
                         <property name="font">
                          <font>
+                          <family>Lucida Sans Unicode</family>
                           <pointsize>10</pointsize>
                           <weight>75</weight>
                           <bold>true</bold>
@@ -2079,6 +2175,7 @@ color: #7f849a</string>
                        <widget class="QLabel" name="last_update_label">
                         <property name="font">
                          <font>
+                          <family>Lucida Sans Unicode</family>
                           <pointsize>10</pointsize>
                           <weight>75</weight>
                           <bold>true</bold>
@@ -2096,6 +2193,7 @@ color: #7f849a</string>
                        <widget class="QLabel" name="IP_address_label">
                         <property name="font">
                          <font>
+                          <family>Lucida Sans Unicode</family>
                           <pointsize>10</pointsize>
                           <weight>75</weight>
                           <bold>true</bold>
@@ -2191,6 +2289,7 @@ color: #7f849a;</string>
                      </property>
                      <property name="font">
                       <font>
+                       <family>Lucida Sans Unicode</family>
                        <pointsize>12</pointsize>
                        <weight>75</weight>
                        <bold>true</bold>
@@ -2224,6 +2323,7 @@ color: #7f849a</string>
                      </property>
                      <property name="font">
                       <font>
+                       <family>Leelawadee UI</family>
                        <pointsize>14</pointsize>
                        <weight>75</weight>
                        <bold>true</bold>
