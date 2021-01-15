@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>UVic Rocketry - Propulsion - Hybrid Controls</string>
   </property>
+  <property name="animated">
+   <bool>true</bool>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <property name="styleSheet">
     <string notr="true">background: #181b2e;</string>
@@ -157,7 +160,9 @@ color: #7f849a;</string>
                          <enum>Qt::RightToLeft</enum>
                         </property>
                         <property name="styleSheet">
-                         <string notr="true">color: #7f849a;</string>
+                         <string notr="true">color: #7f849a;	
+
+</string>
                         </property>
                         <property name="text">
                          <string>USE TEST?</string>
@@ -550,183 +555,625 @@ color: #7f849a;</string>
                       </size>
                      </property>
                      <layout class="QGridLayout" name="gridLayout">
-                      <item row="2" column="1">
-                       <widget class="QCheckBox" name="n2_vent_man">
-                        <property name="sizePolicy">
-                         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                          <horstretch>0</horstretch>
-                          <verstretch>0</verstretch>
-                         </sizepolicy>
-                        </property>
-                        <property name="font">
-                         <font>
-                          <pointsize>10</pointsize>
-                         </font>
-                        </property>
-                        <property name="layoutDirection">
-                         <enum>Qt::LeftToRight</enum>
-                        </property>
-                        <property name="styleSheet">
-                         <string notr="true">color: #7f849a;</string>
-                        </property>
-                        <property name="text">
-                         <string>N2
-VENT</string>
-                        </property>
-                       </widget>
-                      </item>
-                      <item row="2" column="0">
-                       <widget class="QCheckBox" name="mev_man">
-                        <property name="sizePolicy">
-                         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                          <horstretch>0</horstretch>
-                          <verstretch>0</verstretch>
-                         </sizepolicy>
-                        </property>
-                        <property name="font">
-                         <font>
-                          <pointsize>10</pointsize>
-                         </font>
-                        </property>
-                        <property name="layoutDirection">
-                         <enum>Qt::LeftToRight</enum>
-                        </property>
-                        <property name="styleSheet">
-                         <string notr="true">color: #7f849a;</string>
-                        </property>
-                        <property name="text">
-                         <string>MEV</string>
-                        </property>
-                       </widget>
-                      </item>
-                      <item row="0" column="4">
-                       <widget class="QCheckBox" name="purge_vent_man">
-                        <property name="sizePolicy">
-                         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                          <horstretch>0</horstretch>
-                          <verstretch>0</verstretch>
-                         </sizepolicy>
-                        </property>
-                        <property name="font">
-                         <font>
-                          <pointsize>10</pointsize>
-                         </font>
-                        </property>
-                        <property name="layoutDirection">
-                         <enum>Qt::LeftToRight</enum>
-                        </property>
-                        <property name="styleSheet">
-                         <string notr="true">color: #7f849a;</string>
-                        </property>
-                        <property name="text">
-                         <string>PURGE
-VENT</string>
-                        </property>
+                      <item row="0" column="0">
+                       <widget class="QWidget" name="toggleSwitch" native="true">
+                        <layout class="QHBoxLayout" name="toggleswitch">
+                         <item>
+                          <widget class="QSlider" name="ignitor_man">
+                           <property name="sizePolicy">
+                            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                             <horstretch>0</horstretch>
+                             <verstretch>0</verstretch>
+                            </sizepolicy>
+                           </property>
+                           <property name="autoFillBackground">
+                            <bool>false</bool>
+                           </property>
+                           <property name="styleSheet">
+                            <string notr="true">QSlider::groove:horizontal { 
+	background-color: #181b2e;
+	border: 0px solid #424242; 
+	height: 10px; 
+	width: 40px;
+	border-radius: 4px;
+}
+
+QSlider::handle:horizontal { 
+	background-color: #7f849a; 
+	border: 2px solid #7f849a; 
+	width: 16px; 
+	height: 20px; 
+	line-height: 20px; 
+	margin-top: -5px; 
+	margin-bottom: -5px; 
+	border-radius: 10px; 
+}
+
+QSlider::handle:horizontal:hover { 
+	border-radius: 10px;
+}</string>
+                           </property>
+                           <property name="maximum">
+                            <number>1</number>
+                           </property>
+                           <property name="pageStep">
+                            <number>0</number>
+                           </property>
+                           <property name="sliderPosition">
+                            <number>0</number>
+                           </property>
+                           <property name="tracking">
+                            <bool>true</bool>
+                           </property>
+                           <property name="orientation">
+                            <enum>Qt::Horizontal</enum>
+                           </property>
+                           <property name="invertedAppearance">
+                            <bool>false</bool>
+                           </property>
+                           <property name="invertedControls">
+                            <bool>true</bool>
+                           </property>
+                           <property name="tickPosition">
+                            <enum>QSlider::NoTicks</enum>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QLabel" name="label_3">
+                           <property name="text">
+                            <string>IGNITOR</string>
+                           </property>
+                           <property name="alignment">
+                            <set>Qt::AlignCenter</set>
+                           </property>
+                          </widget>
+                         </item>
+                        </layout>
                        </widget>
                       </item>
                       <item row="0" column="1">
-                       <widget class="QCheckBox" name="n2_flow_man">
-                        <property name="sizePolicy">
-                         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                          <horstretch>0</horstretch>
-                          <verstretch>0</verstretch>
-                         </sizepolicy>
-                        </property>
-                        <property name="font">
-                         <font>
-                          <pointsize>10</pointsize>
-                         </font>
-                        </property>
-                        <property name="layoutDirection">
-                         <enum>Qt::LeftToRight</enum>
-                        </property>
-                        <property name="styleSheet">
-                         <string notr="true">color: #7f849a;</string>
-                        </property>
-                        <property name="text">
-                         <string>N2
+                       <widget class="QWidget" name="toggleSwitch_3" native="true">
+                        <layout class="QHBoxLayout" name="toggleswitch_3">
+                         <item>
+                          <widget class="QSlider" name="n2_flow_man">
+                           <property name="sizePolicy">
+                            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                             <horstretch>0</horstretch>
+                             <verstretch>0</verstretch>
+                            </sizepolicy>
+                           </property>
+                           <property name="autoFillBackground">
+                            <bool>false</bool>
+                           </property>
+                           <property name="styleSheet">
+                            <string notr="true">QSlider::groove:horizontal { 
+	background-color: #181b2e;
+	border: 0px solid #424242; 
+	height: 10px; 
+	width: 40px;
+	border-radius: 4px;
+}
+
+QSlider::handle:horizontal { 
+	background-color: #7f849a; 
+	border: 2px solid #7f849a; 
+	width: 16px; 
+	height: 20px; 
+	line-height: 20px; 
+	margin-top: -5px; 
+	margin-bottom: -5px; 
+	border-radius: 10px; 
+}
+
+QSlider::handle:horizontal:hover { 
+	border-radius: 10px;
+}</string>
+                           </property>
+                           <property name="maximum">
+                            <number>1</number>
+                           </property>
+                           <property name="pageStep">
+                            <number>0</number>
+                           </property>
+                           <property name="sliderPosition">
+                            <number>0</number>
+                           </property>
+                           <property name="tracking">
+                            <bool>true</bool>
+                           </property>
+                           <property name="orientation">
+                            <enum>Qt::Horizontal</enum>
+                           </property>
+                           <property name="invertedAppearance">
+                            <bool>false</bool>
+                           </property>
+                           <property name="invertedControls">
+                            <bool>true</bool>
+                           </property>
+                           <property name="tickPosition">
+                            <enum>QSlider::NoTicks</enum>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QLabel" name="label_4">
+                           <property name="text">
+                            <string>N2
 FLOW</string>
-                        </property>
-                       </widget>
-                      </item>
-                      <item row="2" column="4">
-                       <widget class="QCheckBox" name="ncv_man">
-                        <property name="sizePolicy">
-                         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                          <horstretch>0</horstretch>
-                          <verstretch>0</verstretch>
-                         </sizepolicy>
-                        </property>
-                        <property name="font">
-                         <font>
-                          <pointsize>10</pointsize>
-                         </font>
-                        </property>
-                        <property name="layoutDirection">
-                         <enum>Qt::LeftToRight</enum>
-                        </property>
-                        <property name="styleSheet">
-                         <string notr="true">color: #7f849a;</string>
-                        </property>
-                        <property name="text">
-                         <string>NCV</string>
-                        </property>
-                       </widget>
-                      </item>
-                      <item row="0" column="0">
-                       <widget class="QCheckBox" name="ignitor_man">
-                        <property name="font">
-                         <font>
-                          <pointsize>10</pointsize>
-                         </font>
-                        </property>
-                        <property name="text">
-                         <string>IGNITOR</string>
-                        </property>
+                           </property>
+                           <property name="alignment">
+                            <set>Qt::AlignCenter</set>
+                           </property>
+                          </widget>
+                         </item>
+                        </layout>
                        </widget>
                       </item>
                       <item row="0" column="2">
-                       <widget class="QCheckBox" name="n2o_flow_man">
-                        <property name="sizePolicy">
-                         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                          <horstretch>0</horstretch>
-                          <verstretch>0</verstretch>
-                         </sizepolicy>
-                        </property>
-                        <property name="font">
-                         <font>
-                          <pointsize>10</pointsize>
-                         </font>
-                        </property>
-                        <property name="text">
-                         <string>N20
-FLOW</string>
-                        </property>
+                       <widget class="QWidget" name="toggleSwitch_4" native="true">
+                        <layout class="QHBoxLayout" name="toggleswitch_4">
+                         <item>
+                          <widget class="QSlider" name="n2o_flow_man">
+                           <property name="sizePolicy">
+                            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                             <horstretch>0</horstretch>
+                             <verstretch>0</verstretch>
+                            </sizepolicy>
+                           </property>
+                           <property name="autoFillBackground">
+                            <bool>false</bool>
+                           </property>
+                           <property name="styleSheet">
+                            <string notr="true">QSlider::groove:horizontal { 
+	background-color: #181b2e;
+	border: 0px solid #424242; 
+	height: 10px; 
+	width: 40px;
+	border-radius: 4px;
+}
+
+QSlider::handle:horizontal { 
+	background-color: #7f849a; 
+	border: 2px solid #7f849a; 
+	width: 16px; 
+	height: 20px; 
+	line-height: 20px; 
+	margin-top: -5px; 
+	margin-bottom: -5px; 
+	border-radius: 10px; 
+}
+
+QSlider::handle:horizontal:hover { 
+	border-radius: 10px;
+}</string>
+                           </property>
+                           <property name="maximum">
+                            <number>1</number>
+                           </property>
+                           <property name="pageStep">
+                            <number>0</number>
+                           </property>
+                           <property name="sliderPosition">
+                            <number>0</number>
+                           </property>
+                           <property name="tracking">
+                            <bool>true</bool>
+                           </property>
+                           <property name="orientation">
+                            <enum>Qt::Horizontal</enum>
+                           </property>
+                           <property name="invertedAppearance">
+                            <bool>false</bool>
+                           </property>
+                           <property name="invertedControls">
+                            <bool>true</bool>
+                           </property>
+                           <property name="tickPosition">
+                            <enum>QSlider::NoTicks</enum>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QLabel" name="label_5">
+                           <property name="text">
+                            <string>N2O
+ FLOW</string>
+                           </property>
+                           <property name="alignment">
+                            <set>Qt::AlignCenter</set>
+                           </property>
+                          </widget>
+                         </item>
+                        </layout>
+                       </widget>
+                      </item>
+                      <item row="0" column="4">
+                       <widget class="QWidget" name="toggleSwitch_2" native="true">
+                        <layout class="QHBoxLayout" name="toggleswitch_2">
+                         <item>
+                          <widget class="QSlider" name="purge_vent_man">
+                           <property name="sizePolicy">
+                            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                             <horstretch>0</horstretch>
+                             <verstretch>0</verstretch>
+                            </sizepolicy>
+                           </property>
+                           <property name="autoFillBackground">
+                            <bool>false</bool>
+                           </property>
+                           <property name="styleSheet">
+                            <string notr="true">QSlider::groove:horizontal { 
+	background-color: #181b2e;
+	border: 0px solid #424242; 
+	height: 10px; 
+	width: 40px;
+	border-radius: 4px;
+}
+
+QSlider::handle:horizontal { 
+	background-color: #7f849a; 
+	border: 2px solid #7f849a; 
+	width: 16px; 
+	height: 20px; 
+	line-height: 20px; 
+	margin-top: -5px; 
+	margin-bottom: -5px; 
+	border-radius: 10px; 
+}
+
+QSlider::handle:horizontal:hover { 
+	border-radius: 10px;
+}</string>
+                           </property>
+                           <property name="maximum">
+                            <number>1</number>
+                           </property>
+                           <property name="pageStep">
+                            <number>0</number>
+                           </property>
+                           <property name="sliderPosition">
+                            <number>0</number>
+                           </property>
+                           <property name="tracking">
+                            <bool>true</bool>
+                           </property>
+                           <property name="orientation">
+                            <enum>Qt::Horizontal</enum>
+                           </property>
+                           <property name="invertedAppearance">
+                            <bool>false</bool>
+                           </property>
+                           <property name="invertedControls">
+                            <bool>true</bool>
+                           </property>
+                           <property name="tickPosition">
+                            <enum>QSlider::NoTicks</enum>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QLabel" name="label_6">
+                           <property name="text">
+                            <string>PURGE
+VENT</string>
+                           </property>
+                           <property name="alignment">
+                            <set>Qt::AlignCenter</set>
+                           </property>
+                          </widget>
+                         </item>
+                        </layout>
+                       </widget>
+                      </item>
+                      <item row="2" column="0">
+                       <widget class="QWidget" name="toggleSwitch_5" native="true">
+                        <layout class="QHBoxLayout" name="toggleswitch_5">
+                         <item>
+                          <widget class="QSlider" name="mev_man">
+                           <property name="sizePolicy">
+                            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                             <horstretch>0</horstretch>
+                             <verstretch>0</verstretch>
+                            </sizepolicy>
+                           </property>
+                           <property name="autoFillBackground">
+                            <bool>false</bool>
+                           </property>
+                           <property name="styleSheet">
+                            <string notr="true">QSlider::groove:horizontal { 
+	background-color: #181b2e;
+	border: 0px solid #424242; 
+	height: 10px; 
+	width: 40px;
+	border-radius: 4px;
+}
+
+QSlider::handle:horizontal { 
+	background-color: #7f849a; 
+	border: 2px solid #7f849a; 
+	width: 16px; 
+	height: 20px; 
+	line-height: 20px; 
+	margin-top: -5px; 
+	margin-bottom: -5px; 
+	border-radius: 10px; 
+}
+
+QSlider::handle:horizontal:hover { 
+	border-radius: 10px;
+}</string>
+                           </property>
+                           <property name="maximum">
+                            <number>1</number>
+                           </property>
+                           <property name="pageStep">
+                            <number>0</number>
+                           </property>
+                           <property name="sliderPosition">
+                            <number>0</number>
+                           </property>
+                           <property name="tracking">
+                            <bool>true</bool>
+                           </property>
+                           <property name="orientation">
+                            <enum>Qt::Horizontal</enum>
+                           </property>
+                           <property name="invertedAppearance">
+                            <bool>false</bool>
+                           </property>
+                           <property name="invertedControls">
+                            <bool>true</bool>
+                           </property>
+                           <property name="tickPosition">
+                            <enum>QSlider::NoTicks</enum>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QLabel" name="label_7">
+                           <property name="text">
+                            <string>MEV</string>
+                           </property>
+                           <property name="alignment">
+                            <set>Qt::AlignCenter</set>
+                           </property>
+                          </widget>
+                         </item>
+                        </layout>
+                       </widget>
+                      </item>
+                      <item row="2" column="1">
+                       <widget class="QWidget" name="toggleSwitch_6" native="true">
+                        <layout class="QHBoxLayout" name="toggleswitch_6">
+                         <item>
+                          <widget class="QSlider" name="n2_vent_man">
+                           <property name="sizePolicy">
+                            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                             <horstretch>0</horstretch>
+                             <verstretch>0</verstretch>
+                            </sizepolicy>
+                           </property>
+                           <property name="autoFillBackground">
+                            <bool>false</bool>
+                           </property>
+                           <property name="styleSheet">
+                            <string notr="true">QSlider::groove:horizontal { 
+	background-color: #181b2e;
+	border: 0px solid #424242; 
+	height: 10px; 
+	width: 40px;
+	border-radius: 4px;
+}
+
+QSlider::handle:horizontal { 
+	background-color: #7f849a; 
+	border: 2px solid #7f849a; 
+	width: 16px; 
+	height: 20px; 
+	line-height: 20px; 
+	margin-top: -5px; 
+	margin-bottom: -5px; 
+	border-radius: 10px; 
+}
+
+QSlider::handle:horizontal:hover { 
+	border-radius: 10px;
+}</string>
+                           </property>
+                           <property name="maximum">
+                            <number>1</number>
+                           </property>
+                           <property name="pageStep">
+                            <number>0</number>
+                           </property>
+                           <property name="sliderPosition">
+                            <number>0</number>
+                           </property>
+                           <property name="tracking">
+                            <bool>true</bool>
+                           </property>
+                           <property name="orientation">
+                            <enum>Qt::Horizontal</enum>
+                           </property>
+                           <property name="invertedAppearance">
+                            <bool>false</bool>
+                           </property>
+                           <property name="invertedControls">
+                            <bool>true</bool>
+                           </property>
+                           <property name="tickPosition">
+                            <enum>QSlider::NoTicks</enum>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QLabel" name="label_8">
+                           <property name="text">
+                            <string>N2
+VENT</string>
+                           </property>
+                           <property name="alignment">
+                            <set>Qt::AlignCenter</set>
+                           </property>
+                          </widget>
+                         </item>
+                        </layout>
                        </widget>
                       </item>
                       <item row="2" column="2">
-                       <widget class="QCheckBox" name="n2o_vent_man">
-                        <property name="sizePolicy">
-                         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                          <horstretch>0</horstretch>
-                          <verstretch>0</verstretch>
-                         </sizepolicy>
-                        </property>
-                        <property name="font">
-                         <font>
-                          <pointsize>10</pointsize>
-                         </font>
-                        </property>
-                        <property name="layoutDirection">
-                         <enum>Qt::LeftToRight</enum>
-                        </property>
-                        <property name="styleSheet">
-                         <string notr="true">color: #7f849a;</string>
-                        </property>
-                        <property name="text">
-                         <string>N2O
+                       <widget class="QWidget" name="toggleSwitch_7" native="true">
+                        <layout class="QHBoxLayout" name="toggleswitch_7">
+                         <item>
+                          <widget class="QSlider" name="n2o_vent_man">
+                           <property name="sizePolicy">
+                            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                             <horstretch>0</horstretch>
+                             <verstretch>0</verstretch>
+                            </sizepolicy>
+                           </property>
+                           <property name="autoFillBackground">
+                            <bool>false</bool>
+                           </property>
+                           <property name="styleSheet">
+                            <string notr="true">QSlider::groove:horizontal { 
+	background-color: #181b2e;
+	border: 0px solid #424242; 
+	height: 10px; 
+	width: 40px;
+	border-radius: 4px;
+}
+
+QSlider::handle:horizontal { 
+	background-color: #7f849a; 
+	border: 2px solid #7f849a; 
+	width: 16px; 
+	height: 20px; 
+	line-height: 20px; 
+	margin-top: -5px; 
+	margin-bottom: -5px; 
+	border-radius: 10px; 
+}
+
+QSlider::handle:horizontal:hover { 
+	border-radius: 10px;
+}</string>
+                           </property>
+                           <property name="maximum">
+                            <number>1</number>
+                           </property>
+                           <property name="pageStep">
+                            <number>0</number>
+                           </property>
+                           <property name="sliderPosition">
+                            <number>0</number>
+                           </property>
+                           <property name="tracking">
+                            <bool>true</bool>
+                           </property>
+                           <property name="orientation">
+                            <enum>Qt::Horizontal</enum>
+                           </property>
+                           <property name="invertedAppearance">
+                            <bool>false</bool>
+                           </property>
+                           <property name="invertedControls">
+                            <bool>true</bool>
+                           </property>
+                           <property name="tickPosition">
+                            <enum>QSlider::NoTicks</enum>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QLabel" name="label_9">
+                           <property name="text">
+                            <string>N2O
 VENT</string>
-                        </property>
+                           </property>
+                           <property name="alignment">
+                            <set>Qt::AlignCenter</set>
+                           </property>
+                          </widget>
+                         </item>
+                        </layout>
+                       </widget>
+                      </item>
+                      <item row="2" column="4">
+                       <widget class="QWidget" name="toggleSwitch_8" native="true">
+                        <layout class="QHBoxLayout" name="toggleswitch_8">
+                         <item>
+                          <widget class="QSlider" name="ncv_man">
+                           <property name="sizePolicy">
+                            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                             <horstretch>0</horstretch>
+                             <verstretch>0</verstretch>
+                            </sizepolicy>
+                           </property>
+                           <property name="autoFillBackground">
+                            <bool>false</bool>
+                           </property>
+                           <property name="styleSheet">
+                            <string notr="true">QSlider::groove:horizontal { 
+	background-color: #181b2e;
+	border: 0px solid #424242; 
+	height: 10px; 
+	width: 40px;
+	border-radius: 4px;
+}
+
+QSlider::handle:horizontal { 
+	background-color: #7f849a; 
+	border: 2px solid #7f849a; 
+	width: 16px; 
+	height: 20px; 
+	line-height: 20px; 
+	margin-top: -5px; 
+	margin-bottom: -5px; 
+	border-radius: 10px; 
+}
+
+QSlider::handle:horizontal:hover { 
+	border-radius: 10px;
+}</string>
+                           </property>
+                           <property name="maximum">
+                            <number>1</number>
+                           </property>
+                           <property name="pageStep">
+                            <number>0</number>
+                           </property>
+                           <property name="sliderPosition">
+                            <number>0</number>
+                           </property>
+                           <property name="tracking">
+                            <bool>true</bool>
+                           </property>
+                           <property name="orientation">
+                            <enum>Qt::Horizontal</enum>
+                           </property>
+                           <property name="invertedAppearance">
+                            <bool>false</bool>
+                           </property>
+                           <property name="invertedControls">
+                            <bool>true</bool>
+                           </property>
+                           <property name="tickPosition">
+                            <enum>QSlider::NoTicks</enum>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QLabel" name="label_10">
+                           <property name="text">
+                            <string>NCV</string>
+                           </property>
+                           <property name="alignment">
+                            <set>Qt::AlignCenter</set>
+                           </property>
+                          </widget>
+                         </item>
+                        </layout>
                        </widget>
                       </item>
                      </layout>
@@ -806,35 +1253,162 @@ color: #7f849a;</string>
                              </widget>
                             </item>
                             <item row="1" column="0">
-                             <widget class="QWidget" name="horizontalWidget" native="true">
+                             <widget class="QGroupBox" name="horizontalGroupBox">
                               <layout class="QHBoxLayout" name="horizontalLayout_4">
                                <item>
-                                <widget class="QCheckBox" name="n2o_flow_auto">
-                                 <property name="font">
-                                  <font>
-                                   <pointsize>10</pointsize>
-                                  </font>
-                                 </property>
-                                 <property name="layoutDirection">
-                                  <enum>Qt::LeftToRight</enum>
-                                 </property>
-                                 <property name="text">
-                                  <string>N20
+                                <widget class="QWidget" name="toggleSwitch_10" native="true">
+                                 <layout class="QHBoxLayout" name="toggleswitch_10">
+                                  <item>
+                                   <widget class="QSlider" name="n2o_flow_auto">
+                                    <property name="sizePolicy">
+                                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                                      <horstretch>0</horstretch>
+                                      <verstretch>0</verstretch>
+                                     </sizepolicy>
+                                    </property>
+                                    <property name="autoFillBackground">
+                                     <bool>false</bool>
+                                    </property>
+                                    <property name="styleSheet">
+                                     <string notr="true">QSlider::groove:horizontal { 
+	background-color: #0f111d; 
+	border: 0px solid #424242; 
+	height: 10px; 
+	width: 40px;
+	border-radius: 4px;
+}
+
+QSlider::handle:horizontal { 
+	background-color: #7f849a;
+	border: 2px solid #7f849a; 
+	width: 16px; 
+	height: 20px; 
+	line-height: 20px; 
+	margin-top: -5px; 
+	margin-bottom: -5px; 
+	border-radius: 10px; 
+}
+
+QSlider::handle:horizontal:hover { 
+	border-radius: 10px;
+}</string>
+                                    </property>
+                                    <property name="maximum">
+                                     <number>1</number>
+                                    </property>
+                                    <property name="pageStep">
+                                     <number>0</number>
+                                    </property>
+                                    <property name="sliderPosition">
+                                     <number>0</number>
+                                    </property>
+                                    <property name="tracking">
+                                     <bool>true</bool>
+                                    </property>
+                                    <property name="orientation">
+                                     <enum>Qt::Horizontal</enum>
+                                    </property>
+                                    <property name="invertedAppearance">
+                                     <bool>false</bool>
+                                    </property>
+                                    <property name="invertedControls">
+                                     <bool>true</bool>
+                                    </property>
+                                    <property name="tickPosition">
+                                     <enum>QSlider::NoTicks</enum>
+                                    </property>
+                                   </widget>
+                                  </item>
+                                  <item>
+                                   <widget class="QLabel" name="label_12">
+                                    <property name="text">
+                                     <string>N2O
 FLOW</string>
-                                 </property>
+                                    </property>
+                                    <property name="alignment">
+                                     <set>Qt::AlignCenter</set>
+                                    </property>
+                                   </widget>
+                                  </item>
+                                 </layout>
                                 </widget>
                                </item>
                                <item>
-                                <widget class="QCheckBox" name="n2_flow_auto">
-                                 <property name="font">
-                                  <font>
-                                   <pointsize>10</pointsize>
-                                  </font>
-                                 </property>
-                                 <property name="text">
-                                  <string>N2
+                                <widget class="QWidget" name="toggleSwitch_9" native="true">
+                                 <layout class="QHBoxLayout" name="toggleswitch_9">
+                                  <item>
+                                   <widget class="QSlider" name="n2_flow_auto">
+                                    <property name="sizePolicy">
+                                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                                      <horstretch>0</horstretch>
+                                      <verstretch>0</verstretch>
+                                     </sizepolicy>
+                                    </property>
+                                    <property name="autoFillBackground">
+                                     <bool>false</bool>
+                                    </property>
+                                    <property name="styleSheet">
+                                     <string notr="true">QSlider::groove:horizontal { 
+	background-color: #0f111d; 
+	border: 0px solid #424242; 
+	height: 10px; 
+	width: 40px;
+	border-radius: 4px;
+}
+
+QSlider::handle:horizontal { 
+	background-color: #7f849a;
+	border: 2px solid #7f849a; 
+	width: 16px; 
+	height: 20px; 
+	line-height: 20px; 
+	margin-top: -5px; 
+	margin-bottom: -5px; 
+	border-radius: 10px; 
+}
+
+QSlider::handle:horizontal:hover { 
+	border-radius: 10px;
+}</string>
+                                    </property>
+                                    <property name="maximum">
+                                     <number>1</number>
+                                    </property>
+                                    <property name="pageStep">
+                                     <number>0</number>
+                                    </property>
+                                    <property name="sliderPosition">
+                                     <number>0</number>
+                                    </property>
+                                    <property name="tracking">
+                                     <bool>true</bool>
+                                    </property>
+                                    <property name="orientation">
+                                     <enum>Qt::Horizontal</enum>
+                                    </property>
+                                    <property name="invertedAppearance">
+                                     <bool>false</bool>
+                                    </property>
+                                    <property name="invertedControls">
+                                     <bool>true</bool>
+                                    </property>
+                                    <property name="tickPosition">
+                                     <enum>QSlider::NoTicks</enum>
+                                    </property>
+                                   </widget>
+                                  </item>
+                                  <item>
+                                   <widget class="QLabel" name="label_11">
+                                    <property name="text">
+                                     <string>N2
 FLOW</string>
-                                 </property>
+                                    </property>
+                                    <property name="alignment">
+                                     <set>Qt::AlignCenter</set>
+                                    </property>
+                                   </widget>
+                                  </item>
+                                 </layout>
                                 </widget>
                                </item>
                               </layout>
@@ -843,106 +1417,16 @@ FLOW</string>
                            </layout>
                           </widget>
                          </item>
-                         <item alignment="Qt::AlignLeft">
-                          <widget class="QFrame" name="frame_8">
-                           <property name="layoutDirection">
-                            <enum>Qt::LeftToRight</enum>
-                           </property>
+                         <item>
+                          <widget class="QWidget" name="widget_8" native="true">
                            <property name="styleSheet">
                             <string notr="true">background: #181b2e;
 border-radius: 10px;
 color: #7f849a;</string>
                            </property>
-                           <property name="frameShape">
-                            <enum>QFrame::StyledPanel</enum>
-                           </property>
-                           <property name="frameShadow">
-                            <enum>QFrame::Raised</enum>
-                           </property>
-                           <layout class="QGridLayout" name="gridLayout_12">
-                            <item row="2" column="0">
-                             <widget class="QWidget" name="widget" native="true">
-                              <layout class="QGridLayout" name="gridLayout_11">
-                               <item row="1" column="0">
-                                <widget class="QCheckBox" name="n2o_vent_auto">
-                                 <property name="sizePolicy">
-                                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                                   <horstretch>0</horstretch>
-                                   <verstretch>0</verstretch>
-                                  </sizepolicy>
-                                 </property>
-                                 <property name="font">
-                                  <font>
-                                   <pointsize>10</pointsize>
-                                  </font>
-                                 </property>
-                                 <property name="layoutDirection">
-                                  <enum>Qt::LeftToRight</enum>
-                                 </property>
-                                 <property name="styleSheet">
-                                  <string notr="true">color: #7f849a;</string>
-                                 </property>
-                                 <property name="text">
-                                  <string>N2O
-VENT</string>
-                                 </property>
-                                </widget>
-                               </item>
-                               <item row="1" column="1">
-                                <widget class="QCheckBox" name="n2_vent_auto">
-                                 <property name="sizePolicy">
-                                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                                   <horstretch>0</horstretch>
-                                   <verstretch>0</verstretch>
-                                  </sizepolicy>
-                                 </property>
-                                 <property name="font">
-                                  <font>
-                                   <pointsize>10</pointsize>
-                                  </font>
-                                 </property>
-                                 <property name="layoutDirection">
-                                  <enum>Qt::LeftToRight</enum>
-                                 </property>
-                                 <property name="styleSheet">
-                                  <string notr="true">color: #7f849a;</string>
-                                 </property>
-                                 <property name="text">
-                                  <string>N2
-VENT</string>
-                                 </property>
-                                </widget>
-                               </item>
-                               <item row="1" column="2">
-                                <widget class="QCheckBox" name="purge_vent_auto">
-                                 <property name="sizePolicy">
-                                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                                   <horstretch>0</horstretch>
-                                   <verstretch>0</verstretch>
-                                  </sizepolicy>
-                                 </property>
-                                 <property name="font">
-                                  <font>
-                                   <pointsize>10</pointsize>
-                                  </font>
-                                 </property>
-                                 <property name="layoutDirection">
-                                  <enum>Qt::LeftToRight</enum>
-                                 </property>
-                                 <property name="styleSheet">
-                                  <string notr="true">color: #7f849a;</string>
-                                 </property>
-                                 <property name="text">
-                                  <string>PURGE
-VENT</string>
-                                 </property>
-                                </widget>
-                               </item>
-                              </layout>
-                             </widget>
-                            </item>
+                           <layout class="QGridLayout" name="gridLayout_11">
                             <item row="0" column="0">
-                             <widget class="QLabel" name="venting_btn">
+                             <widget class="QLabel" name="filling_label_2">
                               <property name="font">
                                <font>
                                 <pointsize>12</pointsize>
@@ -950,12 +1434,249 @@ VENT</string>
                                 <bold>true</bold>
                                </font>
                               </property>
-                              <property name="styleSheet">
-                               <string notr="true">color: #7f849a;</string>
-                              </property>
                               <property name="text">
                                <string>VENTING</string>
                               </property>
+                             </widget>
+                            </item>
+                            <item row="1" column="0">
+                             <widget class="QGroupBox" name="horizontalGroupBox_2">
+                              <layout class="QHBoxLayout" name="horizontalLayout_5">
+                               <item>
+                                <widget class="QWidget" name="toggleSwitch_11" native="true">
+                                 <layout class="QHBoxLayout" name="toggleswitch_11">
+                                  <item>
+                                   <widget class="QSlider" name="n2o_vent_auto">
+                                    <property name="sizePolicy">
+                                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                                      <horstretch>0</horstretch>
+                                      <verstretch>0</verstretch>
+                                     </sizepolicy>
+                                    </property>
+                                    <property name="autoFillBackground">
+                                     <bool>false</bool>
+                                    </property>
+                                    <property name="styleSheet">
+                                     <string notr="true">QSlider::groove:horizontal { 
+	background-color: #0f111d; 
+	border: 0px solid #424242; 
+	height: 10px; 
+	width: 40px;
+	border-radius: 4px;
+}
+
+QSlider::handle:horizontal { 
+	background-color: #7f849a;
+	border: 2px solid #7f849a; 
+	width: 16px; 
+	height: 20px; 
+	line-height: 20px; 
+	margin-top: -5px; 
+	margin-bottom: -5px; 
+	border-radius: 10px; 
+}
+
+QSlider::handle:horizontal:hover { 
+	border-radius: 10px;
+}</string>
+                                    </property>
+                                    <property name="maximum">
+                                     <number>1</number>
+                                    </property>
+                                    <property name="pageStep">
+                                     <number>0</number>
+                                    </property>
+                                    <property name="sliderPosition">
+                                     <number>0</number>
+                                    </property>
+                                    <property name="tracking">
+                                     <bool>true</bool>
+                                    </property>
+                                    <property name="orientation">
+                                     <enum>Qt::Horizontal</enum>
+                                    </property>
+                                    <property name="invertedAppearance">
+                                     <bool>false</bool>
+                                    </property>
+                                    <property name="invertedControls">
+                                     <bool>true</bool>
+                                    </property>
+                                    <property name="tickPosition">
+                                     <enum>QSlider::NoTicks</enum>
+                                    </property>
+                                   </widget>
+                                  </item>
+                                  <item>
+                                   <widget class="QLabel" name="label_13">
+                                    <property name="text">
+                                     <string>N2O
+VENT</string>
+                                    </property>
+                                    <property name="alignment">
+                                     <set>Qt::AlignCenter</set>
+                                    </property>
+                                   </widget>
+                                  </item>
+                                 </layout>
+                                </widget>
+                               </item>
+                               <item>
+                                <widget class="QWidget" name="toggleSwitch_12" native="true">
+                                 <layout class="QHBoxLayout" name="toggleswitch_12">
+                                  <item>
+                                   <widget class="QSlider" name="n2_vent_auto">
+                                    <property name="sizePolicy">
+                                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                                      <horstretch>0</horstretch>
+                                      <verstretch>0</verstretch>
+                                     </sizepolicy>
+                                    </property>
+                                    <property name="autoFillBackground">
+                                     <bool>false</bool>
+                                    </property>
+                                    <property name="styleSheet">
+                                     <string notr="true">QSlider::groove:horizontal { 
+	background-color: #0f111d; 
+	border: 0px solid #424242; 
+	height: 10px; 
+	width: 40px;
+	border-radius: 4px;
+}
+
+QSlider::handle:horizontal { 
+	background-color: #7f849a;
+	border: 2px solid #7f849a; 
+	width: 16px; 
+	height: 20px; 
+	line-height: 20px; 
+	margin-top: -5px; 
+	margin-bottom: -5px; 
+	border-radius: 10px; 
+}
+
+QSlider::handle:horizontal:hover { 
+	border-radius: 10px;
+}</string>
+                                    </property>
+                                    <property name="maximum">
+                                     <number>1</number>
+                                    </property>
+                                    <property name="pageStep">
+                                     <number>0</number>
+                                    </property>
+                                    <property name="sliderPosition">
+                                     <number>0</number>
+                                    </property>
+                                    <property name="tracking">
+                                     <bool>true</bool>
+                                    </property>
+                                    <property name="orientation">
+                                     <enum>Qt::Horizontal</enum>
+                                    </property>
+                                    <property name="invertedAppearance">
+                                     <bool>false</bool>
+                                    </property>
+                                    <property name="invertedControls">
+                                     <bool>true</bool>
+                                    </property>
+                                    <property name="tickPosition">
+                                     <enum>QSlider::NoTicks</enum>
+                                    </property>
+                                   </widget>
+                                  </item>
+                                  <item>
+                                   <widget class="QLabel" name="label_14">
+                                    <property name="text">
+                                     <string>N2
+VENT</string>
+                                    </property>
+                                    <property name="alignment">
+                                     <set>Qt::AlignCenter</set>
+                                    </property>
+                                   </widget>
+                                  </item>
+                                 </layout>
+                                </widget>
+                               </item>
+                               <item>
+                                <widget class="QWidget" name="toggleSwitch_13" native="true">
+                                 <layout class="QHBoxLayout" name="toggleswitch_13">
+                                  <item>
+                                   <widget class="QSlider" name="purge_vent_auto">
+                                    <property name="sizePolicy">
+                                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                                      <horstretch>0</horstretch>
+                                      <verstretch>0</verstretch>
+                                     </sizepolicy>
+                                    </property>
+                                    <property name="autoFillBackground">
+                                     <bool>false</bool>
+                                    </property>
+                                    <property name="styleSheet">
+                                     <string notr="true">QSlider::groove:horizontal { 
+	background-color: #0f111d; 
+	border: 0px solid #424242; 
+	height: 10px; 
+	width: 40px;
+	border-radius: 4px;
+}
+
+QSlider::handle:horizontal { 
+	background-color: #7f849a;
+	border: 2px solid #7f849a; 
+	width: 16px; 
+	height: 20px; 
+	line-height: 20px; 
+	margin-top: -5px; 
+	margin-bottom: -5px; 
+	border-radius: 10px; 
+}
+
+QSlider::handle:horizontal:hover { 
+	border-radius: 10px;
+}</string>
+                                    </property>
+                                    <property name="maximum">
+                                     <number>1</number>
+                                    </property>
+                                    <property name="pageStep">
+                                     <number>0</number>
+                                    </property>
+                                    <property name="sliderPosition">
+                                     <number>0</number>
+                                    </property>
+                                    <property name="tracking">
+                                     <bool>true</bool>
+                                    </property>
+                                    <property name="orientation">
+                                     <enum>Qt::Horizontal</enum>
+                                    </property>
+                                    <property name="invertedAppearance">
+                                     <bool>false</bool>
+                                    </property>
+                                    <property name="invertedControls">
+                                     <bool>true</bool>
+                                    </property>
+                                    <property name="tickPosition">
+                                     <enum>QSlider::NoTicks</enum>
+                                    </property>
+                                   </widget>
+                                  </item>
+                                  <item>
+                                   <widget class="QLabel" name="label_15">
+                                    <property name="text">
+                                     <string>PURGE
+VENT</string>
+                                    </property>
+                                    <property name="alignment">
+                                     <set>Qt::AlignCenter</set>
+                                    </property>
+                                   </widget>
+                                  </item>
+                                 </layout>
+                                </widget>
+                               </item>
+                              </layout>
                              </widget>
                             </item>
                            </layout>

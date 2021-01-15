@@ -1,5 +1,5 @@
-from PyQt5 import QtWidgets, uic, QtCore
-from PyQt5.QtCore import QTimer, QDateTime, QThread, pyqtSignal
+from PyQt5 import QtWidgets, uic, QtCore, QtGui
+from PyQt5.QtCore import QTimer, QDateTime, QThread, pyqtSignal, Qt, QRect
 from PyQt5.QtWidgets import QFileDialog
 import sys
 import server
@@ -124,20 +124,20 @@ class MainWindow(QtWidgets.QMainWindow):
         # MANUAL CHECKBOXES
             # checkboxes used ".isChecked" to singal a change in state. 
             # Each function connected will check the current state of the switch.   
-        self.ignitor_man.stateChanged.connect(self._Ignitor_btn)
-        self.mev_man.stateChanged.connect(self._MEV_btn)
-        self.n2o_vent_man.stateChanged.connect(self._N2OV_btn)
-        self.n2o_flow_man.stateChanged.connect(self._N2O_btn)
-        self.n2_flow_man.stateChanged.connect(self._N2_btn)
-        self.n2_vent_man.stateChanged.connect(self._N2V_btn)
-        self.ncv_man.stateChanged.connect(self._NCV_btn)
-        self.purge_vent_man.stateChanged.connect(self._RV_btn)
+        self.ignitor_man.valueChanged.connect(self._Ignitor_btn)
+        self.mev_man.valueChanged.connect(self._MEV_btn)
+        self.n2o_vent_man.valueChanged.connect(self._N2OV_btn)
+        self.n2o_flow_man.valueChanged.connect(self._N2O_btn)
+        self.n2_flow_man.valueChanged.connect(self._N2_btn)
+        self.n2_vent_man.valueChanged.connect(self._N2V_btn)
+        self.ncv_man.valueChanged.connect(self._NCV_btn)
+        self.purge_vent_man.valueChanged.connect(self._RV_btn)
         # AUTO CHECKBOXES
-        self.purge_vent_auto.stateChanged.connect(self._RV_btn)
-        self.n2o_vent_auto.stateChanged.connect(self._N2OV_btn)
-        self.n2o_flow_auto.stateChanged.connect(self._N2O_btn)
-        self.n2_flow_auto.stateChanged.connect(self._N2_btn)
-        self.n2_vent_auto.stateChanged.connect(self._N2V_btn)
+        self.purge_vent_auto.valueChanged.connect(self._RV_btn)
+        self.n2o_vent_auto.valueChanged.connect(self._N2OV_btn)
+        self.n2o_flow_auto.valueChanged.connect(self._N2O_btn)
+        self.n2_flow_auto.valueChanged.connect(self._N2_btn)
+        self.n2_vent_auto.valueChanged.connect(self._N2V_btn)
         self.abort_btn.clicked.connect(self._abort_btn)
         self.vent_all_btn.clicked.connect(self._vent_all_btn)
         self.fire_btn.clicked.connect(self._run_btn)
@@ -321,45 +321,45 @@ class MainWindow(QtWidgets.QMainWindow):
     # def _igniter_btn_toggle(self):
     #     if self.igniter_man.isChecked() == True:
     def _Ignitor_btn(self):
-        if self.ignitor_man.isChecked() == True:
+        if self.ignitor_man.value() == 1:
             self._igniter_btn_on()
         else:
             self._igniter_btn_off()
     def _MEV_btn(self):
-        if self.mev_man.isChecked() == True:
+        if self.mev_man.value() == 1:
             self._MEV_btn_on()
         else:
             self._MEV_btn_off()
 
     def _N2OV_btn(self):
-        if self.n2o_vent_man.isChecked() == True or self.n2o_vent_auto.isChecked() == True:
+        if self.n2o_vent_man.value() == 1 or self.n2o_vent_auto.value() == 1:
             self._N2OV_btn_on()
         else:
             self._N2OV_btn_off()
     def _N2O_btn(self):
-        if self.n2o_flow_man.isChecked() == True or self.n2o_flow_auto.isChecked() == True:
+        if self.n2o_flow_man.value() == 1 or self.n2o_flow_auto.value() == 1:
             self._N2O_btn_on()
         else:
             self._N2O_btn_off()
    
     def _N2V_btn(self):
-        if self.n2_vent_man.isChecked() == True or self.n2_vent_auto.isChecked() == True:
+        if self.n2_vent_man.value() == 1 or self.n2_vent_auto.value() == 1:
             self._N2V_btn_on()
         else:
             self._N2V_btn_off() 
     def _N2_btn(self):
-        if self.n2_flow_man.isChecked() == True or self.n2_flow_auto.isChecked() == True:
+        if self.n2_flow_man.value() == 1 or self.n2_flow_auto.value() == 1:
             self._N2_btn_on()
         else:
             self._N2_btn_off()
     
     def _NCV_btn(self):
-        if self.ncv_man.isChecked() == True:
+        if self.ncv_man.value() == 1:
             self._NCV_btn_on()
         else:
             self._NCV_btn_off()
     def _RV_btn(self):
-        if self.purge_vent_auto.isChecked() == True or self.purge_vent_man == True:
+        if self.purge_vent_auto.value() == 1 or self.purge_vent_man.value() == 1:
             self._RV_btn_on()
         else:
             self._RV_btn_off()
@@ -422,14 +422,14 @@ class MainWindow(QtWidgets.QMainWindow):
         self.n2o_vent_man.setEnabled(False)
         self.ncv_man.setEnabled(False)
         
-        self.ignitor_man.setChecked(False)
-        self.n2_flow_man.setChecked(False)
-        self.n2o_flow_man.setChecked(False)
-        self.purge_vent_man.setChecked(False)
-        self.mev_man.setChecked(False)
-        self.n2_vent_man.setChecked(False)
-        self.n2o_vent_man.setChecked(False)
-        self.ncv_man.setChecked(False)
+        self.ignitor_man.setValue(0)
+        self.n2_flow_man.setValue(0)
+        self.n2o_flow_man.setValue(0)
+        self.purge_vent_man.setValue(0)
+        self.mev_man.setValue(0)
+        self.n2_vent_man.setValue(0)
+        self.n2o_vent_man.setValue(0)
+        self.ncv_man.setValue(0)
     # Enable manual control box
     def _enable_man(self):
         self.ignitor_man.setEnabled(True)
@@ -452,14 +452,12 @@ class MainWindow(QtWidgets.QMainWindow):
         self.fire_btn.setEnabled(False)
         self.vent_all_btn.setEnabled(False)
 
-        self.n2o_flow_auto.setChecked(False)
-        self.n2_flow_auto.setChecked(False)
-        self.n2o_vent_auto.setChecked(False)
-        self.n2_vent_auto.setChecked(False)
-        self.purge_vent_auto.setChecked(False)
-        self.abort_btn.setChecked(False)
-        self.fire_btn.setChecked(False)
-        self.vent_all_btn.setChecked(False)
+        self.n2o_flow_auto.setValue(0)
+        self.n2_flow_auto.setValue(0)
+        self.n2o_vent_auto.setValue(0)
+        self.n2_vent_auto.setValue(0)
+        self.purge_vent_auto.setValue(0)
+
     #Enable auto control box
     def _enable_auto(self):
         self.n2o_flow_auto.setEnabled(True)
