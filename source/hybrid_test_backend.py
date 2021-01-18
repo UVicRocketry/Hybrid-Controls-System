@@ -79,7 +79,32 @@ class MainWindow(QtWidgets.QMainWindow):
         self.toggle_man = False
         self.client_server = None
         self.status_thread = None
+        self.statusbox.verticalScrollBar().setStyleSheet("""
 
+    QScrollBar:vertical {
+        min-height: 240px;
+        width: 13px;
+        background-color: black;
+    }
+
+    QScrollBar::groove {
+        background: #7f849a;
+        background-color: black;
+        border-radius: 5px;
+    }
+
+    QScrollBar::handle {
+        background: #7f849a;
+        border-radius: 10px;
+    }
+
+    QScrollBar::handle:horizontal {
+        width: 25px;
+    }
+
+    QScrollBar::handle:vertical {
+        height: 25px;
+    }""")
         ############################ STATES ###############################
         # These will get updated by the GUI if the user clicks a button or
         # if the server changes something. Any time one of these is changed,
@@ -95,7 +120,11 @@ class MainWindow(QtWidgets.QMainWindow):
             "RV" : "closed",
             "VV" : "closed",
             "abort" : False,
-            "run" : False
+            "run" : False,
+            "BD" : 0, #TODO: figure out default values from Morgan 
+            "MEVo%" : 0,
+            "ID" : 0,
+            "MEVoSP": 0
         }
         
 
@@ -145,6 +174,7 @@ class MainWindow(QtWidgets.QMainWindow):
         #SYSTEM PARAMETERS
         self.test_used.clicked.connect(self._load_checked)
         self.load_test_btn.clicked.connect(self._open_file)
+        self.save_states.clicked.connect(self._save_states)
         self.man_btn.clicked.connect(self._man_btn)
         self.auto_btn.clicked.connect(self._auto_btn)
 
@@ -213,12 +243,12 @@ class MainWindow(QtWidgets.QMainWindow):
             self.add_system_status("Disconnection Unsuccessful. Does the connection exist?")
 
    
-   
+   #TODO: "KRIS": make abort send proper states, vent all send proper states. save states button.
     # All these functions do the basically the same thing
         # Add a message to the "System Status" panel on the GUI.
         # Update our system_states dictionary
         # Send the new state over the client_server Server object
-    def _igniter_btn_on(self):#TODO: ignitor needs reworking talk to connor... 
+    def _igniter_btn_on(self):
         self.add_system_status("Igniting")
         self.system_states["igniter"] = True
         self.send_states("igniter True")
@@ -374,6 +404,12 @@ class MainWindow(QtWidgets.QMainWindow):
         toggle = not bool(toggle)
         self.system_states["VV"] = toggle
         self.send_states(f"{toggle} Vent Valve (vent all)")
+        # Venting
+        self._N2OV_btn_on()
+        self._N2V_btn_on()
+        self._RV_btn_on()
+        # close MEV
+        self._MEV_btn_on()
 
     def _run_btn(self):
         self.add_system_status("RUNNING")
@@ -384,13 +420,27 @@ class MainWindow(QtWidgets.QMainWindow):
         self.add_system_status("ABORTING")
         self.system_states["abort"] = True
         self.send_states("abort True")
+
+        # Venting
+        self._N2OV_btn_on()
+        self._N2V_btn_on()
+        self._RV_btn_on()
+        # close MEV
+        self._MEV_btn_off()
     
 
     #SYSTEM PARAMETERS 
         # MANUAL and AUTO Buttons
         #these buttons will disable the other control category 
         #if Manual is toggled on then the auto buttons will be disabled
-    def _man_btn(self):#TODO:update toggles to use state params to make the toggle.
+    def _save_states(self):#TODO: Connor do the config save file in this function
+        self._duration()
+        self._mev_open()
+        self._delay()
+        self._mev_open_speed()
+        #save file code
+    
+    def _man_btn(self):
         
         if self.toggle_man == False:
             self.toggle_man = True
@@ -458,9 +508,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self.n2o_vent_auto.setEnabled(False)
         self.n2_vent_auto.setEnabled(False)
         self.purge_vent_auto.setEnabled(False)
-        self.abort_btn.setEnabled(False)
-        self.fire_btn.setEnabled(False)
-        self.vent_all_btn.setEnabled(False)
+        # self.abort_btn.setEnabled(False)
+        # self.fire_btn.setEnabled(False)
+        # self.vent_all_btn.setEnabled(False)
 
         self.n2o_flow_auto.setValue(0)
         self.n2_flow_auto.setValue(0)
@@ -475,9 +525,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self.n2o_vent_auto.setEnabled(True)
         self.n2_vent_auto.setEnabled(True)
         self.purge_vent_auto.setEnabled(True)
-        self.abort_btn.setEnabled(True)
-        self.fire_btn.setEnabled(True)
-        self.vent_all_btn.setEnabled(True)
+        # self.abort_btn.setEnabled(True)
+        # self.fire_btn.setEnabled(True)
+        # self.vent_all_btn.setEnabled(True)
 
     #Load test
     def _open_file(self):
@@ -503,18 +553,26 @@ class MainWindow(QtWidgets.QMainWindow):
             
     #Edit line parameters
     # TODO: Figure out where to load this data to
-    # def _duration(self):
-        # #use "self.burn_duration.text()" to use the information from the edit line. 
-
-    # def _mev_open(self):
-        # #use "self.mev_open.text()" to use the information from the edit line. 
-
-    # def _delay(self):
+    def _duration(self):
+        # #use "self.burn_duration.text()" to use the information from the edit line.
+        value = self.burn_duration.text()
+        self.system_states["BD"] = value
+        self.send_states(f"BD {value}")
+    def _mev_open(self):
+        # #use "self.mev_open.text()" to use the information from the edit line.
+        value = self.mev_open.text()
+        self.system_states["MEVo%"] = value
+        self.send_states(f"MEVo% {value}")
+    def _delay(self):
         # #use "self.ignitor_delay.text()" to use the information from the edit line. 
-
-    # def _mev_open_speed(self):
+        value = self.ignitor_delay.text()
+        self.system_states["ID"] = value
+        self.send_states(f"ID {value}")
+    def _mev_open_speed(self):
         # #use "self.mev_open_speed.text()" to use the information from the edit line. 
-
+        value = self.mev_open_speed.text() 
+        self.system_states["MEVoSP"] = value
+        self.send_states(f"MEVoSP {value}")
 
 
 

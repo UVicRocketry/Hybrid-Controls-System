@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1442</width>
-    <height>916</height>
+    <height>918</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -456,6 +456,45 @@ color: #7f849a</string>
                         </property>
                         <property name="text">
                          <string>AUTO</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QPushButton" name="save_states">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="minimumSize">
+                         <size>
+                          <width>75</width>
+                          <height>0</height>
+                         </size>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <family>Lucida Sans Unicode</family>
+                          <pointsize>10</pointsize>
+                          <weight>75</weight>
+                          <bold>true</bold>
+                         </font>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">display:inline-block;
+border:0.1em solid black;
+margin:0 0.3em 0.3em 0;
+border-radius:0.12em;
+box-sizing: border-box;
+text-decoration:none;
+text-align:center;
+transition: all 0.2s;
+color: #7f849a</string>
+                        </property>
+                        <property name="text">
+                         <string>SAVE
+STATES</string>
                         </property>
                        </widget>
                       </item>
