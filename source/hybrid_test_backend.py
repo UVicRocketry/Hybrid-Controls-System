@@ -22,6 +22,8 @@ class GetStatusThread(QThread):
         :param server_ob: the object representing the connection to the server
         :param states: the dictionary of states
         """
+        # self.schematic.setPixmap(QtGui.QPixmap("source\images\MULE-1_PID_for_GUI.png"))
+        # self.resize(self.schematic.width(), self.schematic.height())
         self.client_server = server_ob
         self.states = states
         QThread.__init__(self)
@@ -97,6 +99,7 @@ class MainWindow(QtWidgets.QMainWindow):
             "abort" : False,
             "run" : False
         }
+        
 
     ################################ SETUP ####################################
 
@@ -392,23 +395,31 @@ class MainWindow(QtWidgets.QMainWindow):
         
         if self.toggle_man == False:
             self.toggle_man = True
+            self.toggle_auto = False
             self.man_btn.setStyleSheet("QPushButton { border:0.1em solid black; }")
             self._disable_man()
+            self.man_con_label.setStyleSheet("QLabel{color: #7f849a;}")
+
         else:
             self.toggle_man = False
             self.man_btn.setStyleSheet("QPushButton { border:0.1em solid yellow;  }")
             self._enable_man()
+            self.man_con_label.setStyleSheet("QLabel{color: yellow;}")
 
 
     def _auto_btn(self):
         if self.toggle_auto == False:
             self.toggle_auto = True
-            self.auto_btn.setStyleSheet("QPushButton { border:0.1em solid black;  }")
+            self.toggle_man = False
+            self.auto_btn.setStyleSheet("QPushButton { border:0.1em solid black;}")
             self._disable_auto()
+            self.auto_con_label.setStyleSheet("QLabel{color: #7f849a;}")
+
         else:
             self.toggle_auto = False
             self.auto_btn.setStyleSheet("QPushButton {border:0.1em solid yellow; }")
             self._enable_auto()
+            self.auto_con_label.setStyleSheet("QLabel{color: yellow;}")
 
     #DISABLEING and ENABLING CONTROL BOXES
     # disable manual control box
