@@ -6,517 +6,1839 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1392</width>
-    <height>1167</height>
+    <width>1442</width>
+    <height>916</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
-  </property>
-  <property name="autoFillBackground">
-   <bool>false</bool>
-  </property>
-  <property name="styleSheet">
-   <string notr="true">background: #0f111d</string>
-  </property>
-  <property name="toolButtonStyle">
-   <enum>Qt::ToolButtonIconOnly</enum>
+   <string>UVic Rocketry - Propulsion - Hybrid Controls</string>
   </property>
   <property name="animated">
    <bool>true</bool>
   </property>
-  <property name="dockNestingEnabled">
-   <bool>true</bool>
-  </property>
-  <property name="unifiedTitleAndToolBarOnMac">
-   <bool>false</bool>
-  </property>
   <widget class="QWidget" name="centralwidget">
    <property name="styleSheet">
-    <string notr="true"/>
+    <string notr="true">background: #181b2e;</string>
    </property>
-   <layout class="QHBoxLayout" name="horizontalLayout_5">
-    <item>
-     <widget class="QFrame" name="sys_controls">
-      <property name="autoFillBackground">
-       <bool>false</bool>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">color: #0f111d;border: 0px</string>
-      </property>
-      <property name="frameShape">
-       <enum>QFrame::StyledPanel</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Sunken</enum>
-      </property>
-      <layout class="QGridLayout" name="gridLayout">
-       <property name="spacing">
-        <number>20</number>
-       </property>
-       <item row="4" column="1">
-        <widget class="QFrame" name="IG_frame">
+   <layout class="QGridLayout" name="gridLayout_2">
+    <item row="0" column="0">
+     <widget class="QWidget" name="widget" native="true">
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QFrame" name="frame_12">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>550</width>
+           <height>0</height>
+          </size>
+         </property>
          <property name="styleSheet">
-          <string notr="true">border: 0px;background: #181b2e;border-radius: 10px;</string>
+          <string notr="true"/>
          </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
          </property>
          <property name="frameShadow">
-          <enum>QFrame::Plain</enum>
+          <enum>QFrame::Raised</enum>
          </property>
-         <layout class="QVBoxLayout" name="verticalLayout_3">
+         <layout class="QVBoxLayout" name="verticalLayout_12">
           <item>
-           <widget class="QLabel" name="label_PV_3">
-            <property name="font">
-             <font>
-              <pointsize>12</pointsize>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">
-border: none;color: #7f849a</string>
-            </property>
-            <property name="text">
-             <string>IGNITOR</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="igniter_btn_toggle">
-            <property name="enabled">
-             <bool>true</bool>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">font: 12pt &quot;Segoe UI&quot;;
-display:inline-block;
-padding:0.35em 1.2em;
-border:0.1em solid #3f3f3f;
-margin:0 0.3em 0.3em 0;
-border-radius:0.12em;
-box-sizing: border-box;
-text-decoration:none;
-font-family:'Roboto',sans-serif;
-font-weight:300;
-color: #437596;
-text-align:center;
-transition: all 0.2s;</string>
-            </property>
-            <property name="text">
-             <string>IGNITOR (TOGGLE)</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="6" column="1">
-        <widget class="QFrame" name="RV_frame">
-         <property name="styleSheet">
-          <string notr="true">border: 0px;background: #181b2e</string>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Plain</enum>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_6">
-          <item>
-           <widget class="QLabel" name="label_RV">
-            <property name="font">
-             <font>
-              <pointsize>12</pointsize>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">
-border: none;color: #7f849a</string>
-            </property>
-            <property name="text">
-             <string>RELIEF VALVE </string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="RV_btn_off">
-            <property name="styleSheet">
-             <string notr="true">font: 12pt &quot;Segoe UI&quot;;
-display:inline-block;
-padding:0.35em 1.2em;
-border:0.1em solid #3f3f3f;
-margin:0 0.3em 0.3em 0;
-border-radius:0.12em;
-box-sizing: border-box;
-text-decoration:none;
-font-family:'Roboto',sans-serif;
-font-weight:300;
-color: #437596;
-text-align:center;
-transition: all 0.2s;</string>
-            </property>
-            <property name="text">
-             <string>CLOSED</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="RV_btn_on">
-            <property name="styleSheet">
-             <string notr="true">font: 12pt &quot;Segoe UI&quot;;
-display:inline-block;
-padding:0.35em 1.2em;
-border:0.1em solid #3f3f3f;
-margin:0 0.3em 0.3em 0;
-border-radius:0.12em;
-box-sizing: border-box;
-text-decoration:none;
-font-family:'Roboto',sans-serif;
-font-weight:300;
-color: #437596;
-text-align:center;
-transition: all 0.2s;</string>
-            </property>
-            <property name="text">
-             <string>OPEN</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="7" column="1">
-        <widget class="QFrame" name="N2OV_frame">
-         <property name="styleSheet">
-          <string notr="true">border: 0px;background: #181b2e;border-radius: 10px;</string>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Plain</enum>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_5">
-          <item>
-           <widget class="QLabel" name="label_PV_2">
-            <property name="font">
-             <font>
-              <family>MS Shell Dlg 2</family>
-              <pointsize>12</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">
-border: none;color: #7f849a</string>
-            </property>
-            <property name="text">
-             <string>N2O VENT VALVE  </string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="N2OV_btn_off">
-            <property name="styleSheet">
-             <string notr="true">font: 12pt &quot;Segoe UI&quot;;
-display:inline-block;
-padding:0.35em 1.2em;
-border:0.1em solid #3f3f3f;
-margin:0 0.3em 0.3em 0;
-border-radius:0.12em;
-box-sizing: border-box;
-text-decoration:none;
-font-family:'Roboto',sans-serif;
-font-weight:300;
-color: #437596;
-text-align:center;
-transition: all 0.2s;</string>
-            </property>
-            <property name="text">
-             <string>CLOSED</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="N2OV_btn_on">
-            <property name="styleSheet">
-             <string notr="true">font: 12pt &quot;Segoe UI&quot;;
-display:inline-block;
-padding:0.35em 1.2em;
-border:0.1em solid #3f3f3f;
-margin:0 0.3em 0.3em 0;
-border-radius:0.12em;
-box-sizing: border-box;
-text-decoration:none;
-font-family:'Roboto',sans-serif;
-font-weight:300;
-color: #437596;
-text-align:center;
-transition: all 0.2s;</string>
-            </property>
-            <property name="text">
-             <string>OPEN</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="4" column="0">
-        <widget class="QFrame" name="N2O_frame">
-         <property name="styleSheet">
-          <string notr="true">border: 0px;background: #181b2e;border-radius: 15px;</string>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Plain</enum>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_2">
-          <item>
-           <widget class="QLabel" name="label_N2O">
-            <property name="font">
-             <font>
-              <family>MS Shell Dlg 2</family>
-              <pointsize>12</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">
-border: none;color: #7f849a</string>
-            </property>
-            <property name="text">
-             <string>N2O FLOW</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="N2O_btn_off">
-            <property name="enabled">
-             <bool>true</bool>
-            </property>
-            <property name="autoFillBackground">
-             <bool>false</bool>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">font: 12pt &quot;Segoe UI&quot;;
-display:inline-block;
-padding:0.35em 1.2em;
-border:0.1em solid #3f3f3f;
-margin:0 0.3em 0.3em 0;
-border-radius:0.12em;
-box-sizing: border-box;
-text-decoration:none;
-font-family:'Roboto',sans-serif;
-font-weight:300;
-color: #437596;
-text-align:center;
-transition: all 0.2s;</string>
-            </property>
-            <property name="text">
-             <string>CLOSED</string>
-            </property>
-            <property name="checkable">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="N2O_btn_on">
-            <property name="styleSheet">
-             <string notr="true">font: 12pt &quot;Segoe UI&quot;;
-display:inline-block;
-padding:0.35em 1.2em;
-border:0.1em solid #3f3f3f;
-margin:0 0.3em 0.3em 0;
-border-radius:0.12em;
-box-sizing: border-box;
-text-decoration:none;
-font-family:'Roboto',sans-serif;
-font-weight:300;
-color: #437596;
-text-align:center;
-transition: all 0.2s;</string>
-            </property>
-            <property name="text">
-             <string>OPEN</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="5" column="1">
-        <widget class="QFrame" name="VV_frame">
-         <property name="styleSheet">
-          <string notr="true">border: 0px;background: #181b2e;border-radius: 10px;</string>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Plain</enum>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_8">
-          <item>
-           <widget class="QLabel" name="label_VV">
-            <property name="font">
-             <font>
-              <family>MS Shell Dlg 2</family>
-              <pointsize>12</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">;
-border: none;color: #7f849a</string>
-            </property>
-            <property name="text">
-             <string>VENT VALVE</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="VV_btn_off">
-            <property name="styleSheet">
-             <string notr="true">font: 12pt &quot;Segoe UI&quot;;
-display:inline-block;
-padding:0.35em 1.2em;
-border:0.1em solid #3f3f3f;
-margin:0 0.3em 0.3em 0;
-border-radius:0.12em;
-box-sizing: border-box;
-text-decoration:none;
-font-family:'Roboto',sans-serif;
-font-weight:300;
-color: #437596;
-text-align:center;
-transition: all 0.2s;</string>
-            </property>
-            <property name="text">
-             <string>CLOSED</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="VV_btn_on">
-            <property name="styleSheet">
-             <string notr="true">font: 12pt &quot;Segoe UI&quot;;
-display:inline-block;
-padding:0.35em 1.2em;
-border:0.1em solid #3f3f3f;
-margin:0 0.3em 0.3em 0;
-border-radius:0.12em;
-box-sizing: border-box;
-text-decoration:none;
-font-family:'Roboto',sans-serif;
-font-weight:300;
-color: #437596;
-text-align:center;
-transition: all 0.2s;</string>
-            </property>
-            <property name="text">
-             <string>OPEN</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="valve_control_label">
-         <property name="styleSheet">
-          <string notr="true">font: 18pt &quot;MS Shell Dlg 2&quot;;181b2e</string>
-         </property>
-         <property name="text">
-          <string> System Controls </string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="test_parms_label">
-         <property name="font">
-          <font>
-           <family>MS Shell Dlg 2</family>
-           <pointsize>22</pointsize>
-           <weight>75</weight>
-           <italic>false</italic>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">color: #7f849a;</string>
-         </property>
-         <property name="text">
-          <string>Test Parameters</string>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="0" rowspan="2" colspan="2">
-        <widget class="QFrame" name="sys_info_frame_2">
-         <property name="autoFillBackground">
-          <bool>false</bool>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background: #181b2e;border-radius: 10px;</string>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Sunken</enum>
-         </property>
-         <property name="lineWidth">
-          <number>3</number>
-         </property>
-         <property name="midLineWidth">
-          <number>3</number>
-         </property>
-         <layout class="QHBoxLayout" name="horizontalLayout">
-          <item>
-           <widget class="QFrame" name="frame">
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_2">
+           <widget class="QWidget" name="widget" native="true">
+            <layout class="QVBoxLayout" name="verticalLayout">
              <item>
-              <widget class="QPushButton" name="run_btn">
+              <widget class="QFrame" name="frame">
                <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
                </property>
-               <property name="minimumSize">
+               <property name="styleSheet">
+                <string notr="true">background: #0f111d;
+border-radius: 10px;
+color: #7f849a;</string>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::Box</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <property name="lineWidth">
+                <number>1</number>
+               </property>
+               <property name="midLineWidth">
+                <number>0</number>
+               </property>
+               <layout class="QGridLayout" name="gridLayout_3">
+                <item row="5" column="0">
+                 <widget class="QFrame" name="frame_9">
+                  <property name="frameShape">
+                   <enum>QFrame::StyledPanel</enum>
+                  </property>
+                  <property name="frameShadow">
+                   <enum>QFrame::Raised</enum>
+                  </property>
+                  <layout class="QGridLayout" name="gridLayout_14">
+                   <item row="1" column="0">
+                    <widget class="QWidget" name="widget" native="true">
+                     <layout class="QGridLayout" name="gridLayout_13">
+                      <item row="1" column="4">
+                       <widget class="QLineEdit" name="ignitor_delay">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="minimumSize">
+                         <size>
+                          <width>50</width>
+                          <height>30</height>
+                         </size>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <family>Consolas</family>
+                          <pointsize>12</pointsize>
+                         </font>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">background: #181b2e;
+border-radius: 10px;
+color: #7f849a;</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="2" column="4">
+                       <widget class="QLineEdit" name="mev_open_speed">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="minimumSize">
+                         <size>
+                          <width>50</width>
+                          <height>30</height>
+                         </size>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <family>Consolas</family>
+                          <pointsize>12</pointsize>
+                         </font>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">background: #181b2e;
+border-radius: 10px;
+color: #7f849a;</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="0" column="4">
+                       <widget class="QCheckBox" name="test_used">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <family>Lucida Sans Unicode</family>
+                          <pointsize>10</pointsize>
+                         </font>
+                        </property>
+                        <property name="layoutDirection">
+                         <enum>Qt::RightToLeft</enum>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">color: #7f849a;	
+
+</string>
+                        </property>
+                        <property name="text">
+                         <string>USE TEST?</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="1" column="0">
+                       <widget class="QLabel" name="burn_duration_label">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <family>Lucida Sans Unicode</family>
+                          <pointsize>10</pointsize>
+                         </font>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">color: #7f849a</string>
+                        </property>
+                        <property name="text">
+                         <string>BURN DURATION (s)</string>
+                        </property>
+                        <property name="alignment">
+                         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="0" column="0">
+                       <widget class="QPushButton" name="load_test_btn">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                          <horstretch>0</horstretch>
+                          <verstretch>30</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <family>Lucida Sans Unicode</family>
+                          <pointsize>10</pointsize>
+                          <weight>75</weight>
+                          <bold>true</bold>
+                         </font>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">display:inline-block;
+border:0.1em solid black;
+margin:0 0.3em 0.3em 0;
+border-radius:0.12em;
+box-sizing: border-box;
+text-decoration:none;
+text-align:center;
+transition: all 0.2s;
+color: #7f849a</string>
+                        </property>
+                        <property name="text">
+                         <string>Load Test</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="2" column="2">
+                       <widget class="QLabel" name="mev_open_speed_label">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <family>Lucida Sans Unicode</family>
+                          <pointsize>10</pointsize>
+                         </font>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">color: #7f849a;</string>
+                        </property>
+                        <property name="text">
+                         <string>MEV OPEN SPEED</string>
+                        </property>
+                        <property name="alignment">
+                         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="1" column="2">
+                       <widget class="QLabel" name="ignitor_delay_label">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <family>Lucida Sans Unicode</family>
+                          <pointsize>10</pointsize>
+                         </font>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">color: #7f849a;</string>
+                        </property>
+                        <property name="text">
+                         <string>IGNITOR DELAY (s)</string>
+                        </property>
+                        <property name="alignment">
+                         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="2" column="1">
+                       <widget class="QLineEdit" name="mev_open">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="minimumSize">
+                         <size>
+                          <width>50</width>
+                          <height>30</height>
+                         </size>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <family>Consolas</family>
+                          <pointsize>12</pointsize>
+                         </font>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">background: #181b2e;
+border-radius: 10px;
+color: #7f849a;</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="2" column="0">
+                       <widget class="QLabel" name="mev_ope_label">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <family>Lucida Sans Unicode</family>
+                          <pointsize>10</pointsize>
+                         </font>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">color: #7f849a;</string>
+                        </property>
+                        <property name="text">
+                         <string>MEV OPEN (%)</string>
+                        </property>
+                        <property name="alignment">
+                         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="0" column="1" colspan="2">
+                       <widget class="QLineEdit" name="file_path">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="minimumSize">
+                         <size>
+                          <width>0</width>
+                          <height>30</height>
+                         </size>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">background: #181b2e;
+border-radius: 10px;
+color: #7f849a;</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="1" column="1">
+                       <widget class="QLineEdit" name="burn_duration">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="minimumSize">
+                         <size>
+                          <width>50</width>
+                          <height>30</height>
+                         </size>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <family>Consolas</family>
+                          <pointsize>12</pointsize>
+                         </font>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">background: #181b2e;
+border-radius: 10px;
+color: #7f849a;</string>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </widget>
+                   </item>
+                   <item row="1" column="1">
+                    <widget class="QWidget" name="widget" native="true">
+                     <layout class="QVBoxLayout" name="verticalLayout_9">
+                      <item>
+                       <widget class="QPushButton" name="man_btn">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="minimumSize">
+                         <size>
+                          <width>75</width>
+                          <height>0</height>
+                         </size>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <family>Lucida Sans Unicode</family>
+                          <pointsize>10</pointsize>
+                          <weight>75</weight>
+                          <bold>true</bold>
+                         </font>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">display:inline-block;
+border:0.1em solid black;
+margin:0 0.3em 0.3em 0;
+border-radius:0.12em;
+box-sizing: border-box;
+text-decoration:none;
+text-align:center;
+transition: all 0.2s;
+color: #7f849a</string>
+                        </property>
+                        <property name="text">
+                         <string>MANUAL</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QPushButton" name="auto_btn">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="minimumSize">
+                         <size>
+                          <width>75</width>
+                          <height>0</height>
+                         </size>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <family>Lucida Sans Unicode</family>
+                          <pointsize>10</pointsize>
+                          <weight>75</weight>
+                          <bold>true</bold>
+                         </font>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">display:inline-block;
+border:0.1em solid black;
+margin:0 0.3em 0.3em 0;
+border-radius:0.12em;
+box-sizing: border-box;
+text-decoration:none;
+text-align:center;
+transition: all 0.2s;
+color: #7f849a</string>
+                        </property>
+                        <property name="text">
+                         <string>AUTO</string>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </widget>
+                   </item>
+                   <item row="0" column="0">
+                    <widget class="QLabel" name="system_params_label">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="font">
+                      <font>
+                       <family>Leelawadee UI</family>
+                       <pointsize>14</pointsize>
+                       <weight>75</weight>
+                       <bold>true</bold>
+                       <underline>false</underline>
+                      </font>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">color: #7f849a;</string>
+                     </property>
+                     <property name="text">
+                      <string>SYSTEM PARAMETERS</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
+              <spacer name="verticalSpacer">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::MinimumExpanding</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
                 <size>
-                 <width>0</width>
-                 <height>90</height>
+                 <width>20</width>
+                 <height>40</height>
                 </size>
                </property>
-               <property name="font">
-                <font>
-                 <pointsize>18</pointsize>
-                 <weight>75</weight>
-                 <bold>true</bold>
-                </font>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QFrame" name="frame_2">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
                </property>
                <property name="styleSheet">
-                <string notr="true">background-color: rgb(76, 187, 23);
+                <string notr="true">background: #0f111d;
+border-radius: 10px;
+color: #7f849a;</string>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::Box</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QGridLayout" name="gridLayout_5">
+                <item row="0" column="0">
+                 <widget class="QWidget" name="widget" native="true">
+                  <property name="font">
+                   <font>
+                    <family>Leelawadee UI</family>
+                   </font>
+                  </property>
+                  <layout class="QGridLayout" name="gridLayout_4">
+                   <item row="0" column="0">
+                    <widget class="QLabel" name="man_con_label">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="font">
+                      <font>
+                       <family>Leelawadee UI</family>
+                       <pointsize>14</pointsize>
+                       <weight>75</weight>
+                       <bold>true</bold>
+                      </font>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">color: #7f849a;</string>
+                     </property>
+                     <property name="text">
+                      <string>MANUAL CONTROL (FOR TESTING ONLY)</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="1" column="0">
+                    <widget class="QWidget" name="gridWidget" native="true">
+                     <property name="minimumSize">
+                      <size>
+                       <width>30</width>
+                       <height>50</height>
+                      </size>
+                     </property>
+                     <layout class="QGridLayout" name="gridLayout">
+                      <item row="0" column="0">
+                       <widget class="QWidget" name="toggleSwitch" native="true">
+                        <layout class="QHBoxLayout" name="toggleswitch">
+                         <item>
+                          <widget class="QSlider" name="ignitor_man">
+                           <property name="sizePolicy">
+                            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                             <horstretch>0</horstretch>
+                             <verstretch>0</verstretch>
+                            </sizepolicy>
+                           </property>
+                           <property name="autoFillBackground">
+                            <bool>false</bool>
+                           </property>
+                           <property name="styleSheet">
+                            <string notr="true">QSlider::groove:horizontal { 
+	background-color: #181b2e;
+	border: 0px solid #424242; 
+	height: 10px; 
+	width: 40px;
+	border-radius: 4px;
+}
+
+QSlider::handle:horizontal { 
+	background-color: #7f849a; 
+	border: 2px solid #7f849a; 
+	width: 16px; 
+	height: 20px; 
+	line-height: 20px; 
+	margin-top: -5px; 
+	margin-bottom: -5px; 
+	border-radius: 10px; 
+}
+
+QSlider::handle:horizontal:hover { 
+	border-radius: 10px;
+}</string>
+                           </property>
+                           <property name="maximum">
+                            <number>1</number>
+                           </property>
+                           <property name="pageStep">
+                            <number>0</number>
+                           </property>
+                           <property name="sliderPosition">
+                            <number>0</number>
+                           </property>
+                           <property name="tracking">
+                            <bool>true</bool>
+                           </property>
+                           <property name="orientation">
+                            <enum>Qt::Horizontal</enum>
+                           </property>
+                           <property name="invertedAppearance">
+                            <bool>false</bool>
+                           </property>
+                           <property name="invertedControls">
+                            <bool>true</bool>
+                           </property>
+                           <property name="tickPosition">
+                            <enum>QSlider::NoTicks</enum>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QLabel" name="label_3">
+                           <property name="font">
+                            <font>
+                             <family>Lucida Sans</family>
+                             <pointsize>8</pointsize>
+                             <weight>50</weight>
+                             <italic>false</italic>
+                             <bold>false</bold>
+                             <underline>false</underline>
+                             <kerning>true</kerning>
+                            </font>
+                           </property>
+                           <property name="text">
+                            <string>IGNITOR</string>
+                           </property>
+                           <property name="alignment">
+                            <set>Qt::AlignCenter</set>
+                           </property>
+                          </widget>
+                         </item>
+                        </layout>
+                       </widget>
+                      </item>
+                      <item row="0" column="1">
+                       <widget class="QWidget" name="toggleSwitch_3" native="true">
+                        <layout class="QHBoxLayout" name="toggleswitch_3">
+                         <item>
+                          <widget class="QSlider" name="n2_flow_man">
+                           <property name="sizePolicy">
+                            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                             <horstretch>0</horstretch>
+                             <verstretch>0</verstretch>
+                            </sizepolicy>
+                           </property>
+                           <property name="autoFillBackground">
+                            <bool>false</bool>
+                           </property>
+                           <property name="styleSheet">
+                            <string notr="true">QSlider::groove:horizontal { 
+	background-color: #181b2e;
+	border: 0px solid #424242; 
+	height: 10px; 
+	width: 40px;
+	border-radius: 4px;
+}
+
+QSlider::handle:horizontal { 
+	background-color: #7f849a; 
+	border: 2px solid #7f849a; 
+	width: 16px; 
+	height: 20px; 
+	line-height: 20px; 
+	margin-top: -5px; 
+	margin-bottom: -5px; 
+	border-radius: 10px; 
+}
+
+QSlider::handle:horizontal:hover { 
+	border-radius: 10px;
+}</string>
+                           </property>
+                           <property name="maximum">
+                            <number>1</number>
+                           </property>
+                           <property name="pageStep">
+                            <number>0</number>
+                           </property>
+                           <property name="sliderPosition">
+                            <number>0</number>
+                           </property>
+                           <property name="tracking">
+                            <bool>true</bool>
+                           </property>
+                           <property name="orientation">
+                            <enum>Qt::Horizontal</enum>
+                           </property>
+                           <property name="invertedAppearance">
+                            <bool>false</bool>
+                           </property>
+                           <property name="invertedControls">
+                            <bool>true</bool>
+                           </property>
+                           <property name="tickPosition">
+                            <enum>QSlider::NoTicks</enum>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QLabel" name="label_4">
+                           <property name="font">
+                            <font>
+                             <family>Lucida Sans Unicode</family>
+                            </font>
+                           </property>
+                           <property name="text">
+                            <string>N2
+FLOW</string>
+                           </property>
+                           <property name="alignment">
+                            <set>Qt::AlignCenter</set>
+                           </property>
+                          </widget>
+                         </item>
+                        </layout>
+                       </widget>
+                      </item>
+                      <item row="0" column="2">
+                       <widget class="QWidget" name="toggleSwitch_4" native="true">
+                        <layout class="QHBoxLayout" name="toggleswitch_4">
+                         <item>
+                          <widget class="QSlider" name="n2o_flow_man">
+                           <property name="sizePolicy">
+                            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                             <horstretch>0</horstretch>
+                             <verstretch>0</verstretch>
+                            </sizepolicy>
+                           </property>
+                           <property name="autoFillBackground">
+                            <bool>false</bool>
+                           </property>
+                           <property name="styleSheet">
+                            <string notr="true">QSlider::groove:horizontal { 
+	background-color: #181b2e;
+	border: 0px solid #424242; 
+	height: 10px; 
+	width: 40px;
+	border-radius: 4px;
+}
+
+QSlider::handle:horizontal { 
+	background-color: #7f849a; 
+	border: 2px solid #7f849a; 
+	width: 16px; 
+	height: 20px; 
+	line-height: 20px; 
+	margin-top: -5px; 
+	margin-bottom: -5px; 
+	border-radius: 10px; 
+}
+
+QSlider::handle:horizontal:hover { 
+	border-radius: 10px;
+}</string>
+                           </property>
+                           <property name="maximum">
+                            <number>1</number>
+                           </property>
+                           <property name="pageStep">
+                            <number>0</number>
+                           </property>
+                           <property name="sliderPosition">
+                            <number>0</number>
+                           </property>
+                           <property name="tracking">
+                            <bool>true</bool>
+                           </property>
+                           <property name="orientation">
+                            <enum>Qt::Horizontal</enum>
+                           </property>
+                           <property name="invertedAppearance">
+                            <bool>false</bool>
+                           </property>
+                           <property name="invertedControls">
+                            <bool>true</bool>
+                           </property>
+                           <property name="tickPosition">
+                            <enum>QSlider::NoTicks</enum>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QLabel" name="label_5">
+                           <property name="font">
+                            <font>
+                             <family>Lucida Sans Unicode</family>
+                            </font>
+                           </property>
+                           <property name="text">
+                            <string>N2O
+ FLOW</string>
+                           </property>
+                           <property name="alignment">
+                            <set>Qt::AlignCenter</set>
+                           </property>
+                          </widget>
+                         </item>
+                        </layout>
+                       </widget>
+                      </item>
+                      <item row="0" column="4">
+                       <widget class="QWidget" name="toggleSwitch_2" native="true">
+                        <layout class="QHBoxLayout" name="toggleswitch_2">
+                         <item>
+                          <widget class="QSlider" name="purge_vent_man">
+                           <property name="sizePolicy">
+                            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                             <horstretch>0</horstretch>
+                             <verstretch>0</verstretch>
+                            </sizepolicy>
+                           </property>
+                           <property name="autoFillBackground">
+                            <bool>false</bool>
+                           </property>
+                           <property name="styleSheet">
+                            <string notr="true">QSlider::groove:horizontal { 
+	background-color: #181b2e;
+	border: 0px solid #424242; 
+	height: 10px; 
+	width: 40px;
+	border-radius: 4px;
+}
+
+QSlider::handle:horizontal { 
+	background-color: #7f849a; 
+	border: 2px solid #7f849a; 
+	width: 16px; 
+	height: 20px; 
+	line-height: 20px; 
+	margin-top: -5px; 
+	margin-bottom: -5px; 
+	border-radius: 10px; 
+}
+
+QSlider::handle:horizontal:hover { 
+	border-radius: 10px;
+}</string>
+                           </property>
+                           <property name="maximum">
+                            <number>1</number>
+                           </property>
+                           <property name="pageStep">
+                            <number>0</number>
+                           </property>
+                           <property name="sliderPosition">
+                            <number>0</number>
+                           </property>
+                           <property name="tracking">
+                            <bool>true</bool>
+                           </property>
+                           <property name="orientation">
+                            <enum>Qt::Horizontal</enum>
+                           </property>
+                           <property name="invertedAppearance">
+                            <bool>false</bool>
+                           </property>
+                           <property name="invertedControls">
+                            <bool>true</bool>
+                           </property>
+                           <property name="tickPosition">
+                            <enum>QSlider::NoTicks</enum>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QLabel" name="label_6">
+                           <property name="font">
+                            <font>
+                             <family>Lucida Sans Unicode</family>
+                            </font>
+                           </property>
+                           <property name="text">
+                            <string>PURGE
+VENT</string>
+                           </property>
+                           <property name="alignment">
+                            <set>Qt::AlignCenter</set>
+                           </property>
+                          </widget>
+                         </item>
+                        </layout>
+                       </widget>
+                      </item>
+                      <item row="2" column="0">
+                       <widget class="QWidget" name="toggleSwitch_5" native="true">
+                        <layout class="QHBoxLayout" name="toggleswitch_5">
+                         <item>
+                          <widget class="QSlider" name="mev_man">
+                           <property name="sizePolicy">
+                            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                             <horstretch>0</horstretch>
+                             <verstretch>0</verstretch>
+                            </sizepolicy>
+                           </property>
+                           <property name="autoFillBackground">
+                            <bool>false</bool>
+                           </property>
+                           <property name="styleSheet">
+                            <string notr="true">QSlider::groove:horizontal { 
+	background-color: #181b2e;
+	border: 0px solid #424242; 
+	height: 10px; 
+	width: 40px;
+	border-radius: 4px;
+}
+
+QSlider::handle:horizontal { 
+	background-color: #7f849a; 
+	border: 2px solid #7f849a; 
+	width: 16px; 
+	height: 20px; 
+	line-height: 20px; 
+	margin-top: -5px; 
+	margin-bottom: -5px; 
+	border-radius: 10px; 
+}
+
+QSlider::handle:horizontal:hover { 
+	border-radius: 10px;
+}</string>
+                           </property>
+                           <property name="maximum">
+                            <number>1</number>
+                           </property>
+                           <property name="pageStep">
+                            <number>0</number>
+                           </property>
+                           <property name="sliderPosition">
+                            <number>0</number>
+                           </property>
+                           <property name="tracking">
+                            <bool>true</bool>
+                           </property>
+                           <property name="orientation">
+                            <enum>Qt::Horizontal</enum>
+                           </property>
+                           <property name="invertedAppearance">
+                            <bool>false</bool>
+                           </property>
+                           <property name="invertedControls">
+                            <bool>true</bool>
+                           </property>
+                           <property name="tickPosition">
+                            <enum>QSlider::NoTicks</enum>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QLabel" name="label_7">
+                           <property name="font">
+                            <font>
+                             <family>Lucida Sans Unicode</family>
+                            </font>
+                           </property>
+                           <property name="text">
+                            <string>MEV</string>
+                           </property>
+                           <property name="alignment">
+                            <set>Qt::AlignCenter</set>
+                           </property>
+                          </widget>
+                         </item>
+                        </layout>
+                       </widget>
+                      </item>
+                      <item row="2" column="1">
+                       <widget class="QWidget" name="toggleSwitch_6" native="true">
+                        <layout class="QHBoxLayout" name="toggleswitch_6">
+                         <item>
+                          <widget class="QSlider" name="n2_vent_man">
+                           <property name="sizePolicy">
+                            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                             <horstretch>0</horstretch>
+                             <verstretch>0</verstretch>
+                            </sizepolicy>
+                           </property>
+                           <property name="autoFillBackground">
+                            <bool>false</bool>
+                           </property>
+                           <property name="styleSheet">
+                            <string notr="true">QSlider::groove:horizontal { 
+	background-color: #181b2e;
+	border: 0px solid #424242; 
+	height: 10px; 
+	width: 40px;
+	border-radius: 4px;
+}
+
+QSlider::handle:horizontal { 
+	background-color: #7f849a; 
+	border: 2px solid #7f849a; 
+	width: 16px; 
+	height: 20px; 
+	line-height: 20px; 
+	margin-top: -5px; 
+	margin-bottom: -5px; 
+	border-radius: 10px; 
+}
+
+QSlider::handle:horizontal:hover { 
+	border-radius: 10px;
+}</string>
+                           </property>
+                           <property name="maximum">
+                            <number>1</number>
+                           </property>
+                           <property name="pageStep">
+                            <number>0</number>
+                           </property>
+                           <property name="sliderPosition">
+                            <number>0</number>
+                           </property>
+                           <property name="tracking">
+                            <bool>true</bool>
+                           </property>
+                           <property name="orientation">
+                            <enum>Qt::Horizontal</enum>
+                           </property>
+                           <property name="invertedAppearance">
+                            <bool>false</bool>
+                           </property>
+                           <property name="invertedControls">
+                            <bool>true</bool>
+                           </property>
+                           <property name="tickPosition">
+                            <enum>QSlider::NoTicks</enum>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QLabel" name="label_8">
+                           <property name="font">
+                            <font>
+                             <family>Lucida Sans Unicode</family>
+                            </font>
+                           </property>
+                           <property name="text">
+                            <string>N2
+VENT</string>
+                           </property>
+                           <property name="alignment">
+                            <set>Qt::AlignCenter</set>
+                           </property>
+                          </widget>
+                         </item>
+                        </layout>
+                       </widget>
+                      </item>
+                      <item row="2" column="2">
+                       <widget class="QWidget" name="toggleSwitch_7" native="true">
+                        <layout class="QHBoxLayout" name="toggleswitch_7">
+                         <item>
+                          <widget class="QSlider" name="n2o_vent_man">
+                           <property name="sizePolicy">
+                            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                             <horstretch>0</horstretch>
+                             <verstretch>0</verstretch>
+                            </sizepolicy>
+                           </property>
+                           <property name="autoFillBackground">
+                            <bool>false</bool>
+                           </property>
+                           <property name="styleSheet">
+                            <string notr="true">QSlider::groove:horizontal { 
+	background-color: #181b2e;
+	border: 0px solid #424242; 
+	height: 10px; 
+	width: 40px;
+	border-radius: 4px;
+}
+
+QSlider::handle:horizontal { 
+	background-color: #7f849a; 
+	border: 2px solid #7f849a; 
+	width: 16px; 
+	height: 20px; 
+	line-height: 20px; 
+	margin-top: -5px; 
+	margin-bottom: -5px; 
+	border-radius: 10px; 
+}
+
+QSlider::handle:horizontal:hover { 
+	border-radius: 10px;
+}</string>
+                           </property>
+                           <property name="maximum">
+                            <number>1</number>
+                           </property>
+                           <property name="pageStep">
+                            <number>0</number>
+                           </property>
+                           <property name="sliderPosition">
+                            <number>0</number>
+                           </property>
+                           <property name="tracking">
+                            <bool>true</bool>
+                           </property>
+                           <property name="orientation">
+                            <enum>Qt::Horizontal</enum>
+                           </property>
+                           <property name="invertedAppearance">
+                            <bool>false</bool>
+                           </property>
+                           <property name="invertedControls">
+                            <bool>true</bool>
+                           </property>
+                           <property name="tickPosition">
+                            <enum>QSlider::NoTicks</enum>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QLabel" name="label_9">
+                           <property name="font">
+                            <font>
+                             <family>Lucida Sans Unicode</family>
+                            </font>
+                           </property>
+                           <property name="text">
+                            <string>N2O
+VENT</string>
+                           </property>
+                           <property name="alignment">
+                            <set>Qt::AlignCenter</set>
+                           </property>
+                          </widget>
+                         </item>
+                        </layout>
+                       </widget>
+                      </item>
+                      <item row="2" column="4">
+                       <widget class="QWidget" name="toggleSwitch_8" native="true">
+                        <layout class="QHBoxLayout" name="toggleswitch_8">
+                         <item>
+                          <widget class="QSlider" name="ncv_man">
+                           <property name="sizePolicy">
+                            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                             <horstretch>0</horstretch>
+                             <verstretch>0</verstretch>
+                            </sizepolicy>
+                           </property>
+                           <property name="autoFillBackground">
+                            <bool>false</bool>
+                           </property>
+                           <property name="styleSheet">
+                            <string notr="true">QSlider::groove:horizontal { 
+	background-color: #181b2e;
+	border: 0px solid #424242; 
+	height: 10px; 
+	width: 40px;
+	border-radius: 4px;
+}
+
+QSlider::handle:horizontal { 
+	background-color: #7f849a; 
+	border: 2px solid #7f849a; 
+	width: 16px; 
+	height: 20px; 
+	line-height: 20px; 
+	margin-top: -5px; 
+	margin-bottom: -5px; 
+	border-radius: 10px; 
+}
+
+QSlider::handle:horizontal:hover { 
+	border-radius: 10px;
+}</string>
+                           </property>
+                           <property name="maximum">
+                            <number>1</number>
+                           </property>
+                           <property name="pageStep">
+                            <number>0</number>
+                           </property>
+                           <property name="sliderPosition">
+                            <number>0</number>
+                           </property>
+                           <property name="tracking">
+                            <bool>true</bool>
+                           </property>
+                           <property name="orientation">
+                            <enum>Qt::Horizontal</enum>
+                           </property>
+                           <property name="invertedAppearance">
+                            <bool>false</bool>
+                           </property>
+                           <property name="invertedControls">
+                            <bool>true</bool>
+                           </property>
+                           <property name="tickPosition">
+                            <enum>QSlider::NoTicks</enum>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QLabel" name="label_10">
+                           <property name="font">
+                            <font>
+                             <family>Lucida Sans Unicode</family>
+                            </font>
+                           </property>
+                           <property name="text">
+                            <string>NCV</string>
+                           </property>
+                           <property name="alignment">
+                            <set>Qt::AlignCenter</set>
+                           </property>
+                          </widget>
+                         </item>
+                        </layout>
+                       </widget>
+                      </item>
+                     </layout>
+                    </widget>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
+              <spacer name="verticalSpacer_2">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::MinimumExpanding</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QFrame" name="frame_3">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background: #0f111d;
+border-radius: 10px;
+color: #7f849a;</string>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::Box</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QGridLayout" name="gridLayout_7">
+                <item row="2" column="0">
+                 <widget class="QWidget" name="widget" native="true">
+                  <layout class="QGridLayout" name="gridLayout_6">
+                   <item row="1" column="0">
+                    <widget class="QWidget" name="widget" native="true">
+                     <layout class="QHBoxLayout" name="horizontalLayout_3">
+                      <item>
+                       <widget class="QWidget" name="widget" native="true">
+                        <layout class="QVBoxLayout" name="verticalLayout_7">
+                         <item>
+                          <widget class="QWidget" name="widget_7" native="true">
+                           <property name="styleSheet">
+                            <string notr="true">background: #181b2e;
+border-radius: 10px;
+color: #7f849a;</string>
+                           </property>
+                           <layout class="QGridLayout" name="gridLayout_10">
+                            <item row="0" column="0">
+                             <widget class="QLabel" name="filling_label">
+                              <property name="font">
+                               <font>
+                                <family>Leelawadee UI Semilight</family>
+                                <pointsize>12</pointsize>
+                                <weight>75</weight>
+                                <bold>true</bold>
+                               </font>
+                              </property>
+                              <property name="text">
+                               <string>FILLING</string>
+                              </property>
+                             </widget>
+                            </item>
+                            <item row="1" column="0">
+                             <widget class="QGroupBox" name="horizontalGroupBox">
+                              <layout class="QHBoxLayout" name="horizontalLayout_4">
+                               <item>
+                                <widget class="QWidget" name="toggleSwitch_10" native="true">
+                                 <layout class="QHBoxLayout" name="toggleswitch_10">
+                                  <item>
+                                   <widget class="QSlider" name="n2o_flow_auto">
+                                    <property name="sizePolicy">
+                                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                                      <horstretch>0</horstretch>
+                                      <verstretch>0</verstretch>
+                                     </sizepolicy>
+                                    </property>
+                                    <property name="autoFillBackground">
+                                     <bool>false</bool>
+                                    </property>
+                                    <property name="styleSheet">
+                                     <string notr="true">QSlider::groove:horizontal { 
+	background-color: #0f111d; 
+	border: 0px solid #424242; 
+	height: 10px; 
+	width: 40px;
+	border-radius: 4px;
+}
+
+QSlider::handle:horizontal { 
+	background-color: #7f849a;
+	border: 2px solid #7f849a; 
+	width: 16px; 
+	height: 20px; 
+	line-height: 20px; 
+	margin-top: -5px; 
+	margin-bottom: -5px; 
+	border-radius: 10px; 
+}
+
+QSlider::handle:horizontal:hover { 
+	border-radius: 10px;
+}</string>
+                                    </property>
+                                    <property name="maximum">
+                                     <number>1</number>
+                                    </property>
+                                    <property name="pageStep">
+                                     <number>0</number>
+                                    </property>
+                                    <property name="sliderPosition">
+                                     <number>0</number>
+                                    </property>
+                                    <property name="tracking">
+                                     <bool>true</bool>
+                                    </property>
+                                    <property name="orientation">
+                                     <enum>Qt::Horizontal</enum>
+                                    </property>
+                                    <property name="invertedAppearance">
+                                     <bool>false</bool>
+                                    </property>
+                                    <property name="invertedControls">
+                                     <bool>true</bool>
+                                    </property>
+                                    <property name="tickPosition">
+                                     <enum>QSlider::NoTicks</enum>
+                                    </property>
+                                   </widget>
+                                  </item>
+                                  <item>
+                                   <widget class="QLabel" name="label_12">
+                                    <property name="font">
+                                     <font>
+                                      <family>Lucida Sans Unicode</family>
+                                     </font>
+                                    </property>
+                                    <property name="text">
+                                     <string>N2O
+FLOW</string>
+                                    </property>
+                                    <property name="alignment">
+                                     <set>Qt::AlignCenter</set>
+                                    </property>
+                                   </widget>
+                                  </item>
+                                 </layout>
+                                </widget>
+                               </item>
+                               <item>
+                                <widget class="QWidget" name="toggleSwitch_9" native="true">
+                                 <layout class="QHBoxLayout" name="toggleswitch_9">
+                                  <item>
+                                   <widget class="QSlider" name="n2_flow_auto">
+                                    <property name="sizePolicy">
+                                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                                      <horstretch>0</horstretch>
+                                      <verstretch>0</verstretch>
+                                     </sizepolicy>
+                                    </property>
+                                    <property name="autoFillBackground">
+                                     <bool>false</bool>
+                                    </property>
+                                    <property name="styleSheet">
+                                     <string notr="true">QSlider::groove:horizontal { 
+	background-color: #0f111d; 
+	border: 0px solid #424242; 
+	height: 10px; 
+	width: 40px;
+	border-radius: 4px;
+}
+
+QSlider::handle:horizontal { 
+	background-color: #7f849a;
+	border: 2px solid #7f849a; 
+	width: 16px; 
+	height: 20px; 
+	line-height: 20px; 
+	margin-top: -5px; 
+	margin-bottom: -5px; 
+	border-radius: 10px; 
+}
+
+QSlider::handle:horizontal:hover { 
+	border-radius: 10px;
+}</string>
+                                    </property>
+                                    <property name="maximum">
+                                     <number>1</number>
+                                    </property>
+                                    <property name="pageStep">
+                                     <number>0</number>
+                                    </property>
+                                    <property name="sliderPosition">
+                                     <number>0</number>
+                                    </property>
+                                    <property name="tracking">
+                                     <bool>true</bool>
+                                    </property>
+                                    <property name="orientation">
+                                     <enum>Qt::Horizontal</enum>
+                                    </property>
+                                    <property name="invertedAppearance">
+                                     <bool>false</bool>
+                                    </property>
+                                    <property name="invertedControls">
+                                     <bool>true</bool>
+                                    </property>
+                                    <property name="tickPosition">
+                                     <enum>QSlider::NoTicks</enum>
+                                    </property>
+                                   </widget>
+                                  </item>
+                                  <item>
+                                   <widget class="QLabel" name="label_11">
+                                    <property name="font">
+                                     <font>
+                                      <family>Lucida Sans Unicode</family>
+                                     </font>
+                                    </property>
+                                    <property name="text">
+                                     <string>N2
+FLOW</string>
+                                    </property>
+                                    <property name="alignment">
+                                     <set>Qt::AlignCenter</set>
+                                    </property>
+                                   </widget>
+                                  </item>
+                                 </layout>
+                                </widget>
+                               </item>
+                              </layout>
+                             </widget>
+                            </item>
+                           </layout>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QWidget" name="widget_8" native="true">
+                           <property name="styleSheet">
+                            <string notr="true">background: #181b2e;
+border-radius: 10px;
+color: #7f849a;</string>
+                           </property>
+                           <layout class="QGridLayout" name="gridLayout_11">
+                            <item row="0" column="0">
+                             <widget class="QLabel" name="filling_label_2">
+                              <property name="font">
+                               <font>
+                                <family>Leelawadee UI Semilight</family>
+                                <pointsize>12</pointsize>
+                                <weight>75</weight>
+                                <bold>true</bold>
+                               </font>
+                              </property>
+                              <property name="text">
+                               <string>VENTING</string>
+                              </property>
+                             </widget>
+                            </item>
+                            <item row="1" column="0">
+                             <widget class="QGroupBox" name="horizontalGroupBox_2">
+                              <layout class="QHBoxLayout" name="horizontalLayout_5">
+                               <item>
+                                <widget class="QWidget" name="toggleSwitch_11" native="true">
+                                 <layout class="QHBoxLayout" name="toggleswitch_11">
+                                  <item>
+                                   <widget class="QSlider" name="n2o_vent_auto">
+                                    <property name="sizePolicy">
+                                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                                      <horstretch>0</horstretch>
+                                      <verstretch>0</verstretch>
+                                     </sizepolicy>
+                                    </property>
+                                    <property name="autoFillBackground">
+                                     <bool>false</bool>
+                                    </property>
+                                    <property name="styleSheet">
+                                     <string notr="true">QSlider::groove:horizontal { 
+	background-color: #0f111d; 
+	border: 0px solid #424242; 
+	height: 10px; 
+	width: 40px;
+	border-radius: 4px;
+}
+
+QSlider::handle:horizontal { 
+	background-color: #7f849a;
+	border: 2px solid #7f849a; 
+	width: 16px; 
+	height: 20px; 
+	line-height: 20px; 
+	margin-top: -5px; 
+	margin-bottom: -5px; 
+	border-radius: 10px; 
+}
+
+QSlider::handle:horizontal:hover { 
+	border-radius: 10px;
+}</string>
+                                    </property>
+                                    <property name="maximum">
+                                     <number>1</number>
+                                    </property>
+                                    <property name="pageStep">
+                                     <number>0</number>
+                                    </property>
+                                    <property name="sliderPosition">
+                                     <number>0</number>
+                                    </property>
+                                    <property name="tracking">
+                                     <bool>true</bool>
+                                    </property>
+                                    <property name="orientation">
+                                     <enum>Qt::Horizontal</enum>
+                                    </property>
+                                    <property name="invertedAppearance">
+                                     <bool>false</bool>
+                                    </property>
+                                    <property name="invertedControls">
+                                     <bool>true</bool>
+                                    </property>
+                                    <property name="tickPosition">
+                                     <enum>QSlider::NoTicks</enum>
+                                    </property>
+                                   </widget>
+                                  </item>
+                                  <item>
+                                   <widget class="QLabel" name="label_13">
+                                    <property name="font">
+                                     <font>
+                                      <family>Lucida Sans Unicode</family>
+                                     </font>
+                                    </property>
+                                    <property name="text">
+                                     <string>N2O
+VENT</string>
+                                    </property>
+                                    <property name="alignment">
+                                     <set>Qt::AlignCenter</set>
+                                    </property>
+                                   </widget>
+                                  </item>
+                                 </layout>
+                                </widget>
+                               </item>
+                               <item>
+                                <widget class="QWidget" name="toggleSwitch_12" native="true">
+                                 <layout class="QHBoxLayout" name="toggleswitch_12">
+                                  <item>
+                                   <widget class="QSlider" name="n2_vent_auto">
+                                    <property name="sizePolicy">
+                                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                                      <horstretch>0</horstretch>
+                                      <verstretch>0</verstretch>
+                                     </sizepolicy>
+                                    </property>
+                                    <property name="autoFillBackground">
+                                     <bool>false</bool>
+                                    </property>
+                                    <property name="styleSheet">
+                                     <string notr="true">QSlider::groove:horizontal { 
+	background-color: #0f111d; 
+	border: 0px solid #424242; 
+	height: 10px; 
+	width: 40px;
+	border-radius: 4px;
+}
+
+QSlider::handle:horizontal { 
+	background-color: #7f849a;
+	border: 2px solid #7f849a; 
+	width: 16px; 
+	height: 20px; 
+	line-height: 20px; 
+	margin-top: -5px; 
+	margin-bottom: -5px; 
+	border-radius: 10px; 
+}
+
+QSlider::handle:horizontal:hover { 
+	border-radius: 10px;
+}</string>
+                                    </property>
+                                    <property name="maximum">
+                                     <number>1</number>
+                                    </property>
+                                    <property name="pageStep">
+                                     <number>0</number>
+                                    </property>
+                                    <property name="sliderPosition">
+                                     <number>0</number>
+                                    </property>
+                                    <property name="tracking">
+                                     <bool>true</bool>
+                                    </property>
+                                    <property name="orientation">
+                                     <enum>Qt::Horizontal</enum>
+                                    </property>
+                                    <property name="invertedAppearance">
+                                     <bool>false</bool>
+                                    </property>
+                                    <property name="invertedControls">
+                                     <bool>true</bool>
+                                    </property>
+                                    <property name="tickPosition">
+                                     <enum>QSlider::NoTicks</enum>
+                                    </property>
+                                   </widget>
+                                  </item>
+                                  <item>
+                                   <widget class="QLabel" name="label_14">
+                                    <property name="font">
+                                     <font>
+                                      <family>Lucida Sans Unicode</family>
+                                     </font>
+                                    </property>
+                                    <property name="text">
+                                     <string>N2
+VENT</string>
+                                    </property>
+                                    <property name="alignment">
+                                     <set>Qt::AlignCenter</set>
+                                    </property>
+                                   </widget>
+                                  </item>
+                                 </layout>
+                                </widget>
+                               </item>
+                               <item>
+                                <widget class="QWidget" name="toggleSwitch_13" native="true">
+                                 <layout class="QHBoxLayout" name="toggleswitch_13">
+                                  <item>
+                                   <widget class="QSlider" name="purge_vent_auto">
+                                    <property name="sizePolicy">
+                                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                                      <horstretch>0</horstretch>
+                                      <verstretch>0</verstretch>
+                                     </sizepolicy>
+                                    </property>
+                                    <property name="autoFillBackground">
+                                     <bool>false</bool>
+                                    </property>
+                                    <property name="styleSheet">
+                                     <string notr="true">QSlider::groove:horizontal { 
+	background-color: #0f111d; 
+	border: 0px solid #424242; 
+	height: 10px; 
+	width: 40px;
+	border-radius: 4px;
+}
+
+QSlider::handle:horizontal { 
+	background-color: #7f849a;
+	border: 2px solid #7f849a; 
+	width: 16px; 
+	height: 20px; 
+	line-height: 20px; 
+	margin-top: -5px; 
+	margin-bottom: -5px; 
+	border-radius: 10px; 
+}
+
+QSlider::handle:horizontal:hover { 
+	border-radius: 10px;
+}</string>
+                                    </property>
+                                    <property name="maximum">
+                                     <number>1</number>
+                                    </property>
+                                    <property name="pageStep">
+                                     <number>0</number>
+                                    </property>
+                                    <property name="sliderPosition">
+                                     <number>0</number>
+                                    </property>
+                                    <property name="tracking">
+                                     <bool>true</bool>
+                                    </property>
+                                    <property name="orientation">
+                                     <enum>Qt::Horizontal</enum>
+                                    </property>
+                                    <property name="invertedAppearance">
+                                     <bool>false</bool>
+                                    </property>
+                                    <property name="invertedControls">
+                                     <bool>true</bool>
+                                    </property>
+                                    <property name="tickPosition">
+                                     <enum>QSlider::NoTicks</enum>
+                                    </property>
+                                   </widget>
+                                  </item>
+                                  <item>
+                                   <widget class="QLabel" name="label_15">
+                                    <property name="font">
+                                     <font>
+                                      <family>Lucida Sans Unicode</family>
+                                     </font>
+                                    </property>
+                                    <property name="text">
+                                     <string>PURGE
+VENT</string>
+                                    </property>
+                                    <property name="alignment">
+                                     <set>Qt::AlignCenter</set>
+                                    </property>
+                                   </widget>
+                                  </item>
+                                 </layout>
+                                </widget>
+                               </item>
+                              </layout>
+                             </widget>
+                            </item>
+                           </layout>
+                          </widget>
+                         </item>
+                        </layout>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QPushButton" name="abort_btn">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Minimum" vsizetype="MinimumExpanding">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="minimumSize">
+                         <size>
+                          <width>0</width>
+                          <height>80</height>
+                         </size>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <family>Leelawadee UI</family>
+                          <pointsize>12</pointsize>
+                          <weight>75</weight>
+                          <bold>true</bold>
+                          <underline>false</underline>
+                          <strikeout>false</strikeout>
+                         </font>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">display:inline-block;
+padding:0.5em 0.5em;
+background-color: rgb(255,0,0);
+box-sizing: border-box;
+text-decoration:none;
+color:#000000;
+text-align:center;
+transition: all 0.2s;
+border-radius: 10px;</string>
+                        </property>
+                        <property name="text">
+                         <string>ABORT</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QPushButton" name="fire_btn">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Minimum" vsizetype="MinimumExpanding">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="minimumSize">
+                         <size>
+                          <width>0</width>
+                          <height>80</height>
+                         </size>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <family>Leelawadee UI</family>
+                          <pointsize>12</pointsize>
+                          <weight>75</weight>
+                          <bold>true</bold>
+                          <underline>false</underline>
+                          <strikeout>false</strikeout>
+                         </font>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">background-color: rgb(76, 187, 23);
 display:inline-block;
 padding:0.5em 0.5em;
 box-sizing: border-box;
@@ -525,268 +1847,85 @@ color:#000000;
 text-align:center;
 transition: all 0.2s;
 border-radius: 10px;</string>
-               </property>
-               <property name="text">
-                <string>RUN</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="abort_btn">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>90</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>18</pointsize>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">display:inline-block;
+                        </property>
+                        <property name="text">
+                         <string>FIRE</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QPushButton" name="vent_all_btn">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Minimum" vsizetype="MinimumExpanding">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="minimumSize">
+                         <size>
+                          <width>0</width>
+                          <height>80</height>
+                         </size>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <family>Leelawadee UI</family>
+                          <pointsize>12</pointsize>
+                          <weight>75</weight>
+                          <bold>true</bold>
+                          <underline>false</underline>
+                          <strikeout>false</strikeout>
+                         </font>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">background-color: rgb(255,255,51);
+display:inline-block;
 padding:0.5em 0.5em;
-background-color: rgb(255,0,0);
 box-sizing: border-box;
 text-decoration:none;
 color:#000000;
 text-align:center;
 transition: all 0.2s;
-</string>
-            </property>
-            <property name="text">
-             <string>ABORT</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="5" column="0">
-        <widget class="QFrame" name="N2_frame">
-         <property name="styleSheet">
-          <string notr="true">border: 0px;background: #181b2e;border-radius: 10px;</string>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Plain</enum>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout">
-          <item>
-           <widget class="QLabel" name="label_N2">
-            <property name="font">
-             <font>
-              <pointsize>12</pointsize>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">
-border: none;color: #7f849a</string>
-            </property>
-            <property name="text">
-             <string>N2 FLOW</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="N2_btn_off">
-            <property name="styleSheet">
-             <string notr="true">font: 12pt &quot;Segoe UI&quot;;
-display:inline-block;
-padding:0.35em 1.2em;
-border:0.1em solid #3f3f3f;
-margin:0 0.3em 0.3em 0;
-border-radius:0.12em;
-box-sizing: border-box;
-text-decoration:none;
-font-family:'Roboto',sans-serif;
-font-weight:300;
-color: #437596;
-text-align:center;
-transition: all 0.2s;</string>
-            </property>
-            <property name="text">
-             <string>CLOSED</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="N2_btn_on">
-            <property name="styleSheet">
-             <string notr="true">font: 12pt &quot;Segoe UI&quot;;
-display:inline-block;
-padding:0.35em 1.2em;
-border:0.1em solid #3f3f3f;
-margin:0 0.3em 0.3em 0;
-border-radius:0.12em;
-box-sizing: border-box;
-text-decoration:none;
-font-family:'Roboto',sans-serif;
-font-weight:300;
-color: #437596;
-text-align:center;
-transition: all 0.2s;</string>
-            </property>
-            <property name="text">
-             <string>OPEN</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="1" column="0" colspan="2">
-        <widget class="QFrame" name="test_parms_frame">
-         <property name="styleSheet">
-          <string notr="true">background: #181b2e;border-radius: 10px;</string>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Plain</enum>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_2">
-          <item row="2" column="1">
-           <widget class="QFrame" name="BD_frame_2">
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_6">
-             <item>
-              <widget class="QLabel" name="BD_label_2">
-               <property name="font">
-                <font>
-                 <pointsize>10</pointsize>
-                 <weight>75</weight>
-                 <bold>true</bold>
-                </font>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">color: #7f849a</string>
-               </property>
-               <property name="text">
-                <string>MEV OPEN (%)</string>
-               </property>
+border-radius: 10px;</string>
+                        </property>
+                        <property name="text">
+                         <string>VENT
+ALL</string>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </widget>
+                   </item>
+                   <item row="0" column="0">
+                    <widget class="QLabel" name="auto_con_label">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="font">
+                      <font>
+                       <family>Leelawadee UI</family>
+                       <pointsize>14</pointsize>
+                       <weight>75</weight>
+                       <bold>true</bold>
+                      </font>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">color: #7f849a;</string>
+                     </property>
+                     <property name="text">
+                      <string>AUTO CONTROL</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+               </layout>
               </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="BD_lineEdit_2"/>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QFrame" name="BD_frame">
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_3">
-             <item>
-              <widget class="QLabel" name="BD_label">
-               <property name="font">
-                <font>
-                 <pointsize>10</pointsize>
-                 <weight>75</weight>
-                 <bold>true</bold>
-                </font>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">color: #7f849a</string>
-               </property>
-               <property name="text">
-                <string>BURN DURATION (s)</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="BD_lineEdit"/>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item row="0" column="2">
-           <widget class="QFrame" name="ID_frame">
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_4">
-             <item>
-              <widget class="QLabel" name="ID_label">
-               <property name="font">
-                <font>
-                 <pointsize>10</pointsize>
-                 <weight>75</weight>
-                 <bold>true</bold>
-                </font>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">color: #7f849a</string>
-               </property>
-               <property name="text">
-                <string>IGNITOR DELAY (s)</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="lineEdit_3"/>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item row="2" column="2">
-           <widget class="QFrame" name="BD_frame_3">
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_7">
-             <item>
-              <widget class="QLabel" name="BD_label_3">
-               <property name="font">
-                <font>
-                 <pointsize>10</pointsize>
-                 <weight>75</weight>
-                 <bold>true</bold>
-                </font>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">color: #7f849a</string>
-               </property>
-               <property name="text">
-                <string>SYSTEM OPEN (%)</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="BD_lineEdit_3"/>
              </item>
             </layout>
            </widget>
@@ -794,477 +1933,49 @@ transition: all 0.2s;</string>
          </layout>
         </widget>
        </item>
-       <item row="6" column="0">
-        <widget class="QFrame" name="NCV_frame">
-         <property name="styleSheet">
-          <string notr="true">border: 0px;background: #181b2e;border-radius: 10px;</string>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Plain</enum>
-         </property>
-         <property name="lineWidth">
-          <number>0</number>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_7">
-          <item>
-           <widget class="QLabel" name="label">
-            <property name="font">
-             <font>
-              <family>MS Shell Dlg 2</family>
-              <pointsize>12</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">
-border: none;color: #7f849a</string>
-            </property>
-            <property name="text">
-             <string>NORMALLY CLOSED VALVE</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="NCV_btn_off">
-            <property name="styleSheet">
-             <string notr="true">font: 12pt &quot;Segoe UI&quot;;
-display:inline-block;
-padding:0.35em 1.2em;
-border:0.1em solid #3f3f3f;
-margin:0 0.3em 0.3em 0;
-border-radius:0.12em;
-box-sizing: border-box;
-text-decoration:none;
-font-family:'Roboto',sans-serif;
-font-weight:300;
-color: #437596;
-text-align:center;
-transition: all 0.2s;</string>
-            </property>
-            <property name="text">
-             <string>CLOSED</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="NCV_btn_on">
-            <property name="styleSheet">
-             <string notr="true">font: 12pt &quot;Segoe UI&quot;;
-display:inline-block;
-padding:0.35em 1.2em;
-border:0.1em solid #3f3f3f;
-margin:0 0.3em 0.3em 0;
-border-radius:0.12em;
-box-sizing: border-box;
-text-decoration:none;
-font-family:'Roboto',sans-serif;
-font-weight:300;
-color: #437596;
-text-align:center;
-transition: all 0.2s;</string>
-            </property>
-            <property name="text">
-             <string>OPEN</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="7" column="0">
-        <widget class="QFrame" name="MEV_frame">
-         <property name="styleSheet">
-          <string notr="true">border: 0px;background: #181b2e;border-radius: 10px;</string>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Plain</enum>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_4">
-          <item>
-           <widget class="QLabel" name="label_MEV">
-            <property name="font">
-             <font>
-              <pointsize>12</pointsize>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">
-border: none;color: #7f849a</string>
-            </property>
-            <property name="text">
-             <string>MAIN ENGINE VALVE</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="MEV_btn_off">
-            <property name="styleSheet">
-             <string notr="true">font: 12pt &quot;Segoe UI&quot;;
-display:inline-block;
-padding:0.35em 1.2em;
-border:0.1em solid #3f3f3f;
-margin:0 0.3em 0.3em 0;
-border-radius:0.12em;
-box-sizing: border-box;
-text-decoration:none;
-font-family:'Roboto',sans-serif;
-font-weight:300;
-color: #437596;
-text-align:center;
-transition: all 0.2s;</string>
-            </property>
-            <property name="text">
-             <string>CLOSED</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="MEV_btn_on">
-            <property name="styleSheet">
-             <string notr="true">font: 12pt &quot;Segoe UI&quot;;
-display:inline-block;
-padding:0.35em 1.2em;
-border:0.1em solid #3f3f3f;
-margin:0 0.3em 0.3em 0;
-border-radius:0.12em;
-box-sizing: border-box;
-text-decoration:none;
-font-family:'Roboto',sans-serif;
-font-weight:300;
-color: #437596;
-text-align:center;
-transition: all 0.2s;</string>
-            </property>
-            <property name="text">
-             <string>OPEN</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item>
-     <widget class="QFrame" name="column2_frame">
-      <property name="styleSheet">
-       <string notr="true">min-width: 300px;
-max-width: 500px;
-background: #0f111d</string>
-      </property>
-      <property name="frameShape">
-       <enum>QFrame::StyledPanel</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Raised</enum>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_11" stretch="0">
-       <property name="spacing">
-        <number>14</number>
-       </property>
-       <property name="sizeConstraint">
-        <enum>QLayout::SetNoConstraint</enum>
-       </property>
-       <property name="leftMargin">
-        <number>9</number>
-       </property>
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <property name="bottomMargin">
-        <number>0</number>
-       </property>
        <item>
-        <widget class="QFrame" name="print_sys_frame">
-         <property name="focusPolicy">
-          <enum>Qt::NoFocus</enum>
-         </property>
-         <property name="contextMenuPolicy">
-          <enum>Qt::DefaultContextMenu</enum>
-         </property>
-         <property name="layoutDirection">
-          <enum>Qt::LeftToRight</enum>
-         </property>
+        <widget class="QWidget" name="widget" native="true">
          <property name="styleSheet">
-          <string notr="true">border: 0px</string>
+          <string notr="true"/>
          </property>
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Sunken</enum>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_9">
-          <property name="topMargin">
-           <number>9</number>
-          </property>
+         <layout class="QVBoxLayout" name="verticalLayout_5">
           <item>
-           <widget class="QLabel" name="label_sys_info">
+           <widget class="QLabel" name="schematic_label">
             <property name="font">
              <font>
-              <pointsize>20</pointsize>
+              <family>Leelawadee UI</family>
+              <pointsize>14</pointsize>
               <weight>75</weight>
               <bold>true</bold>
              </font>
             </property>
-            <property name="styleSheet">
-             <string notr="true">color: #7f849a</string>
-            </property>
-            <property name="text">
-             <string>System Information</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QFrame" name="sys_info_frame">
             <property name="autoFillBackground">
              <bool>false</bool>
             </property>
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Sunken</enum>
-            </property>
-            <property name="lineWidth">
-             <number>0</number>
-            </property>
-            <layout class="QVBoxLayout" name="verticalLayout_10">
-             <property name="topMargin">
-              <number>9</number>
-             </property>
-             <property name="bottomMargin">
-              <number>9</number>
-             </property>
-             <item>
-              <widget class="QLabel" name="label_3">
-               <property name="font">
-                <font>
-                 <pointsize>10</pointsize>
-                 <weight>75</weight>
-                 <bold>true</bold>
-                </font>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">color: #7f849a</string>
-               </property>
-               <property name="text">
-                <string>IP Address</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="lineEdit_IPaddress">
-               <property name="minimumSize">
-                <size>
-                 <width>300</width>
-                 <height>30</height>
-                </size>
-               </property>
-               <property name="font">
-                <font>
-                 <family>Consolas</family>
-                 <pointsize>12</pointsize>
-                 <weight>75</weight>
-                 <bold>true</bold>
-                </font>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background: #181b2e;
-border-radius: 10px;
-color: #7f849a;</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="disconnect_btn">
-               <property name="minimumSize">
-                <size>
-                 <width>309</width>
-                 <height>50</height>
-                </size>
-               </property>
-               <property name="font">
-                <font>
-                 <pointsize>12</pointsize>
-                 <weight>75</weight>
-                 <bold>true</bold>
-                 <underline>false</underline>
-                 <strikeout>false</strikeout>
-                </font>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">display:inline-block;
-border:0.1em solid black;
-margin:0 0.3em 0.3em 0;
-border-radius:0.12em;
-box-sizing: border-box;
-text-decoration:none;
-text-align:center;
-transition: all 0.2s;
-color: #7f849a</string>
-               </property>
-               <property name="text">
-                <string>Disconnect</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="connect_btn">
-               <property name="minimumSize">
-                <size>
-                 <width>309</width>
-                 <height>50</height>
-                </size>
-               </property>
-               <property name="font">
-                <font>
-                 <family>MS Shell Dlg 2</family>
-                 <pointsize>12</pointsize>
-                 <weight>75</weight>
-                 <bold>true</bold>
-                 <underline>false</underline>
-                 <strikeout>false</strikeout>
-                </font>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">display:inline-block;
-border:0.1em solid black;
-margin:0 0.3em 0.3em 0;
-border-radius:0.12em;
-box-sizing: border-box;
-text-decoration:none;
-text-align:center;
-transition: all 0.2s;
-color: #7f849a</string>
-               </property>
-               <property name="text">
-                <string>Connect</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_date_time">
-               <property name="font">
-                <font>
-                 <pointsize>10</pointsize>
-                 <weight>75</weight>
-                 <bold>true</bold>
-                </font>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">color: #7f849a</string>
-               </property>
-               <property name="text">
-                <string>Date/Time</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="date_time">
-               <property name="minimumSize">
-                <size>
-                 <width>300</width>
-                 <height>30</height>
-                </size>
-               </property>
-               <property name="font">
-                <font>
-                 <family>Consolas</family>
-                 <pointsize>12</pointsize>
-                 <weight>75</weight>
-                 <bold>true</bold>
-                </font>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background: #181b2e;
-border-radius: 10px;
-color: #7f849a;</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_last_update">
-               <property name="font">
-                <font>
-                 <pointsize>10</pointsize>
-                 <weight>75</weight>
-                 <bold>true</bold>
-                </font>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">color: #7f849a</string>
-               </property>
-               <property name="text">
-                <string>Last Update</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="last_update">
-               <property name="minimumSize">
-                <size>
-                 <width>300</width>
-                 <height>30</height>
-                </size>
-               </property>
-               <property name="font">
-                <font>
-                 <family>Consolas</family>
-                 <pointsize>12</pointsize>
-                 <weight>75</weight>
-                 <bold>true</bold>
-                </font>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background: #181b2e;
-border-radius: 10px;
-color: #7f849a;</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="label_sys_status">
-            <property name="font">
-             <font>
-              <family>MS Shell Dlg 2</family>
-              <pointsize>20</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-             </font>
-            </property>
             <property name="styleSheet">
-             <string notr="true">color: #7f849a</string>
+             <string notr="true">color: #7f849a;</string>
             </property>
             <property name="text">
-             <string>System Status</string>
+             <string>SCHEMATIC</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QPlainTextEdit" name="statusbox">
+           <widget class="QLabel" name="schematic">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="font">
              <font>
-              <family>Consolas</family>
-              <pointsize>16</pointsize>
+              <pointsize>14</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
              </font>
             </property>
             <property name="autoFillBackground">
@@ -1273,38 +1984,372 @@ color: #7f849a;</string>
             <property name="styleSheet">
              <string notr="true">background: #181b2e;
 border-radius: 10px;
+background-image: url(:/newPrefix/MULE-1_PID_for_GUI.png);
 color: #7f849a;</string>
-            </property>
-            <property name="verticalScrollBarPolicy">
-             <enum>Qt::ScrollBarAlwaysOff</enum>
-            </property>
-            <property name="horizontalScrollBarPolicy">
-             <enum>Qt::ScrollBarAlwaysOff</enum>
-            </property>
-            <property name="readOnly">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item alignment="Qt::AlignHCenter">
-           <widget class="QLabel" name="label_2">
-            <property name="styleSheet">
-             <string notr="true">float:right;</string>
             </property>
             <property name="text">
              <string/>
             </property>
             <property name="pixmap">
-             <pixmap>../../lemie/Downloads/ENGR 120/uvic_rocketry_logo.png</pixmap>
+             <pixmap resource="images/schematic.qrc">:/newPrefix/MULE-1_PID_for_GUI.png</pixmap>
+            </property>
+            <property name="scaledContents">
+             <bool>true</bool>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
             </property>
            </widget>
           </item>
          </layout>
-         <zorder>sys_info_frame</zorder>
-         <zorder>label_2</zorder>
-         <zorder>label_sys_info</zorder>
-         <zorder>statusbox</zorder>
-         <zorder>label_sys_status</zorder>
+        </widget>
+       </item>
+       <item>
+        <widget class="QFrame" name="frame_4">
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <widget class="QWidget" name="widget" native="true">
+            <property name="styleSheet">
+             <string notr="true">background: #0f111d;
+border-radius: 10px;
+color: #7f849a;</string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_2">
+             <item>
+              <widget class="QFrame" name="frame_5">
+               <property name="frameShape">
+                <enum>QFrame::NoFrame</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QGridLayout" name="gridLayout_9">
+                <item row="3" column="0">
+                 <widget class="QFrame" name="frame_10">
+                  <property name="frameShape">
+                   <enum>QFrame::NoFrame</enum>
+                  </property>
+                  <property name="frameShadow">
+                   <enum>QFrame::Plain</enum>
+                  </property>
+                  <layout class="QVBoxLayout" name="verticalLayout_11">
+                   <item>
+                    <widget class="QWidget" name="widget" native="true">
+                     <layout class="QVBoxLayout" name="verticalLayout_10">
+                      <item>
+                       <widget class="QLabel" name="label">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <family>Leelawadee UI</family>
+                          <pointsize>14</pointsize>
+                          <weight>75</weight>
+                          <bold>true</bold>
+                         </font>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">color: #7f849a;</string>
+                        </property>
+                        <property name="text">
+                         <string>SYSTEM STATUS</string>
+                        </property>
+                        <property name="alignment">
+                         <set>Qt::AlignCenter</set>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QPlainTextEdit" name="statusbox">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <pointsize>16</pointsize>
+                         </font>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">background: #181b2e;
+border-radius: 10px;
+color: #7f849a;</string>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </widget>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+                <item row="0" column="0">
+                 <widget class="QFrame" name="frame_11">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="frameShape">
+                   <enum>QFrame::NoFrame</enum>
+                  </property>
+                  <property name="frameShadow">
+                   <enum>QFrame::Raised</enum>
+                  </property>
+                  <layout class="QGridLayout" name="gridLayout_15">
+                   <item row="2" column="0">
+                    <widget class="QPushButton" name="connect_btn">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="minimumSize">
+                      <size>
+                       <width>0</width>
+                       <height>40</height>
+                      </size>
+                     </property>
+                     <property name="font">
+                      <font>
+                       <family>Lucida Sans Unicode</family>
+                       <pointsize>12</pointsize>
+                       <weight>75</weight>
+                       <bold>true</bold>
+                       <underline>false</underline>
+                       <strikeout>false</strikeout>
+                      </font>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">display:inline-block;
+border:0.1em solid black;
+margin:0 0.3em 0.3em 0;
+border-radius:0.12em;
+box-sizing: border-box;
+text-decoration:none;
+text-align:center;
+transition: all 0.2s;
+color: #7f849a</string>
+                     </property>
+                     <property name="text">
+                      <string>Connect</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="1" column="0">
+                    <widget class="QWidget" name="widget" native="true">
+                     <layout class="QGridLayout" name="gridLayout_8">
+                      <item row="2" column="0">
+                       <widget class="QLabel" name="date_time_label">
+                        <property name="font">
+                         <font>
+                          <family>Lucida Sans Unicode</family>
+                          <pointsize>10</pointsize>
+                          <weight>75</weight>
+                          <bold>true</bold>
+                         </font>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">color: #7f849a;</string>
+                        </property>
+                        <property name="text">
+                         <string>Date / Time</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="4" column="0">
+                       <widget class="QLabel" name="last_update_label">
+                        <property name="font">
+                         <font>
+                          <family>Lucida Sans Unicode</family>
+                          <pointsize>10</pointsize>
+                          <weight>75</weight>
+                          <bold>true</bold>
+                         </font>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">color: #7f849a;</string>
+                        </property>
+                        <property name="text">
+                         <string>Last Update (ms)</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="0" column="0">
+                       <widget class="QLabel" name="IP_address_label">
+                        <property name="font">
+                         <font>
+                          <family>Lucida Sans Unicode</family>
+                          <pointsize>10</pointsize>
+                          <weight>75</weight>
+                          <bold>true</bold>
+                         </font>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">color: #7f849a;</string>
+                        </property>
+                        <property name="text">
+                         <string>IP ADDRESS</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="1" column="0">
+                       <widget class="QLineEdit" name="IPaddress">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <family>Consolas</family>
+                          <pointsize>12</pointsize>
+                         </font>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">background: #181b2e;
+border-radius: 10px;
+color: #7f849a;</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="3" column="0">
+                       <widget class="QLineEdit" name="date_time">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <family>Consolas</family>
+                          <pointsize>12</pointsize>
+                         </font>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">background: #181b2e;
+border-radius: 10px;
+color: #7f849a;</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="5" column="0">
+                       <widget class="QLineEdit" name="last_update">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <family>Consolas</family>
+                          <pointsize>12</pointsize>
+                         </font>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">background: #181b2e;
+border-radius: 10px;
+color: #7f849a;</string>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </widget>
+                   </item>
+                   <item row="3" column="0">
+                    <widget class="QPushButton" name="disconnect_btn">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="minimumSize">
+                      <size>
+                       <width>0</width>
+                       <height>40</height>
+                      </size>
+                     </property>
+                     <property name="font">
+                      <font>
+                       <family>Lucida Sans Unicode</family>
+                       <pointsize>12</pointsize>
+                       <weight>75</weight>
+                       <bold>true</bold>
+                       <underline>false</underline>
+                       <strikeout>false</strikeout>
+                      </font>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">display:inline-block;
+border:0.1em solid black;
+margin:0 0.3em 0.3em 0;
+border-radius:0.12em;
+box-sizing: border-box;
+text-decoration:none;
+text-align:center;
+transition: all 0.2s;
+color: #7f849a</string>
+                     </property>
+                     <property name="text">
+                      <string>Disconnect</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="0" column="0">
+                    <widget class="QLabel" name="label_2">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="font">
+                      <font>
+                       <family>Leelawadee UI</family>
+                       <pointsize>14</pointsize>
+                       <weight>75</weight>
+                       <bold>true</bold>
+                      </font>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">color: #7f849a;</string>
+                     </property>
+                     <property name="text">
+                      <string>SYSTEM INFORMATION</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignCenter</set>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
       </layout>
@@ -1312,8 +2357,9 @@ color: #7f849a;</string>
     </item>
    </layout>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
  </widget>
- <resources/>
+ <resources>
+  <include location="images/schematic.qrc"/>
+ </resources>
  <connections/>
 </ui>
