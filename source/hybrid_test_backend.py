@@ -3,7 +3,7 @@ from PyQt5.QtCore import QTimer, QDateTime, QThread, pyqtSignal, Qt, QRect
 from PyQt5.QtWidgets import QFileDialog
 import sys
 import server
-HOST = '192.168.0.124'
+HOST = '192.168.0.106'
 PORT = 9999
 
 
@@ -390,7 +390,7 @@ class MainWindow(QtWidgets.QMainWindow):
         # MANUAL and AUTO Buttons
         #these buttons will disable the other control category 
         #if Manual is toggled on then the auto buttons will be disabled
-    def _man_btn(self):#TODO:update toggles to use state params to make the toggle.
+    def _man_btn(self):
         
         if self.toggle_man == False:
             self.toggle_man = True
