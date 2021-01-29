@@ -105,12 +105,13 @@ class Controller:
         }
 
         self.client = None
+        self.status_thread = threading.Thread(target=self.state_update())
+        self.status_thread.daemon = False
+        self.status_thread.start()
 
     def write_to_serial(self, command):
         pass
         #some code that writes to serial
-
-    # TODO send all states every cycle, read to file, write to file
 
     def state_update(self):
 
