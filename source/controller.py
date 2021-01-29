@@ -105,23 +105,51 @@ class Controller:
         }
 
         self.client = None
-        self.status_thread = threading.Thread(target=self.state_update())
-        self.status_thread.daemon = False
-        self.status_thread.start()
 
     def write_to_serial(self, command):
-        pass
+        self.state_update()
         #some code that writes to serial
 
     def state_update(self):
 
-        while True:
-            for i in self.states:
-                self.client.send_states(f"{i} {self.states[i]}")
+        for i in self.states:
+            self.client.send_states(f"{i} {self.states[i]}")
 
     def set_state(self, param, state):
         func = getattr('self', f"{self.funcs[param]}")
         func(state)
+
+    def set_igniter(self, param):
+        self.write_to_serial()
+
+    def set_MEV(self, param):
+        self.write_to_serial()
+
+    def set_N20V(self, param):
+        self.write_to_serial()
+
+    def set_N20(self, param):
+        self.write_to_serial()
+
+    def set_N2(self, param):
+        self.write_to_serial()
+
+    def set_NCV(self, param):
+        self.write_to_serial()
+
+    def set_RV(self, param):
+        self.write_to_serial()
+
+    def set_VV(self, param):
+        self.write_to_serial()
+
+    def abort(self, param):
+        self.write_to_serial()
+
+    def run(self, param):
+        self.write_to_serial()
+
+
 
 
 def main():
