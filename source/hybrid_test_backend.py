@@ -3,7 +3,7 @@ from PyQt5.QtCore import QTimer, QDateTime, QThread, pyqtSignal, Qt, QRect
 from PyQt5.QtWidgets import QFileDialog
 import sys
 import server
-HOST = '192.168.0.124'
+HOST = '192.168.0.106'
 PORT = 9999
 
 
@@ -433,6 +433,7 @@ class MainWindow(QtWidgets.QMainWindow):
         # MANUAL and AUTO Buttons
         #these buttons will disable the other control category 
         #if Manual is toggled on then the auto buttons will be disabled
+<<<<<<< HEAD
     def _save_states(self):#TODO: Connor do the config save file in this function
         self._duration()
         self._mev_open()
@@ -440,6 +441,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self._mev_open_speed()
         #save file code
     
+=======
+>>>>>>> 9ebcffdf0c4e5c26cc0824b8d06843a8d3087088
     def _man_btn(self):
         
         if self.toggle_man == False:

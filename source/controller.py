@@ -1,13 +1,17 @@
 """
 This file takes input from the engine stepper motors and other elements
 from the PCB and PI and decodes the data into information that the GUI back end
-can read and send it through a Client object from client.py.
+can read and send it through client.py. 
 """
+#Throwing strings as communication protocol 
+#
+#assume everything is a dictionary
+# 
 
 import client
 import threading
 
-HOST = '192.168.0.124' # depends on IP of the server double check this for connection purposes
+HOST = '192.168.0.124' # depends on IP if the server double check this for connection purposes
 PORT = 9999 # the port that the server is using
 
 
@@ -15,26 +19,16 @@ class Receiver:
     """
     Receives data from server and passes instructions to controller
     """
-    def __init__(self):
+    def __init__(self, controller):
         """
         Initializes the receiver and binds the client to the address, then attempts a connection
         """
-        self.client = client.Client(HOST, PORT)  # creates a client object that will connect to the server
-        self.states = {
-            "connected": False,
-            "igniter": False,
-            "MEV": "closed",
-            "N2OV": "closed",
-            "N2O": "closed",
-            "N2": "closed",
-            "NCV": "closed",
-            "RV": "closed",
-            "VV": "closed",
-            "abort": False,
-            "run": False
-        }  # initializes dictionary of states that will be modified by input from the server
+        self.client = client.Client(HOST, PORT)
+        self.ctrl = controller
+
 
         self.conn_attempt()  # attempts to initalize connection
+        self.ctrl.client = self.client
 
         self.recieve_thread = threading.Thread(target=self.receive_instructions())  # create the receiver thread
         self.recieve_thread.daemon = False  # this has to do with thread termination
@@ -42,18 +36,15 @@ class Receiver:
 
     def conn_attempt(self):
         """
-        attempts to make a connection to a server object, will stay here until a connection is successful, so make sure
-        to run it in a thread if you don't want your program to freeze here
-        :return: None
+        attempts to make a connection to a server object
+        :return: None if the connection attempt times out, 1 if it is successful
         """
         while True:
             try:
                 self.client.initialize_connection()  # attempts to make connection
                 return # if it works
-            except client.ConnectionFailure:  # if it times out try again
-                pass
-            except Exception as e:  # checks for unhandled exception
-                print(e)  # if this is still just a print statement when you see this, it should not be
+            except WindowsError as e:  # if it times out try again
+                print(e)
 
     def receive_instructions(self):
         """
@@ -66,17 +57,99 @@ class Receiver:
             self.client.receive_states()  # will hang up on this line until instructions are received
 
             while self.client.feedback_queue.qsize() > 0:  # if there are instructions in the queue
-                token = self.client.feedback_queue.get(True, 3)  # get the instructions
-                # the instruction should be a tuple of length 2
-                # keeping each token self contained prevents possible errors with multiple programs
+                token = self.client.feedback_queue.get(True, 3)  # get them
                 param = token[0] # parse the instruction in terms of parameter and state
                 state = token[1]
-                self.states[param] = state  # set our dictionary
+                self.ctrl.set_state(param, state)  # set our dictionary
+
+    def fail_state(self):
+
+        self.ctrl.abort()
+
+        conn_thread = threading.Thread(target=self.conn_attempt())
+        conn_thread.daemon = False
+        conn_thread.start()
+
+        while conn_thread.is_alive():
+            pass
 
 
 class Controller:
 
-    pass
+    def __init__(self):
+        self.states = {
+            "connected": False,
+            "igniter": False,
+            "MEV": "closed",
+            "N2OV": "closed",
+            "N2O": "closed",
+            "N2": "closed",
+            "NCV": "closed",
+            "RV": "closed",
+            "VV": "closed",
+            "abort": False,
+            "run": False
+        }
+
+        self.funcs = {
+            "igniter": "set_igniter",
+            "MEV": "set_MEV",
+            "N2OV": "set_N20V",
+            "N2O": "set_N20",
+            "N2": "set_N2",
+            "NCV": "set_NCV",
+            "RV": "set_RV",
+            "VV": "set_VV",
+            "abort": "abort",
+            "run": "run"
+        }
+
+        self.client = None
+
+    def write_to_serial(self, command):
+        self.state_update()
+        #some code that writes to serial
+
+    def state_update(self):
+
+        for i in self.states:
+            self.client.send_states(f"{i} {self.states[i]}")
+
+    def set_state(self, param, state):
+        func = getattr('self', f"{self.funcs[param]}")
+        func(state)
+
+    def set_igniter(self, param):
+        self.write_to_serial()
+
+    def set_MEV(self, param):
+        self.write_to_serial()
+
+    def set_N20V(self, param):
+        self.write_to_serial()
+
+    def set_N20(self, param):
+        self.write_to_serial()
+
+    def set_N2(self, param):
+        self.write_to_serial()
+
+    def set_NCV(self, param):
+        self.write_to_serial()
+
+    def set_RV(self, param):
+        self.write_to_serial()
+
+    def set_VV(self, param):
+        self.write_to_serial()
+
+    def abort(self, param):
+        self.write_to_serial()
+
+    def run(self, param):
+        self.write_to_serial()
+
+
 
 
 def main():
