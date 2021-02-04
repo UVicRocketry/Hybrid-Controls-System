@@ -118,7 +118,7 @@ class MainWindow(QtWidgets.QMainWindow):
             "N2" : "closed",
             "NCV" : "closed",
             "RV" : "closed",
-            "VV" : "closed",
+            "N2V" : "closed",
             "abort" : False,
             "run" : False,
             "BD" : 0, #TODO: figure out default values from Morgan 
@@ -328,15 +328,15 @@ class MainWindow(QtWidgets.QMainWindow):
         self.system_states["RV"] = "open"
         self.send_states("RV open")
 
-    def _VV_btn_off(self):
+    def _N2V_btn_off(self):
         self.add_system_status("Closing Vent Valve")
-        self.system_states["VV"] = "closed"
-        self.send_states("VV closed")
+        self.system_states["N2V"] = "closed"
+        self.send_states("N2V closed")
 
-    def _VV_btn_on(self):
+    def _N2V_btn_on(self):
         self.add_system_status("Opening Vent Valve")
-        self.system_states["VV"] = "open"
-        self.send_states("VV open")
+        self.system_states["N2V"] = "open"
+        self.send_states("N2V open")
 
     def _abort_btn(self):
         self.add_system_status("ABORTING")
@@ -400,9 +400,9 @@ class MainWindow(QtWidgets.QMainWindow):
     #MAIN control buttons
     def _vent_all_btn(self): #TODO: might need to change
         self.add_system_status("Vent Valve (vent all)")
-        toggle = self.system_states["VV"]
-        toggle = not bool(toggle)
-        self.system_states["VV"] = toggle
+        # toggle = self.system_states["VV"]
+        # toggle = not bool(toggle)
+        # self.system_states["VV"] = toggle
         self.send_states(f"{toggle} Vent Valve (vent all)")
         # Venting
         self._N2OV_btn_on()
@@ -433,7 +433,6 @@ class MainWindow(QtWidgets.QMainWindow):
         # MANUAL and AUTO Buttons
         #these buttons will disable the other control category 
         #if Manual is toggled on then the auto buttons will be disabled
-<<<<<<< HEAD
     def _save_states(self):#TODO: Connor do the config save file in this function
         self._duration()
         self._mev_open()
@@ -441,8 +440,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self._mev_open_speed()
         #save file code
     
-=======
->>>>>>> 9ebcffdf0c4e5c26cc0824b8d06843a8d3087088
     def _man_btn(self):
         
         if self.toggle_man == False:
