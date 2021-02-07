@@ -10,6 +10,12 @@ can read and send it through client.py.
 
 import client
 import threading
+from serial import Serial
+
+baud_rate = 115200          # In the arduino .ino file, Serial.begin(baud_rate)
+serial_port = "dev/ttyUSB0" # Something similar to this. It will depend what usb port the arduino is connected to
+ser = Serial(serial_port, baud_rate)
+
 
 HOST = '192.168.0.124' # depends on IP if the server double check this for connection purposes
 PORT = 9999 # the port that the server is using
@@ -37,7 +43,7 @@ class Receiver:
     def conn_attempt(self):
         """
         attempts to make a connection to a server object
-        :return: None if the connection attempt times out, 1 if it is successful
+        :return: Nothing
         """
         while True:
             try:
@@ -60,25 +66,25 @@ class Receiver:
                 token = self.client.feedback_queue.get(True, 3)  # get them
                 param = token[0] # parse the instruction in terms of parameter and state
                 state = token[1]
-                self.ctrl.set_state(param, state)  # set our dictionary
+
+                if param == "connected" and state == "False": # checks if connection is ending
+                    self.fail_state()
+                    return
+
+                self.ctrl.write_to_serial((param, state))  # send the command to our controller, notice we are sending
+                # a tuple, this is on purpose, its a stylistic choice
 
     def fail_state(self):
 
         self.ctrl.abort()
-
-        conn_thread = threading.Thread(target=self.conn_attempt())
-        conn_thread.daemon = False
-        conn_thread.start()
-
-        while conn_thread.is_alive():
-            pass
+        self.recieve_thread.join()
+        self.client.end_connection()
 
 
 class Controller:
 
     def __init__(self):
         self.states = {
-            "connected": False,
             "igniter": False,
             "MEV": "closed",
             "N2OV": "closed",
@@ -87,70 +93,40 @@ class Controller:
             "NCV": "closed",
             "RV": "closed",
             "VV": "closed",
-            "abort": False,
-            "run": False
         }
 
-        self.funcs = {
-            "igniter": "set_igniter",
-            "MEV": "set_MEV",
-            "N2OV": "set_N20V",
-            "N2O": "set_N20",
-            "N2": "set_N2",
-            "NCV": "set_NCV",
-            "RV": "set_RV",
-            "VV": "set_VV",
-            "abort": "abort",
-            "run": "run"
+        self.abort_states = {
+            "igniter": False,
+            "MEV": "closed",
+            "N2OV": "open",
+            "N2O": "closed",
+            "N2": "closed",
+            "NCV": "closed",
+            "RV": "open",
+            "N2V": "open",
         }
 
         self.client = None
 
     def write_to_serial(self, command):
-        self.state_update()
-        #some code that writes to serial
+
+        ser.writelines(f'{command[0]} {command[1]}'.encode())  # Write stuff to arduino
+
+    def read_from_serial(self):
+
+        command = ser.readline().decode().split
+        self.states[command[0]] = command[1]  # update our dictionary
+        self.state_update()  # send updated dictionary back to server
+
 
     def state_update(self):
 
         for i in self.states:
             self.client.send_states(f"{i} {self.states[i]}")
 
-    def set_state(self, param, state):
-        func = getattr('self', f"{self.funcs[param]}")
-        func(state)
-
-    def set_igniter(self, param):
-        self.write_to_serial()
-
-    def set_MEV(self, param):
-        self.write_to_serial()
-
-    def set_N20V(self, param):
-        self.write_to_serial()
-
-    def set_N20(self, param):
-        self.write_to_serial()
-
-    def set_N2(self, param):
-        self.write_to_serial()
-
-    def set_NCV(self, param):
-        self.write_to_serial()
-
-    def set_RV(self, param):
-        self.write_to_serial()
-
-    def set_VV(self, param):
-        self.write_to_serial()
-
-    def abort(self, param):
-        self.write_to_serial()
-
-    def run(self, param):
-        self.write_to_serial()
-
-
-
+    def abort(self):
+        for i in self.abort_states:
+            self.write_to_serial((i, self.abort_states[i]))
 
 def main():
     pass
