@@ -403,7 +403,7 @@ class MainWindow(QtWidgets.QMainWindow):
         # toggle = self.system_states["VV"]
         # toggle = not bool(toggle)
         # self.system_states["VV"] = toggle
-        self.send_states(f"{toggle} Vent Valve (vent all)")
+        #self.send_states(f"{toggle} Vent Valve (vent all)")
         # Venting
         self._N2OV_btn_on()
         self._N2V_btn_on()
@@ -438,10 +438,15 @@ class MainWindow(QtWidgets.QMainWindow):
         self._mev_open()
         self._delay()
         self._mev_open_speed()
-        #save file code
-    
+
+        new_file = open('config.txt', 'w')
+        for i in self.system_states:
+            new_file.write(f'{i} {self.system_states[i]}')
+
+        new_file.close()
+
+
     def _man_btn(self):
-        
         if self.toggle_man == False:
             self.toggle_man = True
             self.toggle_auto = False
