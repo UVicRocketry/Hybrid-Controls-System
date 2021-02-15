@@ -10,14 +10,17 @@ class NoConnection(Exception):
     """
     A custom exception raised when attempting to utilize the client when no connection has been made
     """
-    pass
+
+    def __str__(self):
+        return "NoConnection"
 
 
 class ConnectionFailure(Exception):
     """
     A custom exception raised when the client fails to connect to a server
     """
-    pass
+    def __str__(self):
+        return "ConnectionFailure"
 
 
 class Client:

@@ -6,14 +6,16 @@ class NoConnection(Exception):
     """
     A custom exception raised when attempting to utilize the server when no connection has been made
     """
-    pass
+    def __str__(self):
+        return "NoConnection"
 
 
 class InvalidIp(Exception):
     """
     A custom exception raised when an invalid IP is provided when creating the server
     """
-    pass
+    def __str__(self):
+        return "InvalidIp"
 
 
 class Server:

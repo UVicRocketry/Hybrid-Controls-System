@@ -31,14 +31,16 @@ class Receiver:
         """
         self.client = client.Client(HOST, PORT)
         self.ctrl = controller
+        self.receive_thread = None # Will become the receiver thread
 
 
+    def start(self):
         self.conn_attempt()  # attempts to initalize connection
         self.ctrl.client = self.client
 
-        self.recieve_thread = threading.Thread(target=self.receive_instructions())  # create the receiver thread
-        self.recieve_thread.daemon = False  # this has to do with thread termination
-        self.recieve_thread.start()  # start the receiver thread
+        self.receive_thread = threading.Thread(target=self.receive_instructions())  # create the receiver thread
+        self.receive_thread.daemon = False  # this has to do with thread termination
+        self.receive_thread.start()  # start the receiver thread
 
     def conn_attempt(self):
         """
@@ -49,7 +51,7 @@ class Receiver:
             try:
                 self.client.initialize_connection()  # attempts to make connection
                 return # if it works
-            except WindowsError as e:  # if it times out try again
+            except client.ConnectionFailure as e:  # if it times out try again
                 print(e)
 
     def receive_instructions(self):
@@ -74,11 +76,19 @@ class Receiver:
                 self.ctrl.write_to_serial((param, state))  # send the command to our controller, notice we are sending
                 # a tuple, this is on purpose, its a stylistic choice
 
-    def fail_state(self):
+    def fail_state(self, error):
 
-        self.ctrl.abort()
-        self.recieve_thread.join()
-        self.client.end_connection()
+        try:
+            self.ctrl.abort()
+        except Exception as e:
+            print(e)
+            print("Well, this isn't good, guess we'll die")
+        print(error)
+        try:
+            self.receive_thread.join()
+            self.client.end_connection()
+        except TypeError as e:
+            print(e)
 
 
 class Controller:
@@ -109,14 +119,21 @@ class Controller:
         self.client = None
 
     def write_to_serial(self, command):
+        try:
 
-        ser.writelines(f'{command[0]} {command[1]}'.encode())  # Write stuff to arduino
+             ser.writelines(f'{command[0]} {command[1]}'.encode())  # Write stuff to arduino
+        except Exception as e:
+            print(e)
+            self.abort()
 
     def read_from_serial(self):
-
-        command = ser.readline().decode().split
-        self.states[command[0]] = command[1]  # update our dictionary
-        self.state_update()  # send updated dictionary back to server
+        try:
+            command = ser.readline().decode().split
+            self.states[command[0]] = command[1]  # update our dictionary
+            self.state_update()  # send updated dictionary back to server
+        except Exception as e:
+            print(e)
+            self.abort()
 
 
     def state_update(self):
@@ -129,7 +146,13 @@ class Controller:
             self.write_to_serial((i, self.abort_states[i]))
 
 def main():
-    pass
+    controller = Controller()
+    receiver = Receiver(controller)
+    try:
+        receiver.start()
+    except Exception as e:
+        receiver.fail_state(e)
+        print(e)
 
 
 if __name__ == '__main__':
