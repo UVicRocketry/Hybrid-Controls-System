@@ -60,7 +60,7 @@ class Client:
         :return: nothing
         """
         try:
-            self.client.sendall(data.encode())  # send off the data
+            self.client.sendall((data+" ").encode())  # send off the data
         except WindowsError: # his will fail if there is no connection initialized
             raise NoConnection
 
@@ -71,11 +71,16 @@ class Client:
         """
         try:
             data = self.client.recv(1024).decode()  # receives data which it decodes() into a string
-        except WindowsError:  # this will fail if there is no connection initialized
+            data = data.split()
+            print(data)
+            for i in range(0, int(len(data) / 2), 2):
+                token = (data[i], data[i + 1])
+                print(token)
+                self.feedback_queue.put(token)
+        except Exception as e:
+            print(f'Client receive_states: {e}')
             raise NoConnection
-        data = data.split(" ")  # splits string into a list using spaces as the delimiter
-        data = tuple(data)
-        self.feedback_queue.put(data)  # adds each list entry to the queue
+
 
 
 if __name__ == '__main__':

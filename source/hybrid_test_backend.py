@@ -3,7 +3,7 @@ from PyQt5.QtCore import QTimer, QDateTime, QThread, pyqtSignal, Qt, QRect
 from PyQt5.QtWidgets import QFileDialog
 import sys
 import server
-HOST = '192.168.0.106'
+HOST = '192.168.0.121'
 PORT = 9999
 
 
@@ -46,6 +46,7 @@ class GetStatusThread(QThread):
 
                 try:
                     token = self.client_server.feedback_queue.get(True, 3)
+                    print(token)
                     param = token[0]
                     state = token[1]
                 except server.queue.Empty: # if we have a mix up with our queue something bad has happened
@@ -200,23 +201,22 @@ class MainWindow(QtWidgets.QMainWindow):
         # Get our IP from the box on the GUI, instantiate a Server with it
         # PORT is hard coded in at the top of the file, if you change PORT here, you must also change
         # it in client
-        if self.client_server is not None:
-            if self.client_server.client is not None:
-                self.add_system_status("Connection already active")
-                return
+        if self.system_states['connected']:
+            self.add_system_status("Connection already exists")
+            return
 
-        if self.lineEdit_IPaddress.text() == "":   # this if statement checks to see if we haven't entered an IP
+        if self.IPaddress.text() == "":   # this if statement checks to see if we haven't entered an IP
             self.add_system_status("Invalid IP")
             return
         try:
-            self.client_server = server.Server(self.lineEdit_IPaddress.text(), PORT)
+            self.client_server = server.Server(self.IPaddress.text(), PORT)
             self.client_server.initialize_connection()
         except Exception as e:
-            print(f'line 171 {e}')
-
+            self.add_system_status(str(e))
+            return
 
         # Attempt connection to the Server on the rPi
-        if(self.client_server.client != None):
+        if self.client_server.client:
             self.add_system_status(f"Connection Successful on HOST:PORT {self.client_server.HOST}:{self.client_server.PORT}") 
             self.system_states["connected"] = True
             self.send_states("connected True")
@@ -225,7 +225,7 @@ class MainWindow(QtWidgets.QMainWindow):
                 self.status_thread.status_signal.connect(self.add_system_status)
                 self.status_thread.start()
             except Exception as e:
-                print(f'line 184 {e}')
+                self.add_system_status(str(e))
         else:
             self.add_system_status("Connection Unsuccessful. Is the IP address correct?")
             self.client_server = None
@@ -249,102 +249,82 @@ class MainWindow(QtWidgets.QMainWindow):
         # Update our system_states dictionary
         # Send the new state over the client_server Server object
     def _igniter_btn_on(self):
-        self.add_system_status("Igniting")
         self.system_states["igniter"] = True
         self.send_states("igniter True")
        
     def _igniter_btn_off(self):
-        self.add_system_status("Un-igniting?")
         self.system_states["igniter"] = False
         self.send_states("igniter False")
 
-    def _MEV_btn_off(self):  
-        self.add_system_status("Closing MEV")
+    def _MEV_btn_off(self):
         self.system_states["MEV"] = "closed"
         self.send_states("MEV closed")
 
     def _MEV_btn_on(self):
-        self.add_system_status("Opening MEV")
         self.system_states["MEV"] = "open"
         self.send_states("MEV open")
 
     def _N2OV_btn_off(self):
-        self.add_system_status("Closing N2O Vent")
         self.system_states["N2OV"] = "closed"
         self.send_states("N2OV closed")
         
     def _N2OV_btn_on(self):
-        self.add_system_status("Opening N2O Vent")
         self.system_states["N2OV"] = "open"
         self.send_states("N2OV open")
 
     def _N2O_btn_off(self):
-        self.add_system_status("Closing N2O Valve")
         self.system_states["N2O"] = "closed"
         self.send_states("N2O closed")
 
     def _N2O_btn_on(self):
-        self.add_system_status("Opening N2O Valve")
         self.system_states["N2O"] = "open"
         self.send_states("N2O open")
 
     def _N2_btn_off(self):
-        self.add_system_status("Closing N2 Valve")
         self.system_states["N2"] = "closed"
         self.send_states("N2 closed")
 
     def _N2_btn_on(self):
-        self.add_system_status("Opening N2 Valve")
         self.system_states["N2"] = "open"
         self.send_states("N2 open")
 
     def _N2V_btn_off(self):
-        self.add_system_status("Closing N2 Vent Valve")
         self.system_states["N2V"] = "closed"
         self.send_states("N2V closed")
 
     def _N2V_btn_on(self):
-        self.add_system_status("Opening N2 Vent Valve")
         self.system_states["N2V"] = "open"
         self.send_states("N2 open")
 
     def _NCV_btn_off(self):
-        self.add_system_status("Closing NC Valve")
         self.system_states["NCV"] = "closed"
         self.send_states("NCV closed")
 
     def _NCV_btn_on(self):
-        self.add_system_status("Opening NC Valve")
         self.system_states["NCV"] = "open"
         self.send_states("NCV open")
 
     def _RV_btn_off(self):
-        self.add_system_status("Closing Relief Valve")
         self.system_states["RV"] = "closed"
         self.send_states("RV closed")
 
     def _RV_btn_on(self):
-        self.add_system_status("Opening Relief Valve")
         self.system_states["RV"] = "open"
         self.send_states("RV open")
 
     def _N2V_btn_off(self):
-        self.add_system_status("Closing Vent Valve")
         self.system_states["N2V"] = "closed"
         self.send_states("N2V closed")
 
     def _N2V_btn_on(self):
-        self.add_system_status("Opening Vent Valve")
         self.system_states["N2V"] = "open"
         self.send_states("N2V open")
 
     def _abort_btn(self):
-        self.add_system_status("ABORTING")
         self.system_states["abort"] = True
         self.send_states("abort True")
 
     def _run_btn(self):
-        self.add_system_status("RUNNING")
         self.system_states["run"] = True
         self.send_states("run True")
     #auto and manual toggle buttons
@@ -440,9 +420,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self._mev_open_speed()
 
         new_file = open('config.txt', 'w')
-        for i in self.system_states:
-            new_file.write(f'{i} {self.system_states[i]}')
-
         new_file.close()
 
 

@@ -71,7 +71,10 @@ class Server:
         :return: nothing
         """
 
-        self.client.sendall(data.encode())
+        try:
+            self.client.sendall((data + " ").encode())  # send off the data
+        except WindowsError:  # his will fail if there is no connection initialized
+            raise NoConnection
 
     def receive_states(self):
         """
@@ -82,9 +85,11 @@ class Server:
             raise NoConnection
         try:
             data = self.client.recv(1024).decode()  # receives data which it decodes() into a string
+            data = data.split()
             print(data)
-            data = data.split(" ")  # splits string into a list using spaces as the delimiter
-            data = tuple(data)  # convert the
-            self.feedback_queue.put(data)  # adds each list entry to the queue
+            for i in range(0, int(len(data) / 2), 2):
+                token = (data[i], data[i+1])
+                self.feedback_queue.put(token)  # adds each list entry to the queue
         except Exception as e:
-            print(f'line 92 {e}')
+            print(f'Server receive_states: {e}')
+            raise NoConnection
