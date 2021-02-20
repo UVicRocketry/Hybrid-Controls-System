@@ -19,13 +19,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="91da95a7-87d1-4534-8d3d-902312f1a94d" name="Default Changelist" comment="Added the state update method and thread.">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/client.py" beforeDir="false" afterPath="$PROJECT_DIR$/source/client.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/source/controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/hybrid_test_backend.py" beforeDir="false" afterPath="$PROJECT_DIR$/source/hybrid_test_backend.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/source/server.py" afterDir="false" />
-    </list>
+    <list default="true" id="91da95a7-87d1-4534-8d3d-902312f1a94d" name="Default Changelist" comment="This is a bit of a revamp of the entire project, but workability has been achieved" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -200,7 +194,14 @@
       <option name="project" value="LOCAL" />
       <updated>1611882057862</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="This is a bit of a revamp of the entire project, but workability has been achieved">
+      <created>1613610939796</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1613610939796</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -218,6 +219,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Added fail state code as well as some Controller class functionality" />
     <MESSAGE value="Added the state update method and thread." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added the state update method and thread." />
+    <MESSAGE value="This is a bit of a revamp of the entire project, but workability has been achieved" />
+    <option name="LAST_COMMIT_MESSAGE" value="This is a bit of a revamp of the entire project, but workability has been achieved" />
   </component>
 </project>
