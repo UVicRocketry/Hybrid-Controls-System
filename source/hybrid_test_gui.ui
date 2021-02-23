@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1442</width>
-    <height>918</height>
+    <width>1450</width>
+    <height>958</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -1980,6 +1980,12 @@ ALL</string>
          <layout class="QVBoxLayout" name="verticalLayout_5">
           <item>
            <widget class="QLabel" name="schematic_label">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="font">
              <font>
               <family>Leelawadee UI</family>
@@ -2003,40 +2009,15 @@ ALL</string>
            </widget>
           </item>
           <item>
-           <widget class="QLabel" name="schematic">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>14</pointsize>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="autoFillBackground">
-             <bool>false</bool>
-            </property>
+           <widget class="QLabel" name="label_16">
             <property name="styleSheet">
-             <string notr="true">background: #181b2e;
-border-radius: 10px;
-background-image: url(:/newPrefix/MULE-1_PID_for_GUI.png);
-color: #7f849a;</string>
+             <string notr="true"/>
             </property>
             <property name="text">
              <string/>
             </property>
             <property name="pixmap">
-             <pixmap resource="images/schematic.qrc">:/newPrefix/MULE-1_PID_for_GUI.png</pixmap>
-            </property>
-            <property name="scaledContents">
-             <bool>true</bool>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
+             <pixmap>images/MULE-1_PID_for_GUI.png</pixmap>
             </property>
            </widget>
           </item>
