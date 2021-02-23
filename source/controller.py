@@ -62,7 +62,11 @@ class Receiver:
 
         while True:
 
-            self.client.receive_states()  # will hang up on this line until instructions are received
+            try:
+                self.client.receive_states()  # will hang up on this line until instructions are received
+            except client.NoConnection:
+                self.fail_state('No Connection')
+                return
 
             while self.client.feedback_queue.qsize() > 0:  # if there are instructions in the queue
                 token = self.client.feedback_queue.get(True, 3)
@@ -70,7 +74,7 @@ class Receiver:
                 state = token[1]
 
                 if param == "connected" and state == "False": # checks if connection is ending
-                    self.fail_state()
+                    self.fail_state('Connection Ended')
                     return
 
                 self.ctrl.write_to_serial(f'{param} {state}')  # send the command to our controller
@@ -81,7 +85,7 @@ class Receiver:
         except Exception as e:
             print(e)
             print("Well, this isn't good, guess we'll die")
-        print(str(error) + "fail_state")
+        print(str(error) + " fail_state")
         try:
             #self.receive_thread.join()
             self.client.end_connection()
@@ -130,7 +134,7 @@ class Controller:
             self.read_from_serial(command)
             #ser.writelines(command.encode())  # Write stuff to arduino
         except Exception as e:
-            print(str(e) + 'write to serial')
+            print(str(e) + ' write to serial')
 
     def read_from_serial(self, command):
         try:
@@ -139,11 +143,9 @@ class Controller:
 
             #command = ser.readline().decode().split
             #self.system_states[command[0]] = command[1]  # update our dictionary
-            #print(command)
             self.state_update(command[0])  # send updated dictionary back to server
         except Exception as e:
-            print(str(e) + 'read from serial')
-            #self.abort()
+            print(str(e) + ' read from serial')
 
 
     def state_update(self, command):
@@ -162,7 +164,7 @@ def main():
         receiver.start()
     except Exception as e:
         receiver.fail_state(e)
-        print(str(e) + 'main failure')
+        print(str(e) + ' main failure')
 
 
 if __name__ == '__main__':

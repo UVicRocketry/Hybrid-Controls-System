@@ -39,7 +39,11 @@ class GetStatusThread(QThread):
             try:
                 self.client_server.receive_states() # Will hang up on this line until it receives something from client
             except server.NoConnection:
+                self.client_server.end_connection()
+                self.status_signal.emit('Connection has failed')
+                self.states['connected'] = False
                 return
+
             param = None
             state = None
             while self.client_server.feedback_queue.qsize() > 0:    # clears the queue and pops output to GUI
@@ -54,7 +58,6 @@ class GetStatusThread(QThread):
                     continue
                 except IndexError:
                     self.status_signal.emit(f'Failed to parse arguments: {param}, {state}')
-                    self.status_signal.emit(f'Reattempting...')
                     continue
 
                 if param not in self.states.keys():  # checks to make sure parameter is valid
@@ -203,7 +206,6 @@ class MainWindow(QtWidgets.QMainWindow):
         # it in client
         if self.system_states['connected']:
             self.add_system_status("Connection already exists")
-            return
 
         if self.IPaddress.text() == "":   # this if statement checks to see if we haven't entered an IP
             self.add_system_status("Invalid IP")
@@ -232,14 +234,19 @@ class MainWindow(QtWidgets.QMainWindow):
 
     # Disconnect from the Server on the rPi
     def _disconnect_btn(self):
+
+        self.system_states["connected"] = False
         try:
             self.send_states("connected false")
             self.client_server.end_connection()
             self.add_system_status("Disconnection Successful")
-            self.system_states["connected"] = False
+
         
         # This error throws if you try to disconnect before making a connection
         except AttributeError:
+            self.add_system_status("Disconnection Unsuccessful. Does the connection exist?")
+
+        except server.NoConnection:
             self.add_system_status("Disconnection Unsuccessful. Does the connection exist?")
 
    
@@ -587,10 +594,13 @@ class MainWindow(QtWidgets.QMainWindow):
             self.client_server = None
 
 def main():
-    app = QtWidgets.QApplication(sys.argv)
-    main = MainWindow()
-    main.show()
-    sys.exit(app.exec_())
+    try:
+        app = QtWidgets.QApplication(sys.argv)
+        main = MainWindow()
+        main.show()
+        sys.exit(app.exec_())
+    except Exception as e:
+        print(e)
 
 if __name__ == '__main__':      
     main()

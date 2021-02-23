@@ -72,8 +72,7 @@ class Client:
         try:
             data = self.client.recv(1024).decode()  # receives data which it decodes() into a string
             data = data.split()
-            print(data)
-            for i in range(0, int(len(data) / 2), 2):
+            for i in range(0, len(data), 2):
                 token = (data[i], data[i + 1])
                 print(token)
                 self.feedback_queue.put(token)

@@ -85,11 +85,12 @@ class Server:
             raise NoConnection
         try:
             data = self.client.recv(1024).decode()  # receives data which it decodes() into a string
+            if data == '':
+                raise NoConnection
             data = data.split()
-            print(data)
-            for i in range(0, int(len(data) / 2), 2):
+            for i in range(0, len(data), 2):
                 token = (data[i], data[i+1])
                 self.feedback_queue.put(token)  # adds each list entry to the queue
-        except Exception as e:
+        except WindowsError as e:
             print(f'Server receive_states: {e}')
             raise NoConnection

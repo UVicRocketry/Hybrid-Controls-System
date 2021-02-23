@@ -19,7 +19,13 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="91da95a7-87d1-4534-8d3d-902312f1a94d" name="Default Changelist" comment="This is a bit of a revamp of the entire project, but workability has been achieved" />
+    <list default="true" id="91da95a7-87d1-4534-8d3d-902312f1a94d" name="Default Changelist" comment="This is a bit of a revamp of the entire project, but workability has been achieved">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/client.py" beforeDir="false" afterPath="$PROJECT_DIR$/source/client.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/source/controller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/hybrid_test_backend.py" beforeDir="false" afterPath="$PROJECT_DIR$/source/hybrid_test_backend.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/source/server.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -165,8 +171,8 @@
       <list>
         <item itemvalue="Python.controller" />
         <item itemvalue="Python.hybrid_test_backend" />
-        <item itemvalue="Python.client" />
         <item itemvalue="Python.server" />
+        <item itemvalue="Python.client" />
         <item itemvalue="Python.tester" />
       </list>
     </recent_temporary>
