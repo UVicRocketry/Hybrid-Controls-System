@@ -20,10 +20,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="91da95a7-87d1-4534-8d3d-902312f1a94d" name="Default Changelist" comment="This is a bit of a revamp of the entire project, but workability has been achieved">
-      <change beforePath="$PROJECT_DIR$/.idea/Hybrid_Controls_System.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Hybrid_Controls_System.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/client.py" beforeDir="false" afterPath="$PROJECT_DIR$/source/client.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/hybrid_test_backend.py" beforeDir="false" afterPath="$PROJECT_DIR$/source/hybrid_test_backend.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/source/server.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -54,7 +52,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../Hybrid-Test-Stand-Control" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
-  <component name="RunManager" selected="Python.controller">
+  <component name="RunManager" selected="Python.hybrid_test_backend">
     <configuration name="client" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -169,8 +167,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.controller" />
         <item itemvalue="Python.hybrid_test_backend" />
+        <item itemvalue="Python.controller" />
         <item itemvalue="Python.server" />
         <item itemvalue="Python.client" />
         <item itemvalue="Python.tester" />

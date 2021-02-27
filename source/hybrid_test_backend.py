@@ -40,7 +40,7 @@ class GetStatusThread(QThread):
                 self.client_server.receive_states() # Will hang up on this line until it receives something from client
             except server.NoConnection:
                 self.client_server.end_connection()
-                self.status_signal.emit('Connection has failed')
+                self.status_signal.emit('Disconnect Signal Processed')
                 self.states['connected'] = False
                 return
 

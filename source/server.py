@@ -58,8 +58,11 @@ class Server:
         cleans up the sockets when we are done with them, leaving them open can cause problems
         :return: nothing
         """
-        self.server.close()
-        self.client.close()
+        try:
+            self.server.close()
+            self.client.close()
+        except AttributeError:
+            print('already closed')
 
         self.server = None
         self.client = None
