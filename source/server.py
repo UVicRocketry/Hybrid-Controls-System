@@ -85,8 +85,6 @@ class Server:
             raise NoConnection
         try:
             data = self.client.recv(1024).decode()  # receives data which it decodes() into a string
-            if data == '':
-                raise NoConnection
             data = data.split()
             for i in range(0, len(data), 2):
                 token = (data[i], data[i+1])
