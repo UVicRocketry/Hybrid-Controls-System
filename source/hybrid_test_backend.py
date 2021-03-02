@@ -427,6 +427,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self._mev_open_speed()
 
         new_file = open('config.txt', 'w')
+        for i in self.system_states:
+            new_file.write(f'{i} {self.system_states[i]}\n')
         new_file.close()
 
 
