@@ -8,20 +8,20 @@ void setup(){
 
 void flash_once(){
     digitalWrite(13, HIGH);
-    delay(1000);
+    delay(500);
     digitalWrite(13, LOW);
-    delay(1000);
+    delay(500);
 }
 
 void flash_twice(){
     digitalWrite(13, HIGH);
-    delay(1000);
+    delay(500);
     digitalWrite(13, LOW);
-    delay(1000);
+    delay(500);
     digitalWrite(13, HIGH);
-    delay(1000);
+    delay(500);
     digitalWrite(13, LOW);
-    delay(1000);
+    delay(500);
 }
 
 void loop(){
