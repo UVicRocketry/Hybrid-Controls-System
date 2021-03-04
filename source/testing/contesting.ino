@@ -6,17 +6,15 @@ void setup(){
     Serial.begin(115200);
 }
 
-//hello this is a test comment
-
 void loop(){
 
     if(Serial.available()){
         data = Serial.readString();
 
         if(data == "MEV open"){
-            digital.Write(13, HIGH);
+            digitalWrite(13, HIGH);
             delay(1000);
-            digital.Write(13, LOW);
+            digitalWrite(13, LOW);
         }
 
     }
