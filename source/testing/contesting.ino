@@ -33,7 +33,9 @@ void loop(){
 
         /*
         First set of flashes indicates the target. Second set of flashes indicates setting.
+
         If there's only one set of flashes, it's the igniter.
+
         1 flash means setting closed, 2 flashes means setting open.
 
         First set:
@@ -49,7 +51,7 @@ void loop(){
 
         //igniter control flow here
 
-        if(data == "MEV_closed"){ //1
+        if(data == "MEV closed"){ //1
             digitalWrite(13, LOW);
 
             flash_once();
@@ -59,7 +61,7 @@ void loop(){
             delay(3000); //gap before next first set of flashes
         }
 
-        else if(data == "MEV_open"){ 
+        else if(data == "MEV open"){ 
             digitalWrite(13, LOW);
             
             flash_once();
@@ -69,7 +71,7 @@ void loop(){
             delay(3000);
         }
 
-        else if(data == "N2OV_closed"){ //2
+        else if(data == "N2OV closed"){ //2
             digitalWrite(13, LOW);
 
             flash_once();
@@ -80,7 +82,7 @@ void loop(){
             delay(3000);
         }
 
-        else if(data == "N2OV_open"){ 
+        else if(data == "N2OV open"){ 
             digitalWrite(13, LOW);
             
             flash_once();
@@ -91,7 +93,7 @@ void loop(){
             delay(3000);
         }
 
-        else if(data == "N2O_closed"){ //3
+        else if(data == "N2O closed"){ //3
             digitalWrite(13, LOW);
 
             for(int i = 1; i <=3; i++) flash_once();
@@ -101,7 +103,7 @@ void loop(){
             delay(3000);
         }
 
-        else if(data == "N2O_open"){ 
+        else if(data == "N2O open"){ 
             digitalWrite(13, LOW);
             
             for(int i = 1; i <=3; i++) flash_once();
@@ -111,7 +113,7 @@ void loop(){
             delay(3000);
         }
 
-        else if(data == "N2_closed"){ //4
+        else if(data == "N2 closed"){ //4
             digitalWrite(13, LOW);
 
             for(int i = 1; i <=4; i++) flash_once();
@@ -121,7 +123,7 @@ void loop(){
             delay(3000);
         }
 
-        else if(data == "N2_open"){ 
+        else if(data == "N2 open"){ 
             digitalWrite(13, LOW);
             
             for(int i = 1; i <=4; i++) flash_once();
@@ -131,7 +133,7 @@ void loop(){
             delay(3000);
         }
 
-        else if(data == "NCV_closed"){ //5
+        else if(data == "NCV closed"){ //5
             digitalWrite(13, LOW);
 
             for(int i = 1; i <=5; i++) flash_once();
@@ -141,7 +143,7 @@ void loop(){
             delay(3000);
         }
 
-        else if(data == "NCV_open"){
+        else if(data == "NCV open"){
             digitalWrite(13, LOW);
             
             for(int i = 1; i <=5; i++) flash_once();
@@ -151,7 +153,7 @@ void loop(){
             delay(3000);
         }
 
-        else if(data == "RV_closed"){ //6
+        else if(data == "RV closed"){ //6
             digitalWrite(13, LOW);
 
             for(int i = 1; i <=6; i++) flash_once();
@@ -161,7 +163,7 @@ void loop(){
             delay(3000);
         }
 
-        else if(data == "RV_open"){
+        else if(data == "RV open"){
             digitalWrite(13, LOW);
             
             for(int i = 1; i <=6; i++) flash_once();
@@ -171,7 +173,7 @@ void loop(){
             delay(3000);
         }
 
-        else if(data == "N2V_closed"){ //7
+        else if(data == "N2V closed"){ //7
             digitalWrite(13, LOW);
 
             for(int i = 1; i <=7; i++) flash_once();
@@ -181,7 +183,7 @@ void loop(){
             delay(3000);
         }
 
-        else if(data == "N2V_open"){
+        else if(data == "N2V open"){
             digitalWrite(13, LOW);
             
             for(int i = 1; i <=7; i++) flash_once();
