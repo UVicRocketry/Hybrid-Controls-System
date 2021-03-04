@@ -3,7 +3,7 @@ from PyQt5.QtCore import QTimer, QDateTime, QThread, pyqtSignal, Qt, QRect
 from PyQt5.QtWidgets import QFileDialog
 import sys
 import server
-HOST = '192.168.0.121'
+HOST = '10.0.0.120'
 PORT = 9999
 
 
