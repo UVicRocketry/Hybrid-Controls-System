@@ -5,7 +5,7 @@ void setup(){
     pinMode(13, OUTPUT);
     Serial.begin(115200);
 }
-//hello this is a comment
+
 void loop(){
 
     if(Serial.available()){
