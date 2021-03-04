@@ -6,6 +6,8 @@ void setup(){
     Serial.begin(115200);
 }
 
+//hello this is a test comment
+
 void loop(){
 
     if(Serial.available()){
