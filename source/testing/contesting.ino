@@ -12,9 +12,9 @@ void loop(){
         data = Serial.readString();
 
         if(data == "MEV open"){
-            digital.Write(13, HIGH);
+            digitalWrite(13, HIGH);
             delay(1000);
-            digital.Write(13, LOW);
+            digitalWrite(13, LOW);
         }
 
     }
