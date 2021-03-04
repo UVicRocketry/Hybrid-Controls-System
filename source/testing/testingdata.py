@@ -1,4 +1,7 @@
 from serial import Serial
 
-ser = Serial("COM5", 115200)
+arduino = Serial("COM5", 115200)
+arduino.open()
 
+def write_to_serial(command):
+    arduino.writelines(command.encode("utf-8"))
