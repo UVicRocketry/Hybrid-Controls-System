@@ -6,6 +6,24 @@ void setup(){
     Serial.begin(115200);
 }
 
+void flash_once(){
+    digitalWrite(13, HIGH);
+    delay(1000);
+    digitalWrite(13, LOW);
+    delay(1000);
+}
+
+void flash_twice(){
+    digitalWrite(13, HIGH);
+    delay(1000);
+    digitalWrite(13, LOW);
+    delay(1000);
+    digitalWrite(13, HIGH);
+    delay(1000);
+    digitalWrite(13, LOW);
+    delay(1000);
+}
+
 void loop(){
 
     digitalWrite(13, LOW);
@@ -32,69 +50,145 @@ void loop(){
         //igniter control flow here
 
         if(data == "MEV_closed"){ //1
-            digitalWrite(13, HIGH);
-            delay(1000);
             digitalWrite(13, LOW);
-            delay(5000);
+
+            flash_once();
+            delay(1000); //gap between sets of flashes
+
+            flash_once();
+            delay(3000); //gap before next first set of flashes
         }
 
         else if(data == "MEV_open"){ 
-            digitalWrite(13, HIGH);
-            delay(1000);
             digitalWrite(13, LOW);
+            
+            flash_once();
             delay(1000);
-            digitalWrite(13, HIGH);
-            delay(1000);
-            digitalWrite(13, LOW);
-            delay(5000);
+            
+            flash_twice();
+            delay(3000);
         }
 
         else if(data == "N2OV_closed"){ //2
-            
+            digitalWrite(13, LOW);
+
+            flash_once();
+            flash_once();
+            delay(1000);
+
+            flash_once();
+            delay(3000);
         }
 
         else if(data == "N2OV_open"){ 
+            digitalWrite(13, LOW);
             
+            flash_once();
+            flash_once();
+            delay(1000);
+            
+            flash_twice();
+            delay(3000);
         }
 
         else if(data == "N2O_closed"){ //3
-            
+            digitalWrite(13, LOW);
+
+            for(int i = 1; i <=3; i++) flash_once();
+            delay(1000);
+
+            flash_once();
+            delay(3000);
         }
 
         else if(data == "N2O_open"){ 
+            digitalWrite(13, LOW);
             
+            for(int i = 1; i <=3; i++) flash_once();
+            delay(1000);
+            
+            flash_twice();
+            delay(3000);
         }
 
         else if(data == "N2_closed"){ //4
-            
+            digitalWrite(13, LOW);
+
+            for(int i = 1; i <=4; i++) flash_once();
+            delay(1000);
+
+            flash_once();
+            delay(3000);
         }
 
         else if(data == "N2_open"){ 
+            digitalWrite(13, LOW);
             
+            for(int i = 1; i <=4; i++) flash_once();
+            delay(1000);
+            
+            flash_twice();
+            delay(3000);
         }
 
         else if(data == "NCV_closed"){ //5
-            
+            digitalWrite(13, LOW);
+
+            for(int i = 1; i <=5; i++) flash_once();
+            delay(1000);
+
+            flash_once();
+            delay(3000);
         }
 
         else if(data == "NCV_open"){
+            digitalWrite(13, LOW);
             
+            for(int i = 1; i <=5; i++) flash_once();
+            delay(1000);
+            
+            flash_twice();
+            delay(3000);
         }
 
         else if(data == "RV_closed"){ //6
-            
+            digitalWrite(13, LOW);
+
+            for(int i = 1; i <=6; i++) flash_once();
+            delay(1000);
+
+            flash_once();
+            delay(3000);
         }
 
         else if(data == "RV_open"){
+            digitalWrite(13, LOW);
             
+            for(int i = 1; i <=6; i++) flash_once();
+            delay(1000);
+            
+            flash_twice();
+            delay(3000);
         }
 
         else if(data == "N2V_closed"){ //7
-            
+            digitalWrite(13, LOW);
+
+            for(int i = 1; i <=7; i++) flash_once();
+            delay(1000);
+
+            flash_once();
+            delay(3000);
         }
 
         else if(data == "N2V_open"){
+            digitalWrite(13, LOW);
             
+            for(int i = 1; i <=7; i++) flash_once();
+            delay(1000);
+            
+            flash_twice();
+            delay(3000);
         }
 
     }
