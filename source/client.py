@@ -61,7 +61,7 @@ class Client:
         """
         try:
             self.client.sendall((data+" ").encode())  # send off the data
-        except Exception: # his will fail if there is no connection initialized
+        except Exception: # his will fail if there is no connection initialized.
             raise NoConnection
 
     def receive_states(self):
@@ -71,32 +71,11 @@ class Client:
         """
         try:
             data = self.client.recv(1024).decode()  # receives data which it decodes() into a string
-            data = data.split()
+            data = data.split()  # converts string to array
+            # because data is sent in pairs, we want to go through the list 2 at a time
             for i in range(0, len(data), 2):
-                token = (data[i], data[i + 1])
-                print(token)
-                self.feedback_queue.put(token)
+                token = (data[i], data[i + 1])  # creates the tuple object
+                self.feedback_queue.put(token)  # add the token to the queue
         except Exception as e:
             print(f'Client receive_states: {e}')
             raise NoConnection
-
-
-
-if __name__ == '__main__':
-    """
-        this is just test code, good for troubleshooting
-    """
-    c = Client(HOST, PORT)
-    c.initialize_connection()
-    while True:
-
-        c.receive_states()
-
-        while c.feedback_queue.qsize() > 0:
-            token = c.feedback_queue.get()
-            d = token[0]
-            b = token[1]
-            if d == 'connected' and b == 'false':
-                exit()
-            print(f'{d} {b}')
-        c.send_states(f'{d} {b}')

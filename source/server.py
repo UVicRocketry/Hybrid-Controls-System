@@ -4,7 +4,7 @@ import queue
 
 class NoConnection(Exception):
     """
-    A custom exception raised when attempting to utilize the server when no connection has been made
+    A custom exception raised when attempting to utilize the server when no connection currently exists
     """
     def __str__(self):
         return "NoConnection"
@@ -58,8 +58,11 @@ class Server:
         cleans up the sockets when we are done with them, leaving them open can cause problems
         :return: nothing
         """
-        self.server.close()
-        self.client.close()
+        try:
+            self.server.close()
+            self.client.close()
+        except AttributeError:
+            print('already closed')
 
         self.server = None
         self.client = None
@@ -73,7 +76,7 @@ class Server:
 
         try:
             self.client.sendall((data + " ").encode())  # send off the data
-        except WindowsError:  # his will fail if there is no connection initialized
+        except WindowsError:  # this will fail if there is no connection initialized
             raise NoConnection
 
     def receive_states(self):
@@ -86,9 +89,10 @@ class Server:
         try:
             data = self.client.recv(1024).decode()  # receives data which it decodes() into a string
             data = data.split()
+            # because data is sent in pairs, we want to go through the list 2 at a time
             for i in range(0, len(data), 2):
-                token = (data[i], data[i+1])
-                self.feedback_queue.put(token)  # adds each list entry to the queue
+                token = (data[i], data[i+1])  # create new token
+                self.feedback_queue.put(token)  # adds each list token to the queue
         except WindowsError as e:
             print(f'Server receive_states: {e}')
             raise NoConnection

@@ -14,7 +14,7 @@ from serial import Serial
 
 baud_rate = 115200          # In the arduino .ino file, Serial.begin(baud_rate)
 serial_port = "dev/ttyUSB0" # Something similar to this. It will depend what usb port the arduino is connected to
-#ser = Serial(serial_port, baud_rate)
+ser = Serial(serial_port, baud_rate)
 
 
 HOST = '127.0.0.1' # depends on IP if the server double check this for connection purposes
@@ -80,22 +80,39 @@ class Receiver:
                 self.ctrl.write_to_serial(f'{param} {state}')  # send the command to our controller
 
     def fail_state(self, error):
+        """
+        This function is called if we lose connection with the controller, or if some other unhandled error occurs
+        Essentially it attempts to put the test engine into an aborted state
+        The error parameter is used for debugging in testing, just letting you know what went wrong
+        """
         try:
-            self.ctrl.abort()
+            self.ctrl.abort()  # send the engine into an abort state
         except Exception as e:
             print(e)
-            print("Well, this isn't good, guess we'll die")
+            print("Well, this isn't good") # if this fails it means we've lost connection to the engine
         print(str(error) + " fail_state")
         try:
-            #self.receive_thread.join()
-            self.client.end_connection()
+            self.client.end_connection() # clean up our connections in case we want to reconnect
         except TypeError as e:
             print(e)
 
 
 class Controller:
 
+    """
+    Receives information from the Receiver class and passes it on to the Arduino controller
+    """
+
     def __init__(self):
+        """
+        the system_states dictionary is a direct copy of the one that exists in hybrid_test_backend.py
+        If hybrid test in updated, so should this one
+        Note, possibly in future just make this dictionary a module so we don't have to update it in multiple places
+
+        abort_states dictionary is used when aborting the test, it is all the parameters that correspond to the engine
+        shutting down
+        """
+
         self.system_states = {
             "connected": False,
             "igniter": False,
@@ -111,6 +128,8 @@ class Controller:
             "ID": 0,
             "MEVoSP": 0
         }
+
+        # TODO double check abort states
 
         self.abort_states = {
             "igniter": False,
@@ -129,30 +148,34 @@ class Controller:
 
         self.client = None
 
+    # TODO double check intended functionality re: reading/writing to serial
     def write_to_serial(self, command):
+        """write the commands to the arduino, the command is in 'parameter state' format,
+        the space in between in important"""
         try:
-            self.read_from_serial(command)
-            #ser.writelines(command.encode())  # Write stuff to arduino
+            ser.writelines(command.encode())  # Write stuff to arduino
         except Exception as e:
             print(str(e) + ' write to serial')
 
-    def read_from_serial(self, command):
+    def read_from_serial(self):
+        """Reads data from the serial and transmits it back to the GUI"""
         try:
-            command = command.split()
-            self.system_states[command[0]] = command[1]
-
-            #command = ser.readline().decode().split
-            #self.system_states[command[0]] = command[1]  # update our dictionary
+            command = ser.readline().decode().split()  # read from the serial port
+            self.system_states[command[0]] = command[1]  # update our dictionary
             self.state_update(command[0])  # send updated dictionary back to server
         except Exception as e:
             print(str(e) + ' read from serial')
 
-
     def state_update(self, command):
-
-        self.client.send_states(f"{command} {self.system_states[command]}")
+        """send updated states to the GUI"""
+        try:
+            self.client.send_states(f"{command} {self.system_states[command]}") # send data to GUI
+        except client.NoConnection:
+            self.abort()
 
     def abort(self):
+        """This will trip if anything fails in the control process
+            The abort_states dictionary is used to set the test engine to an off state"""
         for i in self.abort_states:
             self.write_to_serial(f'{i}, {self.abort_states[i]}')
 
