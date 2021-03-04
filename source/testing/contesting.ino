@@ -47,6 +47,8 @@ void loop(){
             5 flashes - NCV
             6 flashes - RV
             7 flashes - N2V
+
+        Contact Ben S or Kris L for more
         */
 
         //igniter control flow here
