@@ -6,6 +6,7 @@ import server
 HOST = '10.0.0.120'
 PORT = 9999
 
+#comment
 
 class GetStatusThread(QThread):
 

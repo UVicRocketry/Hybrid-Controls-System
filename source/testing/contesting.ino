@@ -1,4 +1,5 @@
-String data = 0;
+
+String data;
 
 void setup(){
     pinMode(13, OUTPUT);
@@ -9,6 +10,12 @@ void loop(){
 
     if(Serial.available()){
         data = Serial.readString();
+
+        if(data == "MEV open"){
+            digital.Write(13, HIGH);
+            delay(1000);
+            digital.Write(13, LOW);
+        }
 
     }
 
