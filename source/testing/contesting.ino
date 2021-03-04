@@ -8,16 +8,18 @@ void setup(){
 
 void loop(){
 
+    digitalWrite(13, LOW);
+
     if(Serial.available()){
         data = Serial.readString();
 
         /*
         First set of flashes indicates the target. Second set of flashes indicates setting.
-
+        If there's only one set of flashes, it's the igniter.
         1 flash means setting closed, 2 flashes means setting open.
 
         First set:
-            0 flashes
+            0 flashes - igniter
             1 flashes - MEV
             2 flashes - N2OV
             3 flashes - N2O
@@ -31,20 +33,20 @@ void loop(){
 
         if(data == "MEV_closed"){ //1
             digitalWrite(13, HIGH);
-            delay(500);
+            delay(1000);
             digitalWrite(13, LOW);
-            delay(2500);
+            delay(5000);
         }
 
         else if(data == "MEV_open"){ 
             digitalWrite(13, HIGH);
-            delay(500);
+            delay(1000);
             digitalWrite(13, LOW);
-            delay(500);
+            delay(1000);
             digitalWrite(13, HIGH);
-            delay(500);
+            delay(1000);
             digitalWrite(13, LOW);
-            delay(2500);
+            delay(5000);
         }
 
         else if(data == "N2OV_closed"){ //2
