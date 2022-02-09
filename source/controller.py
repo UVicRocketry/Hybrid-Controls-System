@@ -62,7 +62,7 @@ class Receiver:
 
         while True:
             
-            if ser.in_wating:
+            if ser.in_waiting:
                 self.ctrl.read_from_serail()
                 
             try:
