@@ -1,12 +1,12 @@
 # Hybrid_Controls_System (HB - Project Acronym)
 
-The controls software works on a server-client model. The server role is filled by mission control where the GUI (found in hybrid_test_backend.py) communicates with the control module on the test stand. The client role is filled by a raspberry pi running the control software (found in controller.py) which “talks” to an arduino through a USB port. 
+The controls software works on a server-client model. The client role is filled by the mission control laptop where the GUI (found in hybrid_test_backend.py) communicates with the control module on the test stand. The server role is filled by a Raspberry Pi running the control software (found in controller.py) which sends commands to an arduino through a USB port. 
 
 The client and server send commands to each other in order to control the test stand. The commands take the form of a parameter and a state separated by a space. For example, to close the MEV, the server would send the following message: “MEV closed”. The client would receive that command and update the arduino accordingly. After receiving confirmation that the MEV had been closed successfully, the client would send a confirmation message back to the server which would take the same form as the original command e.g. “MEV closed”
 
 ## Example Control Flow
 
-Server sends “MEV closed” to the client
+Client sends “MEV closed” to the client
 Client sends “MEV closed” to the arduino
 Arduino sends “MEV closed” to the client after the MEV closes successfully
 The client sends “MEV closed” back to the server so the server knows that the command executed successfully
