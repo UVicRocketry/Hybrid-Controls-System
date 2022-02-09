@@ -1,8 +1,11 @@
-from PyQt5 import QtWidgets, uic, QtCore, QtGui
-from PyQt5.QtCore import QTimer, QDateTime, QThread, pyqtSignal, Qt, QRect
-from PyQt5.QtWidgets import QFileDialog
 import sys
+
+from PyQt5 import QtCore, QtGui, QtWidgets, uic
+from PyQt5.QtCore import QDateTime, QRect, Qt, QThread, QTimer, pyqtSignal
+from PyQt5.QtWidgets import QFileDialog
+
 import server
+
 HOST = '10.0.0.120'
 PORT = 9999
 
