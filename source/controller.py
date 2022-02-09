@@ -8,11 +8,9 @@ can read and send it through client.py.
 #assume everything is a dictionary
 # 
 
-import threading
-
-from serial import Serial
-
 import client
+import threading
+from serial import Serial
 
 baud_rate = 115200          # In the arduino .ino file, Serial.begin(baud_rate)
 serial_port = "dev/ttyUSB0" # Something similar to this. It will depend what usb port the arduino is connected to
@@ -62,10 +60,7 @@ class Receiver:
         :return: Nothing
         """
 
-        while True: #TODO: add limit switch fail check. Ie if limit switch is not send back in X amount of time go into fail safe mode
-            
-            if ser.in_waiting:
-                self.ctrl.read_from_serial() # updates if there is a response from the Controller. Make sure to test if this actually works in testing
+        while True:
 
             try:
                 self.client.receive_states()  # will hang up on this line until instructions are received
@@ -82,7 +77,7 @@ class Receiver:
                     self.fail_state('Connection Ended')
                     return
 
-                self.ctrl.write_to_serial(f'{param} {state}')  # send the command to the arduino controller
+                self.ctrl.write_to_serial(f'{param} {state}')  # send the command to our controller
 
     def fail_state(self, error):
         """
