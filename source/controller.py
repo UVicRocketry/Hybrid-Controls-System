@@ -61,7 +61,10 @@ class Receiver:
         """
 
         while True:
-
+            
+            if ser.in_wating:
+                self.ctrl.read_from_serail()
+                
             try:
                 self.client.receive_states()  # will hang up on this line until instructions are received
             except client.NoConnection:
