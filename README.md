@@ -1,4 +1,4 @@
-# Hybrid_Controls_System (HB - Project Acronym)
+# Hybrid-Controls-System (HB - Project Acronym)
 
 The controls software works on a server-client model. The server role is filled by the mission control laptop where the GUI (found in hybrid_test_backend.py) communicates with the controls Raspberry Pi on the test stand, which is the client. The control software running on the Pi (found in controller.py) sends commands to an arduino through a USB port. 
 
