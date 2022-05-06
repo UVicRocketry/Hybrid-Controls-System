@@ -24,7 +24,7 @@ To determine the correct IP:
 1. On the computer that is running hybrid_test_backend.py open command prompt
 2. Type in ipconfig and hit enter
 3. Find line labelled IPv4 Address. That is the correct IP address
-![IPconnection](./source/images/IPconnection.png)
+![IPconnection](./src/images/IPconnection.png)
 
 You should make sure that the HOST value in controller.py matches the value of the IPv4 address before you attempt to run the software
 
@@ -70,7 +70,7 @@ The Lockout Box Arduino is used for including physical switches, buttons, and sa
 
 To start testing the system you first must wired the everything correctly according to this diagram.  
 
-![Wiring Diagram](./source/images/ControlsWiringDiagram.drawio.png)
+![Wiring Diagram](./src/images/ControlsWiringDiagram.drawio.png)
 _Note: If you get the draw.io extension for vs code you can edit this picture directly._
 
   Next plugin the computer running the GUI to the Rpi 4 using a ethernet cable. You can now start up the server and connect to the client. To do this you have to run controller.py on the raspberry pi and hybrid_test_backend.py on the GUI computer. Once both of those are running you can follow the connection steps in implementation.

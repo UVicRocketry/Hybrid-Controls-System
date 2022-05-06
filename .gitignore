@@ -1,3 +1,4 @@
 # Prevents the .idea folder from being synced if you're a lame pycharm user.
-
 .idea
+# Pychache
+__pycache__/
