@@ -91,6 +91,11 @@ All data should take the STANDARD FORMAT:  ID,TAG,label,value, ....,TERMINATOR
 For example: CBOX,CD,stepper1,OPEN,stepper2,CLOSE,\n
 The detailed description of each 
 - ID: a identifier for the message being sent which gives information about the sender.
+  - Code (description),
+  - CB (Control Box)
+  - MC (Mission Control Laptop)
+  - RP (R-Pi Server)
+  - VC (Valuve Control Arduino)
   
 
 - TAG: Specifies type of message
@@ -100,12 +105,11 @@ The detailed description of each
   - ERROR (error message)
   - FD (feed back data)]
 
-- label: specifies type of control data, request, error ect.
+- Label: specifies type of control data, request, error ect.
+
+- Value: Value corresponding to the immediatly PRECEDING label.
   
-- terminator: Indicates
-  the end of a message packet
-  currently set to : \n
-  always lower case
+- Terminator: Indicates the end of a message packet currently set to : \n
 
 ### Error Protocol
 
