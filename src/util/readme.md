@@ -12,7 +12,7 @@ The detailed description of each entry type are below:
   - CBX (Control Box)
   - MCC (Mission Control Laptop)
   - RPI (R-Pi Server)
-  - VCA (Valuve Control Arduino)  
+  - VCA (Valve Control Arduino)  
 
 - TAG: Specifies type of message
   - CD (control data)
