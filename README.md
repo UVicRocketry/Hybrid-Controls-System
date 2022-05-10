@@ -87,29 +87,30 @@ Both serial and ethernet communication are used in the system. Since the data se
 
 ### Standard Protocal
 
-All data should take the STANDARD FORMAT:  ID,TAG,label,value, ....,TERMINATOR
-For example: CBOX,CD,stepper1,OPEN,stepper2,CLOSE,\n
-The detailed description of each 
+All data should take the STANDARD FORMAT:    ID,TAG,label,value, ....,TERMINATOR
+For example: CBX,CD,stepper1,OPEN,stepper2,CLOSE,\n
+
+The detailed description of each entry type are below:
+
 - ID: a identifier for the message being sent which gives information about the sender.
   - Code (description),
-  - CB (Control Box)
-  - MC (Mission Control Laptop)
-  - RP (R-Pi Server)
-  - VC (Valuve Control Arduino)
-  
+  - CBX (Control Box)
+  - MCC (Mission Control Laptop)
+  - RPI (R-Pi Server)
+  - VCA (Valuve Control Arduino)  
 
 - TAG: Specifies type of message
   - Code (description),
   - CD (control data),
-  - R (request),
-  - ERROR (error message)
+  - RQ (request),
+  - ER (error message)
   - FD (feed back data)]
 
-- Label: specifies type of control data, request, error ect.
+- label: specifies type of control data, request, error ect.
 
-- Value: Value corresponding to the immediatly PRECEDING label.
+- value: Value corresponding to the immediatly PRECEDING label.
   
-- Terminator: Indicates the end of a message packet currently set to : \n
+- TERMINATOR: Indicates the end of a message packet currently set to : \n
 
 ### Error Protocol
 
