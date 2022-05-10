@@ -21,7 +21,7 @@ UVic Rocketry's hybrid controls system is designed to actuate and monitor the st
   - Obtains confirmation or error from limit switches
   - sends confirmed valve states or error back to the R Pi
 
-![System_Diagram](./source/images/system_diagram.png)
+
 
 ![System_Control_Flow_Diagram](./source/images/high_level_data_flow.drawio.png)  
 _Note: If you get the draw.io extension for vs code you can edit this picture directly._
