@@ -17,7 +17,12 @@
 #define C4 10
 #define C5 11
 
-int LEDState[10];
+//shift register
+#define latchPin 12
+#define clockPin 5
+#define dataPin 6
+
+byte leds = 0;    // Variable to hold the pattern of which LEDs are currently turned on or off
 
 void setup() {
   Serial.begin(9600);
@@ -29,12 +34,16 @@ void setup() {
   pinMode(C3, INPUT);
   pinMode(C4, INPUT);
   pinMode(C5, INPUT);
+  pinMode(latchPin, OUTPUT);
+  pinMode(dataPin, OUTPUT);  
+  pinMode(clockPin, OUTPUT);
 }//setup
 
 void loop() {
     //TODO
     //Write new LED logic
-    
+
+    leds = 0;
     String switchStr = "SS,";
     digitalWrite(R1, HIGH);
     switchStr += valveSwitchRead("V1", C1);
@@ -50,6 +59,8 @@ void loop() {
     switchStr += valveSwitchRead("V9", C4);
     switchStr += valveSwitchRead("V10", C5);
     digitalWrite(R2, LOW);
+    
+    updateShiftRegister();
     
     digitalWrite(R3, HIGH);
     if(!digitalRead(C4)){
@@ -68,6 +79,7 @@ void loop() {
     
     digitalWrite(R3, LOW);
     Serial.println(switchStr);
+    
 }//loop
 
 //Reads valve switches state and adds it to the string for serial comm with the MCC
@@ -75,14 +87,23 @@ String valveSwitchRead(String valveName, int valveCol){
   String valveStatus = valveName + ",";
   if(digitalRead(valveCol)){
     valveStatus += "O,";
-    LEDState[valveName.substring(1).toInt() - 1] = HIGH;
+    bitSet(leds, valveName.substring(1).toInt() - 1)
   } else{
     valveStatus += "C,";
-    LEDState[valveName.substring(1).toInt() - 1] = LOW;
   }//ifelse
   
   return valveStatus;
 }//valveSwitchRead
+
+/*
+ * updateShiftRegister() - This function sets the latchPin to low, then calls the Arduino function 'shiftOut' to shift out contents of variable 'leds' in the shift register before putting the 'latchPin' high again.
+ */
+void updateShiftRegister()
+{
+   digitalWrite(latchPin, LOW);
+   shiftOut(dataPin, clockPin, LSBFIRST, leds);
+   digitalWrite(latchPin, HIGH);
+}
 
 
 //Takes Serial comm from MCC and transfers into array to output to the LEDs
