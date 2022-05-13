@@ -22,7 +22,8 @@
 #define clockPin 5
 #define dataPin 6
 
-byte leds = 0;    // Variable to hold the pattern of which LEDs are currently turned on or off
+byte ledTop = 0;    // Variable to hold the pattern of which LEDs are currently turned on or off
+byte ledBot = 0;
 
 void setup() {
   Serial.begin(9600);
@@ -43,7 +44,8 @@ void loop() {
     //TODO
     //Write new LED logic
 
-    leds = 0;
+    ledTop = 0;
+    ledBot = 0;
     String switchStr = "SS,";
     digitalWrite(R1, HIGH);
     switchStr += valveSwitchRead("V1", C1);
@@ -87,7 +89,11 @@ String valveSwitchRead(String valveName, int valveCol){
   String valveStatus = valveName + ",";
   if(digitalRead(valveCol)){
     valveStatus += "O,";
-    bitSet(leds, valveName.substring(1).toInt() - 1)
+    if(valveName.substring(1).toInt() > 8){
+      bitSet(ledBot, valveName.substring(1).toInt() - 9);
+    } else {
+      bitSet(ledTop, valveName.substring(1).toInt() - 1 );
+    }//ifelse
   } else{
     valveStatus += "C,";
   }//ifelse
@@ -100,9 +106,10 @@ String valveSwitchRead(String valveName, int valveCol){
  */
 void updateShiftRegister()
 {
-   digitalWrite(latchPin, LOW);
-   shiftOut(dataPin, clockPin, LSBFIRST, leds);
-   digitalWrite(latchPin, HIGH);
+  digitalWrite(latchPin, LOW);
+  shiftOut(dataPin, clockPin, LSBFIRST, ledTop);
+  shiftOut(dataPin, clockPin, LSBFIRST, ledBot);
+  digitalWrite(latchPin, HIGH);
 }
 
 
