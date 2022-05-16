@@ -106,13 +106,14 @@ void loop() {
     
     digitalWrite(R3, LOW);
     Serial.println(switchStr);
-    /*String valveState = Serial.read();
+    String valveState = Serial.readString();
 
     int i;
     
-    for(i = 0; i < 10(); i++;){
+    for(i = 0; i < 10; i++){
       valveParse(valveState, *valveList[i]);
-    }//for*/
+    }//for
+    delay(100);
     
 }//loop
 
@@ -161,9 +162,3 @@ void updateShiftRegister()
   shiftOut(dataPin, clockPin, LSBFIRST, ledBot);
   digitalWrite(latchPin, HIGH);
 }
-
-
-//Takes Serial comm from MCC and transfers into array to output to the LEDs
-void LEDParse(String led){
-  //TODO write
-}//LEDParse
