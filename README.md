@@ -15,7 +15,7 @@ UVic Rocketry's hybrid controls system is designed to actuate and monitor the st
   - Relays confirmation back to MC computer
   - Collects and Logs Data from LABJACK DAQ
   - Sends Logs to MC Computer
-- Arduino : Actuates all valves on the test stand
+- Valve Control Arduino : Actuates all valves on the test stand
   - Recieves command from R Pi
   - Executes valve movements
   - Obtains confirmation or error from limit switches
@@ -85,7 +85,7 @@ _Note: If you get the draw.io extension for vs code you can edit this picture di
 ## Communication Protocol
 Both serial and ethernet communication are used in the system. Since the data sent through these networks is very similar, they share the same communication protocal.
 
-### Standard Protocal
+### Standard Protocol
 
 All data should take the STANDARD FORMAT:    ID,TAG,label,value, ....,TERMINATOR
 For example: CBX,CD,stepper1,OPEN,stepper2,CLOSE,\n
@@ -119,19 +119,13 @@ The detailed description of each entry type are below:
 ### Abort Protocol
 - ABORT (high priority message): The ABORT message needs to bipass regular message handling and be relayed as quickly as possible to the Valve Control Arduino
 
-## Testing System Integration
+### Ignition Protocol
+- IGNITE (priority message): The ignition sequence is a special state which requires a button to be held and a repeating stream of data to be sent through the communication system to the valve control arduino. When the stream of data stops (indicated by a timeout period) ignition ceases and regular control is resumed. This protocol allows for a continuous ignition process.
 
-To start testing the system, ensure all motors and limit switches are wired correctly following the diagra in the *Valve Control Arduino* section.    
-
-  Next plugin the computer running the GUI to the Rpi 4 using a ethernet cable. You can now start up the server and connect to the client. To do this you have to run controller.py on the raspberry pi and hybrid_test_backend.py on the GUI computer. Once both of those are running you can follow the connection steps in implementation.
-
-  To test, make sure the arduino folder is uploaded to the arduino and the QueueList is working imported properly. To connect to the arduino you need to change `serial_port` in controller.py to the correct port on the raspberry Pi.
-
-
-## Mission Control Laptop & Raspberry Pi Communications
+### Mission Control Laptop & Raspberry Pi Communications
 The communication between Mission control and the Test Stand is facilitated by a python-written server-client model. The client and server send commands to each other in order to control the test stand. The commands take the form of a parameter and a state separated by a space. For example, to close the MEV, the server would send the following message: “MEV closed”. The client would receive that command and update the arduino accordingly. After receiving confirmation that the MEV had been closed successfully, the client would send a confirmation message back to the server which would take the same form as the original command e.g. “MEV closed”
 
-### Implementation (How to Establish Connection)
+#### Implementation (How to Establish Connection)
 
 The hybrid_test_backend.py file imports a Server object from the server.py file. Make sure that both of those files are present in the same folder when running the software
 
@@ -150,7 +144,7 @@ You should make sure that the HOST value in controller.py matches the value of t
 
 There is a PORT value in both hybrid_test_backend.py and in controller.py, make sure they are the same before attempting to run the software
 
-### Common Issues
+#### Common Issues
 If you are having trouble getting the connection to establish:
 Double check that the IPv4 address matches HOST
 Double check that the two PORT values match
@@ -160,3 +154,11 @@ Your computer’s firewall will likely block the connection initially. If your c
 1. Disable the firewall on both devices (the raspberry pi likely doesn’t have a firewall so don’t worry about that) 
 2. Attempt the connection again
 3. If it works this time and you don’t want to permanently leave your firewall off follow the steps in the following tutorial to open your firewall to that port https://www.tomshardware.com/news/how-to-open-firewall-ports-in-windows-10,36451.html
+
+
+
+## Testing and Requirements
+
+See HCS_Requirements_Documentation.xlsx for specific Testing and Requirements information
+
+
