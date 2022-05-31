@@ -27,7 +27,7 @@ UVic Rocketry's hybrid controls system is designed to actuate and monitor the st
 _Note: If you get the draw.io extension for vs code you can edit this picture directly._
 
 ## Control Box Arduino
-The Lockout Box Arduino is used for including physical switches, buttons, and safety measures that integrate with the virtual controls offered by the GUI software. The Arduino will be connected via USB to the Controls laptop and have the serial input interpreted by the GUI software. 
+The Control Box Arduino is used for including physical switches, buttons, and safety measures that integrate with the virtual controls offered by the GUI software. The Arduino will be connected via USB to the Controls laptop and have the serial input interpreted by the GUI software. 
 
 ### Objectives
 - maximize visibility
@@ -38,8 +38,15 @@ The Lockout Box Arduino is used for including physical switches, buttons, and sa
 - physical control for arming system
 - visual indicator for system armed
 - visual and auditory indicator for system in auto mode
-- max operating voltage is 12V
+- max operating voltage is 5V
 - max available GPIO dictated by Arduino
+
+### Notes
+- there are 8 available pins on the Nano, A2-A7, D11, D13
+  - D11 was reading high when it should not have been, so should not be trusted with critical functions
+  - D13 is wired to the Nano's LED and cannot be used for input unless the LED and resistor are desoldered
+- there are 6 available outs on the shift registers left if more LEDs need to be added
+- 4 valve switches are wired up but unused
 
 
 ## MCC
@@ -117,7 +124,7 @@ The detailed description of each entry type are below:
 - COMMUNICATION ERROR: A communication error occurs when one subsystems fails to get confirmation from another. When this occur, a two way ERROR message is sent to every available subsystem.
 
 ### Abort Protocol
-- ABORT (high priority message): The ABORT message needs to bipass regular message handling and be relayed as quickly as possible to the Valve Control Arduino
+- ABORT (high priority message): The ABORT message needs to bipass regular message handling and be relayed as quickly as possible to the Valve Control Arduino.
 
 ### Ignition Protocol
 - IGNITE (priority message): The ignition sequence is a special state which requires a button to be held and a repeating stream of data to be sent through the communication system to the valve control arduino. When the stream of data stops (indicated by a timeout period) ignition ceases and regular control is resumed. This protocol allows for a continuous ignition process.
