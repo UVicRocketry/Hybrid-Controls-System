@@ -22,6 +22,9 @@
 #define clockPin 5
 #define dataPin 6
 
+//buzzer pin
+#define buzzer A1
+
 //valve aliases
 String V1 = "N2OF";
 String V2 = "N2OV";
@@ -39,6 +42,12 @@ String * valveList[10];
 byte ledTop = 0;    // Holds which LEDs are currently turned on or off for first shift register
 byte ledBot = 0;    // Holds LEDs for second shift register
 
+bool armed = false; //to check whether system is armed for key turn buzzer
+bool fired = false; //to check if MEV is open, then turn off primed buzzer
+
+bool testing = false; //set to true to put box into testing mode, makes LEDs turn on due to switches
+
+
 void setup() {
   Serial.begin(9600);
   while (!Serial){};
@@ -55,6 +64,7 @@ void setup() {
   pinMode(latchPin, OUTPUT);
   pinMode(dataPin, OUTPUT);  
   pinMode(clockPin, OUTPUT);
+  pinMode(buzzer, OUTPUT);
 
   //adds valve names to list for string processing
   valveList[0] = & V1;
@@ -102,6 +112,14 @@ void loop() {
       }//while
     }//if
 
+    //checks if key has been turned, then turns on buzzer if it has been
+    if(digitalRead(C5) && !armed){
+      tone(buzzer, 300, 500); 
+      armed = true;
+    } else if (!digitalRead(C5)){
+      armed = false;
+    }//else if
+
     //Only allows commands other than ABORT to be sent to the computer if arming key is inserted and engaged
     if(digitalRead(C5)){
 
@@ -116,11 +134,25 @@ void loop() {
       //Adds MEV and IGP switch to output string
       switchStr += valveSwitchRead("IGP", C1, -1);
       switchStr += valveSwitchRead("MEV", C3, -1);
+
+      //checks whether MEV switch has been activated, so primed buzzer can be turned off
+      if(digitalRead(C3)){
+        fired = true;
+      } else {
+        fired = false;
+      }//if else
+
+      //if system is primed for ignition, turns on buzzer, if 
+      if(digitalRead(C1) && !fired){
+        tone(buzzer, 500, 1200);
+      } else {
+        //noTone(buzzer);
+      }//if else
   
       //Sends output string over serial
       Serial.println(switchStr);
       
-      /*
+      ///*
       //Reads feedback data from serial
       String valveState = Serial.readString();
       
@@ -134,7 +166,7 @@ void loop() {
           valveParse(valveState, *valveList[i]);
         }//for
       }//if
-      */
+      //*/
     }//if
 
     digitalWrite(R3, LOW);
@@ -155,14 +187,15 @@ String valveSwitchRead(String valveName, int valveCol, int pos){
     
     //This if statement is only for testing if the switches are working,
     //simulates input from computer to turn on leds
-    ///*
-    if(pos < 0) {
-    }else if(pos > 8){
-      bitSet(ledBot, pos - 9);
-    } else {
-      bitSet(ledTop, pos - 1 );
-    }//ifelse
-    //*/
+    if(testing){
+      if(pos < 0) {
+      }else if(pos > 8){
+        bitSet(ledBot, pos - 9);
+      } else {
+        bitSet(ledTop, pos - 1 );
+      }//ifelse
+    }//if
+    
   }else{
     valveStatus += "CLOSE,";
   }//ifelse
