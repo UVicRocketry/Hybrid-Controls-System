@@ -105,6 +105,7 @@ The detailed description of each entry type are below:
   - RQ (request),
   - ER (error message)
   - FD (feed back data)]
+  - CF (Confirm message recieved "value")
 
 - label: specifies type of control data, request, error ect.
 
