@@ -1,9 +1,9 @@
 /* UVR Propulsion Development Platform Mission Control Box Firmware
- * Joshua Piuti 2022
- * 
- * This firmware controls the mission control box, gathering input from the switches and buttons, sending them to the controls computer
- * and then recieves valve state data from the computer to display on the box.
- */
+  Joshua Piuti 2022
+
+  This firmware controls the mission control box, gathering input from the switches and buttons, sending them to the controls computer
+  and then recieves valve state data from the computer to display on the box.
+*/
 
 //matrix row pins
 #define R1 2
@@ -50,7 +50,7 @@ bool testing = false; //set to true to put box into testing mode, makes LEDs tur
 
 void setup() {
   Serial.begin(9600);
-  while (!Serial){};
+  while (!Serial) {};
 
   //sets pinmodes
   pinMode(R1, OUTPUT);
@@ -62,7 +62,7 @@ void setup() {
   pinMode(C4, INPUT);
   pinMode(C5, INPUT);
   pinMode(latchPin, OUTPUT);
-  pinMode(dataPin, OUTPUT);  
+  pinMode(dataPin, OUTPUT);
   pinMode(clockPin, OUTPUT);
   pinMode(buzzer, OUTPUT);
 
@@ -77,102 +77,102 @@ void setup() {
   valveList[7] = & V8;
   valveList[8] = & V9;
   valveList[9] = & V10;
-  
+
 }//setup
 
 void loop() {
-    //resets shift register bytes
-    ledTop = 0;
-    ledBot = 0;
-  
-    //goes throught switches and polls them for their state then adds
-    //them to the output string
-    String switchStr = "CBX,CD,";
-    digitalWrite(R1, HIGH);
-    switchStr += valveSwitchRead(V1, C1, 1);
-    switchStr += valveSwitchRead(V2, C2, 2);
-    switchStr += valveSwitchRead(V3, C3, 3);
-    switchStr += valveSwitchRead(V4, C4, 4);
-    switchStr += valveSwitchRead(V5, C5, 5);
-    digitalWrite(R1, LOW);
-    digitalWrite(R2, HIGH);
-    switchStr += valveSwitchRead(V6, C1, 6);
-    switchStr += valveSwitchRead(V7, C2, 7);
-    switchStr += valveSwitchRead(V8, C3, 8);
-    switchStr += valveSwitchRead(V9, C4, 9);
-    switchStr += valveSwitchRead(V10, C5, 10);
-    digitalWrite(R2, LOW);
+  //goes throught switches and polls them for their state then adds
+  //them to the output string
+  String switchStr = "CBX,CD,";
+  digitalWrite(R1, HIGH);
+  switchStr += valveSwitchRead(V1, C1, 1);
+  switchStr += valveSwitchRead(V2, C2, 2);
+  switchStr += valveSwitchRead(V3, C3, 3);
+  switchStr += valveSwitchRead(V4, C4, 4);
+  switchStr += valveSwitchRead(V5, C5, 5);
+  digitalWrite(R1, LOW);
+  digitalWrite(R2, HIGH);
+  switchStr += valveSwitchRead(V6, C1, 6);
+  switchStr += valveSwitchRead(V7, C2, 7);
+  switchStr += valveSwitchRead(V8, C3, 8);
+  switchStr += valveSwitchRead(V9, C4, 9);
+  switchStr += valveSwitchRead(V10, C5, 10);
+  digitalWrite(R2, LOW);
 
-    //Checks if abort button is pressed, if so sends ABORT signal until it is depressed
-    digitalWrite(R3, HIGH);
-    if(!digitalRead(C4)){
-      while(!digitalRead(C4)){
-        Serial.println("ABORT");
-        delay(100);
-      }//while
+  //Checks if abort button is pressed, if so sends ABORT signal until it is depressed
+  digitalWrite(R3, HIGH);
+  if (!digitalRead(C4)) {
+    while (!digitalRead(C4)) {
+      Serial.println("ABORT");
+      delay(100);
+    }//while
+  }//if
+
+  //checks if key has been turned, then turns on buzzer if it has been
+  if (digitalRead(C5) && !armed) {
+    tone(buzzer, 300, 500);
+    armed = true;
+  } else if (!digitalRead(C5)) {
+    armed = false;
+  }//else if
+
+  //Only allows commands other than ABORT to be sent to the computer if arming key is inserted and engaged
+  if (digitalRead(C5)) {
+
+    updateShiftRegister();
+
+    //Checks if the igniter fire button is depressed and sends IGNITER FIRE signal
+    while (digitalRead(C2)) {
+      Serial.println("IGNITE");
+      delay(500);
     }//if
 
-    //checks if key has been turned, then turns on buzzer if it has been
-    if(digitalRead(C5) && !armed){
-      tone(buzzer, 300, 500); 
-      armed = true;
-    } else if (!digitalRead(C5)){
-      armed = false;
-    }//else if
+    //Adds MEV and IGP switch to output string
+    switchStr += valveSwitchRead("IGP", C1, -1);
+    switchStr += valveSwitchRead("MEV", C3, -1);
 
-    //Only allows commands other than ABORT to be sent to the computer if arming key is inserted and engaged
-    if(digitalRead(C5)){
+    //checks whether MEV switch has been activated, so primed buzzer can be turned off
+    if (digitalRead(C3)) {
+      fired = true;
+    } else {
+      fired = false;
+    }//if else
 
-      updateShiftRegister();
-    
-      //Checks if the igniter fire button is depressed and sends IGNITER FIRE signal
-      while(digitalRead(C2)){
-        Serial.println("IGNITE");
-        delay(500);
-      }//if
-  
-      //Adds MEV and IGP switch to output string
-      switchStr += valveSwitchRead("IGP", C1, -1);
-      switchStr += valveSwitchRead("MEV", C3, -1);
-
-      //checks whether MEV switch has been activated, so primed buzzer can be turned off
-      if(digitalRead(C3)){
-        fired = true;
-      } else {
-        fired = false;
-      }//if else
-
-      //if system is primed for ignition, turns on buzzer, if 
-      if(digitalRead(C1) && !fired){
-        tone(buzzer, 500, 1200);
-      } else {
-        //noTone(buzzer);
-      }//if else
-  
-      //Sends output string over serial
-      Serial.println(switchStr);
-      
-      ///*
-      //Reads feedback data from serial
-      String valveState = Serial.readString();
-      
-      //Checks if header is present
-      int index = valveState.indexOf("MCC,FD");
-      if(index != -1){
-        int i;
-    
-        //Goes through feedback data and turns on LEDs according to which valves are  open
-        for(i = 0; i < 10; i++){
-          valveParse(valveState, *valveList[i]);
-        }//for
-      }//if
-      //*/
-    }//if
-
+    //if system is primed for ignition, turns on buzzer, if
+    if (digitalRead(C1) && !fired) {
+      tone(buzzer, 500, 1200);
+    } else {
+      //noTone(buzzer);
+    }//if else
     digitalWrite(R3, LOW);
-    
-    delay(100);
-    
+
+    //Sends output string over serial
+    Serial.println(switchStr);
+
+    ///*
+    //Reads feedback data from serial
+    //if(Serial.available()){
+    String valveState = Serial.readString();//Until('\n');
+    Serial.println(valveState);
+    //Checks if header is present
+    int index = valveState.indexOf("MCC,FD");
+    Serial.println(index);
+    if (index != -1) {
+      int i;
+      ledTop = 0;
+      ledBot = 0;
+
+
+      //Goes through feedback data and turns on LEDs according to which valves are  open
+      for (i = 0; i < 10; i++) {
+        valveParse(valveState, *valveList[i], i);
+      }//for
+    }//if
+    //*/
+  }//if
+  //}//if
+
+  delay(100);
 }//loop
 
 
@@ -180,48 +180,46 @@ void loop() {
 //-----------------------------------------------------------------------------------------------
 //Reads valve switches state and adds it to the string for serial comm with the MCC
 //pos is just for testing box functionality without a connected computer sending feedback data
-String valveSwitchRead(String valveName, int valveCol, int pos){
+String valveSwitchRead(String valveName, int valveCol, int pos) {
   String valveStatus = valveName + ",";
-  if(digitalRead(valveCol)){
+  if (digitalRead(valveCol)) {
     valveStatus += "OPEN,";
-    
+
     //This if statement is only for testing if the switches are working,
     //simulates input from computer to turn on leds
-    if(testing){
-      if(pos < 0) {
-      }else if(pos > 8){
+    if (testing) {
+      if (pos < 0) {
+      } else if (pos > 8) {
         bitSet(ledBot, pos - 9);
       } else {
         bitSet(ledTop, pos - 1 );
       }//ifelse
     }//if
-    
-  }else{
+
+  } else {
     valveStatus += "CLOSE,";
   }//ifelse
-  
+
   return valveStatus;
 }//valveSwitchRead
 
 //Parses feedback data to turn on LEDs
-void valveParse (String input, String valveName){
-   //Finds index of valveName in input string
-   int index = input.indexOf(valveName + ",");
-
-   //If index is found check for valve position
-   if(index != -1){
-    int end = input.indexOf(",", valveName.length() + 1);
+void valveParse (String input, String valveName, int pos) {
+  //Finds index of valveName in input string
+  int index = input.indexOf(valveName + ",");
+  //If index is found check for valve position
+  if (index != -1) {
+    int end = input.indexOf(",", index + valveName.length() + 1);
     String value = input.substring(index + valveName.length() + 1, end);
-
     //If valve is open, set bit in LED byte for that valve to ON
-    if(value == "OPEN"){
-      if(valveName.substring(1).toInt() > 8){
-        bitSet(ledBot, valveName.substring(1).toInt() - 9);
+    if (value == "OPEN") {
+      if (pos > 8) {
+        bitSet(ledBot, pos - 8);
       } else {
-        bitSet(ledTop, valveName.substring(1).toInt() - 1 );
+        bitSet(ledTop, pos);
       }//ifelse
     }//if
-   }//if
+  }//if
 }//valveParse
 
 
