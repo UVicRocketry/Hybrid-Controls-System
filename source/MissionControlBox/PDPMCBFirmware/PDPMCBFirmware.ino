@@ -85,18 +85,18 @@ void loop() {
   //them to the output string
   String switchStr = "CBX,CD,";
   digitalWrite(R1, HIGH);
-  switchStr += valveSwitchRead(V1, C1, 1);
-  switchStr += valveSwitchRead(V2, C2, 2);
-  switchStr += valveSwitchRead(V3, C3, 3);
-  switchStr += valveSwitchRead(V4, C4, 4);
-  switchStr += valveSwitchRead(V5, C5, 5);
+  switchStr += valveSwitchRead(V1, C1, 0);
+  switchStr += valveSwitchRead(V2, C2, 1);
+  switchStr += valveSwitchRead(V3, C3, 2);
+  switchStr += valveSwitchRead(V4, C4, 3);
+  switchStr += valveSwitchRead(V5, C5, 4);
   digitalWrite(R1, LOW);
   digitalWrite(R2, HIGH);
-  switchStr += valveSwitchRead(V6, C1, 6);
-  switchStr += valveSwitchRead(V7, C2, 7);
-  switchStr += valveSwitchRead(V8, C3, 8);
-  switchStr += valveSwitchRead(V9, C4, 9);
-  switchStr += valveSwitchRead(V10, C5, 10);
+  switchStr += valveSwitchRead(V6, C1, 5);
+  switchStr += valveSwitchRead(V7, C2, 6);
+  switchStr += valveSwitchRead(V8, C3, 7);
+  switchStr += valveSwitchRead(V9, C4, 8);
+  switchStr += valveSwitchRead(V10, C5, 9);
   digitalWrite(R2, LOW);
 
   //Checks if abort button is pressed, if so sends ABORT signal until it is depressed
@@ -153,15 +153,13 @@ void loop() {
     //Reads feedback data from serial
     //if(Serial.available()){
     String valveState = Serial.readString();//Until('\n');
-    Serial.println(valveState);
+
     //Checks if header is present
     int index = valveState.indexOf("MCC,FD");
-    Serial.println(index);
     if (index != -1) {
       int i;
       ledTop = 0;
       ledBot = 0;
-
 
       //Goes through feedback data and turns on LEDs according to which valves are  open
       for (i = 0; i < 10; i++) {
@@ -189,10 +187,10 @@ String valveSwitchRead(String valveName, int valveCol, int pos) {
     //simulates input from computer to turn on leds
     if (testing) {
       if (pos < 0) {
-      } else if (pos > 8) {
-        bitSet(ledBot, pos - 9);
+      } else if (pos > 7) {
+        bitSet(ledBot, pos - 8);
       } else {
-        bitSet(ledTop, pos - 1 );
+        bitSet(ledTop, pos);
       }//ifelse
     }//if
 
@@ -213,7 +211,7 @@ void valveParse (String input, String valveName, int pos) {
     String value = input.substring(index + valveName.length() + 1, end);
     //If valve is open, set bit in LED byte for that valve to ON
     if (value == "OPEN") {
-      if (pos > 8) {
+      if (pos > 7) {
         bitSet(ledBot, pos - 8);
       } else {
         bitSet(ledTop, pos);
