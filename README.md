@@ -21,9 +21,7 @@ UVic Rocketry's hybrid controls system is designed to actuate and monitor the st
   - Obtains confirmation or error from limit switches
   - sends confirmed valve states or error back to the R Pi
 
-
-
-![System_Control_Flow_Diagram](./source/images/high_level_data_flow.drawio.png)  
+![System_Control_Flow_Diagram](./images/high_level_data_flow.drawio.png)  
 _Note: If you get the draw.io extension for vs code you can edit this picture directly._
 
 ## Control Box Arduino
@@ -75,12 +73,8 @@ The Arduino in charge of valve control accepts commands from the R Pi over seria
 - must identify stuck valves and relay to Mission Control (can use timer)
 - Must initiate abort system when safety checks fail
 ### Wiring
-
-
-![Wiring Diagram](./source/images/ControlsWiringDiagram.drawio.png)  
+![Wiring Diagram](./images/ControlsWiringDiagram.drawio.png)  
 _Note: If you get the draw.io extension for vs code you can edit this picture directly._
-
-
 
 ## Communication Protocol
 Both serial and ethernet communication are used in the system. Since the data sent through these networks is very similar, they share the same communication protocal.
@@ -139,7 +133,7 @@ To determine the correct IP:
 1. On the computer that is running hybrid_test_backend.py open command prompt
 2. Type in ipconfig and hit enter
 3. Find line labelled IPv4 Address. That is the correct IP address
-![IPconnection](./source/images/IPconnection.png)
+![IPconnection](./images/IPconnection.png)
 
 You should make sure that the HOST value in controller.py matches the value of the IPv4 address before you attempt to run the software
 
@@ -159,6 +153,7 @@ Your computer’s firewall will likely block the connection initially. If your c
 
 
 ## Testing and Requirements
+![Wiring Diagram](./images/ControlsWiringDiagram.drawio.png)
 
 See HCS_Requirements_Documentation.xlsx for specific Testing and Requirements information
 

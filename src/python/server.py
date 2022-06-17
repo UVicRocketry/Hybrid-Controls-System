@@ -1,5 +1,7 @@
+import logging
 import socket
 import queue
+from message import Message
 
 
 class NoConnection(Exception):
@@ -34,7 +36,7 @@ class Server:
         self.server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)   # allows the server and client to reconnect
         self.client = None  # just a placeholder for now, becomes the client when a successfully connected
         self.c_address = None  # just a placeholder for now, becomes the client when a successfully connected
-        self.feedback_queue = queue.Queue()  # used to store feedback from client
+        self.message_queue = queue.Queue()  # used to store messages from client
 
 
     def initialize_connection(self):
@@ -47,9 +49,9 @@ class Server:
         """
         try:
             self.server.bind(self.address)  # binds the server object to the HOST and PORT
-
         except socket.gaierror: # this is an exception raised if the ip is invalid
             raise InvalidIp
+        logging.info("Waiting for client to connect.")
         self.server.listen(5)  # waits for a connection from the client
         self.client, self.c_address = self.server.accept()  # when a successful connection is made
 
@@ -59,40 +61,42 @@ class Server:
         :return: nothing
         """
         try:
-            self.server.close()
             self.client.close()
+            self.server.close()
         except AttributeError:
-            print('already closed')
+            logging.error('[Server] Connection already closed.')
 
         self.server = None
         self.client = None
+        logging.info("[Server] Successfully closed connection.")
 
-    def send_states(self, data):
+    def write_msg(self, msg):
         """
-        Send state to client, used when input is received from GUI
-        :param data: The state being sent
+        Send msg to client
+        :param msg: The state being sent
         :return: nothing
         """
-
         try:
-            self.client.sendall((data + " ").encode())  # send off the data
-        except WindowsError:  # this will fail if there is no connection initialized
+            self.client.sendall((msg).encode())  # send off the data
+        except socket.error:  # this will fail if there is no connection initialized
             raise NoConnection
 
-    def receive_states(self):
+    def read_msg_to_queue(self):
         """
-        Receive data from client and tokenize it, then add it to the instruction queue
-        :return: nothing
+        Receive data from client and generates a Message object, then add it to the instruction queue
+        :return: High priority message
         """
         if self.client is None:
             raise NoConnection
         try:
-            data = self.client.recv(1024).decode()  # receives data which it decodes() into a string
-            data = data.split()
-            # because data is sent in pairs, we want to go through the list 2 at a time
-            for i in range(0, len(data), 2):
-                token = (data[i], data[i+1])  # create new token
-                self.feedback_queue.put(token)  # adds each list token to the queue
-        except WindowsError as e:
-            print(f'Server receive_states: {e}')
+            msg = self.client.recv(1024).decode()
+            if msg in ("ABORT", "IGNITE"):
+                return msg
+            else:
+                msg = Message(msg)  # receives data which it decodes() into a string
+                logging.info(msg)
+                self.message_queue.put(msg)  # adds message to the queue
+        except socket.error as e:
+            logging.error(f'read_msg_to_queue: {e}')
             raise NoConnection
+        return None

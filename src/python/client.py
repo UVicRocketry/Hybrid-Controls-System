@@ -1,16 +1,13 @@
+import logging
 import socket
 import queue
-
-# the HOST and PORT are just part of the test code at the bottom, ignore for purposes of Client class
-HOST = '127.0.0.1'
-PORT = 9999
+from message import Message
 
 
 class NoConnection(Exception):
     """
     A custom exception raised when attempting to utilize the client when no connection has been made
     """
-
     def __str__(self):
         return "NoConnection"
 
@@ -32,11 +29,11 @@ class Client:
         :param host: The IP of the client, IS HARD CODED, NEED TO CHANGE IF IP OF SERVER CHANGES
         :param port: The port that the socket will be connecting on. Hard coded to 9999
         """
-        self.host = host  # The ip of the server that the client connects to
-        self.port = port  # The port the client connects on
-        self.address = (self.host, self.port)  # A tuple formed from the given host and ip, used for socket object
+        self.HOST = host  # The ip of the server that the client connects to
+        self.PORT = port  # The port the client connects on
+        self.address = (self.HOST, self.PORT)  # A tuple formed from the given host and ip, used for socket object
         self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  # Initializes the client socket
-        self.feedback_queue = queue.Queue()  # A queue used to store the incoming instructions from the server
+        self.message_queue = queue.Queue()  # A queue used to store the incoming instructions from the server
 
     def initialize_connection(self):
         """
@@ -53,29 +50,31 @@ class Client:
         """
         self.client.close()  # cleans up the socket
 
-    def send_states(self, data):
+    def write_msg(self, msg):
         """
-        Send state to server, used when input is received from control software
-        :param data: The state being sent
+        Send msg to server
+        :param msg: The state being sent
         :return: nothing
         """
         try:
-            self.client.sendall((data+" ").encode())  # send off the data
-        except Exception: # his will fail if there is no connection initialized.
+            self.client.sendall((msg).encode())  # send off the data
+        except socket.error: # this will fail if there is no connection initialized.
             raise NoConnection
 
-    def receive_states(self):
+    def read_msg_to_queue(self):
         """
-        Receive data from server and tokenize it, then add it to the instruction queue
-        :return: nothing
+        Receive data from server and generates a Message object, then add it to the instruction queue
+        :return: High priority message
         """
         try:
-            data = self.client.recv(1024).decode()  # receives data which it decodes() into a string
-            data = data.split()  # converts string to array
-            # because data is sent in pairs, we want to go through the list 2 at a time
-            for i in range(0, len(data), 2):
-                token = (data[i], data[i + 1])  # creates the tuple object
-                self.feedback_queue.put(token)  # add the token to the queue
-        except Exception as e:
+            msg = self.client.recv(1024).decode()
+            if msg in ("ABORT", "IGNITE"):
+                return msg
+            else:
+                msg = Message(msg)  # receives data which it decodes() into a string
+                logging.info(msg)
+                self.message_queue.put(msg)  # adds message to the queue
+        except socket.error as e:
             print(f'Client receive_states: {e}')
             raise NoConnection
+        return None
