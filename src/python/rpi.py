@@ -146,12 +146,13 @@ def main():
         raise Exception("2 arguments required.\nUsage: python mcc.py <Serial Port> <Host IP> [1 (for test mode)]")
 
     try:
-        if sys.argv[3] == "1":
-            controller = Controller(sys.argv[1], sys.argv[2], test=True)
+        if len(sys.argv) == 4:
+            if sys.argv[3] == "1":
+                controller = Controller(sys.argv[1], sys.argv[2], test=True)
         else:
-            while controller.system_states["client_connected"] == False or controller.system_states["serial_connected"] == False:
-                pass
             controller = Controller(sys.argv[1], sys.argv[2])
+        while controller.system_states["client_connected"] == False or controller.system_states["serial_connected"] == False:
+            pass
         controller.start()
     except KeyboardInterrupt: #close on ctrl+C
         logging.warning("Keyboard Interrupt")
