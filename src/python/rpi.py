@@ -54,7 +54,7 @@ class Controller:
         """
         if self.test:
             self.test_thread1 = threading.Thread(name="test_thread1", target=self.receiver, args=(self.client,))
-            self.test_thread2 = threading.Thread(name="test_thread2", target=self.author, args=(self.client, self.client))
+            self.test_thread2 = threading.Thread(name="test_thread2", target=self.test, args=(self.client, self.client))
 
             self.test_thread1.daemon = False
             self.test_thread2.daemon = False
@@ -122,7 +122,7 @@ class Controller:
             self.log(f"Failed to ping serial device on port {port}")
             self.serial = None
 
-    def receiver(self, receiver, ):
+    def receiver(self, receiver):
         self.log(f"Starting {type(receiver).__name__} receiver thread.")
         while True:
             receiver.read_msg_to_queue()
@@ -132,6 +132,15 @@ class Controller:
         while True:
             while not backlog.message_queue.empty():
                 author.write_msg(str(backlog.message_queue.get()))
+
+    def test(self, backlog, author):
+        self.log(f"Starting test thread.")
+        while True:
+            while not backlog.message_queue.empty():
+                msg = backlog.message_queue.get()
+                msg.setId("MCC")
+                msg.setTag("FD")
+                author.write_msg(str(msg))
 
     def log(self, msg):
         logging.info(msg)
