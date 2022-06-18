@@ -89,13 +89,12 @@ class Server:
         if self.client is None:
             raise NoConnection
         try:
-            msg = self.client.recv(1024).decode()
-            if msg in ("ABORT", "IGNITE"):
-                return msg
-            else:
-                msg = Message(msg)  # receives data which it decodes() into a string
-                logging.info(msg)
-                self.message_queue.put(msg)  # adds message to the queue
+            msg = Message(self.client.recv(1024).decode()) # receives data which it decodes() into a string
+            logging.info(msg)
+            if "ABORT" in msg.getLabels():
+                with self.message_queue.queue.mutex:
+                    self.message_queue.clear()
+            self.message_queue.put(msg)  # adds message to the queue
         except socket.error as e:
             logging.error(f'read_msg_to_queue: {e}')
             raise NoConnection

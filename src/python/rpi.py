@@ -53,7 +53,7 @@ class Controller:
         :return: nothing
         """
         if self.test:
-            self.test_thread1 = threading.Thread(name="test_thread1", target=self.receiver, args=(self.client, self.client))
+            self.test_thread1 = threading.Thread(name="test_thread1", target=self.receiver, args=(self.client,))
             self.test_thread2 = threading.Thread(name="test_thread2", target=self.author, args=(self.client, self.client))
 
             self.test_thread1.daemon = False
@@ -62,8 +62,8 @@ class Controller:
             self.test_thread1.start()
             self.test_thread2.start()
         else:
-            self.client_receiver_thread = threading.Thread(name="client_receiver_thread", target=self.receiver, args=(self.client, self.serial))  # create the receiver threads
-            self.serial_receiver_thread = threading.Thread(name="serial_receiver_thread", target=self.receiver, args=(self.serial, self.client))
+            self.client_receiver_thread = threading.Thread(name="client_receiver_thread", target=self.receiver, args=(self.client,))  # create the receiver threads
+            self.serial_receiver_thread = threading.Thread(name="serial_receiver_thread", target=self.receiver, args=(self.serial,))
 
             self.client_author_thread = threading.Thread(name="client_author_thread", target=self.author, args=(self.serial, self.client))  # create the author threads 
             self.serial_author_thread = threading.Thread(name="serial_author_thread", target=self.author, args=(self.client, self.serial))
@@ -122,12 +122,10 @@ class Controller:
             self.log(f"Failed to ping serial device on port {port}")
             self.serial = None
 
-    def receiver(self, reciever, author):
-        self.log(f"Starting {type(reciever).__name__} receiver thread.")
+    def receiver(self, receiver, ):
+        self.log(f"Starting {type(receiver).__name__} receiver thread.")
         while True:
-            priority_msg = reciever.read_msg_to_queue()
-            if priority_msg:
-                author.write_msg(priority_msg)
+            receiver.read_msg_to_queue()
 
     def author(self, backlog, author):
         self.log(f"Starting {type(author).__name__}  author thread.")
@@ -145,7 +143,7 @@ def main():
     controller = None
 
     if len(sys.argv) not in (3,4):
-        raise Exception("2 arguments required.\nUsage: python mcc <Host IP> <Serial Port>")
+        raise Exception("2 arguments required.\nUsage: python mcc.py <Serial Port> <Host IP> [1 (for test mode)]")
 
     try:
         if sys.argv[3] == "1":
