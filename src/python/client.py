@@ -57,6 +57,7 @@ class Client:
         :return: nothing
         """
         try:
+            logging.info("Sending" + msg)
             self.client.sendall((msg).encode())  # send off the data
         except socket.error: # this will fail if there is no connection initialized.
             raise NoConnection

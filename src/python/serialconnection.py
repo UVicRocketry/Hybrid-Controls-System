@@ -25,6 +25,7 @@ class SerialConnection:
         Send message to serial device.
         :param message: string to send over serial connection.
         """
+        logging.info("Sending" + message)
         self.ser.write(message.encode())
 
     # TODO: 
