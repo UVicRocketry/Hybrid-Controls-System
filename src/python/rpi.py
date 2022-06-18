@@ -151,8 +151,8 @@ def main():
                 controller = Controller(sys.argv[1], sys.argv[2], test=True)
         else:
             controller = Controller(sys.argv[1], sys.argv[2])
-        while controller.system_states["client_connected"] == False or controller.system_states["serial_connected"] == False:
-            pass
+            while controller.system_states["client_connected"] == False or controller.system_states["serial_connected"] == False:
+                pass
         controller.start()
     except KeyboardInterrupt: #close on ctrl+C
         logging.warning("Keyboard Interrupt")

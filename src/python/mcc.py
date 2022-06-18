@@ -43,7 +43,7 @@ class Controller:
         self.test = test
 
         if test:
-            self.start_server(HOST, PORT)
+            self.start_serial(serial_port)
         else:
             self.start_server(HOST, PORT)
             self.start_serial(serial_port)
@@ -56,8 +56,8 @@ class Controller:
         self.log("Starting threads.")
 
         if self.test:
-            self.test_thread1 = threading.Thread(name="test_thread1", target=self.receiver, args=(self.server,))
-            self.test_thread2 = threading.Thread(name="test_thread2", target=self.message_generator)
+            self.test_thread1 = threading.Thread(name="test_thread1", target=self.receiver, args=(self.serial,))
+            self.test_thread2 = threading.Thread(name="test_thread2", target=self.serial_test)
 
             self.test_thread1.daemon = False
             self.test_thread2.daemon = False
@@ -140,7 +140,8 @@ class Controller:
     def serial_test(self):
         self.log("Starting serial test thread.")
         while True:
-            self.serial.read_msg_to_queue()
+            while not self.serial.message_queue.empty():
+                pass
             msg = self.serial.message_queue.get()
             msg.setId("MCC")
             msg.setTag("FD")
@@ -177,8 +178,8 @@ def main():
                 controller = Controller(sys.argv[1], sys.argv[2], test=True)
         else:
             controller = Controller(sys.argv[1], sys.argv[2])
-        while controller.system_states["client_connected"] == False or controller.system_states["serial_connected"] == False:
-            pass
+            while controller.system_states["client_connected"] == False or controller.system_states["serial_connected"] == False:
+                pass
         controller.start()
     except KeyboardInterrupt: #close on ctrl+C
         logging.warning("Keyboard Interrupt")

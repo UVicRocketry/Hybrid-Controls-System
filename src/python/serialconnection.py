@@ -38,13 +38,13 @@ class SerialConnection:
         while self.ser.in_waiting:
             pass
         msg = self.ser.readline().decode()
-        if msg in ("ABORT", "IGNITE"):
-            return msg
-        else:
-            msg = Message()
-            logging.info(msg)
-            self.message_queue.put(msg) 
-        return None
+        logging.info(msg)
+        msg = Message(msg)
+        if "ABORT" in msg.getLabels():
+            with self.message_queue.queue.mutex:
+                self.message_queue.clear()
+        logging.info(msg)
+        self.message_queue.put(msg)
 
     def close(self):
         self.ser.close()
