@@ -84,12 +84,13 @@ void loop() {
   //goes throught switches and polls them for their state then adds
   //them to the output string
   String switchStr = "CBX,CD,";
+  String NCV = "";
   digitalWrite(R1, HIGH);
   switchStr += valveSwitchRead(V1, C1, 0);
   switchStr += valveSwitchRead(V2, C2, 1);
   switchStr += valveSwitchRead(V3, C3, 2);
   switchStr += valveSwitchRead(V4, C4, 3);
-  switchStr += valveSwitchRead(V5, C5, 4);
+  NCV += valveSwitchRead(V5, C5, 4);
   digitalWrite(R1, LOW);
   digitalWrite(R2, HIGH);
   switchStr += valveSwitchRead(V6, C1, 5);
@@ -103,7 +104,7 @@ void loop() {
   digitalWrite(R3, HIGH);
   if (!digitalRead(C4)) {
     while (!digitalRead(C4)) {
-      Serial.println("ABORT");
+      Serial.println("CBX,CD,ABORT,,");
       delay(100);
     }//while
   }//if
@@ -123,13 +124,14 @@ void loop() {
 
     //Checks if the igniter fire button is depressed and sends IGNITER FIRE signal
     while (digitalRead(C2)) {
-      Serial.println("IGNITE");
+      Serial.println("CBX,CD,IGNITE,,");
       delay(500);
     }//if
 
     //Adds MEV and IGP switch to output string
     switchStr += valveSwitchRead("IGP", C1, -1);
     switchStr += valveSwitchRead("MEV", C3, -1);
+    switchStr += NCV;
 
     //checks whether MEV switch has been activated, so primed buzzer can be turned off
     if (digitalRead(C3)) {
