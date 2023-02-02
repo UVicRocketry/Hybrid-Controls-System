@@ -1,8 +1,13 @@
 /* UVR Propulsion Development Platform Mission Control Box Firmware
-  Joshua Piuti 2022
+  Matthew Ebert 
+  2023-FEB-01
 
   This firmware controls the mission control box, gathering input from the switches and buttons, sending them to the controls computer
-  and then recieves valve state data from the computer to display on the box.
+
+  This program only sends data on a STATE CHANGE. 
+  
+  Limited logic should be implemented here. 
+  The idea is to create a simple controller for the attached computer (MCC)
 */
 
 //matrix row pins
