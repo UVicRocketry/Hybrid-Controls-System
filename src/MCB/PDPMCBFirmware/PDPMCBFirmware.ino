@@ -14,6 +14,8 @@
 /***************DEFINITIONS ******************/
 
 
+#define pinBUZZER 11
+
 
 #define pinABORT 2
 #define maskABORT (1<<pinABORT)
@@ -21,9 +23,13 @@
 #define pinARMKEY 3
 #define maskARMKEY 1<<pinARMKEY
 
-#define IGFIRE 4
-#define IGPRIME 5
-#define MEV 6
+#define pinIGFIRE 4
+#define pinIGPRIME 5
+#define maskIGPRIME (1<<pinIGPRIME)
+
+#define pinMEV 6
+
+
 
 
 #define numValves 10
@@ -53,7 +59,13 @@ void setup() {
 
   //sets pinmodes
   DDRD = 0x00;
-  DDRB = 0x00;
+  DDRC = 0x00;
+  DDRB |= 0x04;
+  analogWrite(11, 0);
+  buzzerSetup();
+
+  PCICR |= B00000100; // Enable interrupts on PD port
+  PCMSK2 |= B00100000; // Trigger interrupts on pins D4 and D5
 
   //attachInterrupt(digitalPinToInterrupt(pinARMKEY), ISR_ARMINGKEY, CHANGE);
   attachInterrupt(digitalPinToInterrupt(pinABORT), ISR_ABORT, CHANGE);
@@ -161,7 +173,52 @@ void sendStates(uint16_t tempState)
 }
 
 
-volatile int startTime = 0;
+
+
+
+void buzzerSetup(void)
+{
+  cli();
+
+  TCCR1A = 0;// set entire TCCR1A register to 0
+  TCCR1B = 0;// same for TCCR1B
+  TCNT1  = 0;//initialize counter value to 0
+  // set compare match register for 1hz increments
+  OCR1A = 30000;// = (16*10^6) / (1*1024) - 1 (must be <65536)
+  // turn on CTC mode
+  TCCR1B |= (1 << WGM12);
+  // Set CS10 and CS12 bits for 1024 prescaler
+  // TCCR1B |= (1 << CS12) | (1 << CS10);
+  // enable timer compare interrupt
+  TIMSK1 |= (1 << OCIE1A);
+
+  sei();
+}
+
+
+
+ISR (PCINT0_vect) {
+  // code to execute
+}
+
+
+ISR(TIMER1_COMPA_vect)
+{
+  analogWrite(11, 0);
+  TCCR1B &= !(1 << CS12) & !(1 << CS10); 
+}
+
+
+ISR (PCINT2_vect) {
+
+  if ((PIND & maskIGPRIME) == 0)
+  {
+    analogWrite(11, 255);
+    TCNT2 = 0;
+    TCCR1B |= (1 << CS12) | (1 << CS10);
+  }
+}
+
 void ISR_ABORT(void)
 {
   for (int i = 0; i < 1000; i++)
@@ -175,5 +232,8 @@ void ISR_ABORT(void)
   {
     ABORT = true;
     Serial.print("MCB,ABORT,\n");
+    analogWrite(11, 255);
+    TCNT2 = 0;
+    TCCR1B |= (1 << CS12) | (1 << CS10);
   }
 }

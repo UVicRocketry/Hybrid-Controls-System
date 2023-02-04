@@ -72,18 +72,6 @@
   "project": {
     "files": [
       {
-        "name": "PDPMCBCircuit.kicad_pcb",
-        "open": false,
-        "window": {
-          "display": 0,
-          "maximized": true,
-          "pos_x": -8,
-          "pos_y": -8,
-          "size_x": 2576,
-          "size_y": 1416
-        }
-      },
-      {
         "name": "PDPMCBCircuit.kicad_sch",
         "open": true,
         "window": {
