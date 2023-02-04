@@ -13,9 +13,6 @@
 
 /***************DEFINITIONS ******************/
 
-#define pinN2OF 4
-#define pinN2OV 5
-#define pinN2V 6
 
 
 #define pinABORT 2
@@ -24,27 +21,27 @@
 #define pinARMKEY 3
 #define maskARMKEY 1<<pinARMKEY
 
+#define IGFIRE 4
+#define IGPRIME 5
+#define MEV 6
 
 
-#define numValves 3
-String listValves[numValves] = { "N2OF", "N2OV", "N2F"};
+#define numValves 10
+String listValves[numValves] = {"IGFIRE", "IGPRIME", "MEV", "S1", "EVV", "NCV", "RTV", "N2F", "N2OV", "N2OF"};
 
 
-#define maskPB 0x1F
-#define maskPD 0xFC
+#define maskPC 0x3F
+#define maskPD 0xF0
 
 
-enum state {
-  ABORT,  //0
-  DISARMED,//1
-  ARMED,//2
-  PRIMED,//3
-  FIRE//4
+enum status_t {
+  DISARMED,//0
+  ARMED,//1
 };
 
-
+volatile bool ABORT = false;
 volatile uint8_t updateState = 0;
-volatile state STATUS = NULL;
+//volatile status_t STATUS = NULL;
 
 //FUNCTION DECLARATION
 uint16_t getState(void);
@@ -58,22 +55,9 @@ void setup() {
   DDRD = 0x00;
   DDRB = 0x00;
 
-  attachInterrupt(digitalPinToInterrupt(pinARMKEY), ISR_ARMINGKEY, CHANGE);
+  //attachInterrupt(digitalPinToInterrupt(pinARMKEY), ISR_ARMINGKEY, CHANGE);
   attachInterrupt(digitalPinToInterrupt(pinABORT), ISR_ABORT, CHANGE);
-
-
   delay(100);
-  STATUS = DISARMED;
-
-  if ((getState() & maskARMKEY) == 0)
-  {
-    Serial.print("MCB,STATUS,ARMED,\n");
-    STATUS = ARMED;
-  } else
-  {
-    Serial.print("MCB,STATUS,DISARMED,\n");
-    STATUS = DISARMED;
-  }
 
 }//setup
 
@@ -85,37 +69,51 @@ void loop()
 
   uint16_t CurState = getState();
   uint16_t NewState = CurState;
+  status_t CurSTATUS = getSTATUS();
+  if (CurSTATUS == DISARMED) Serial.print("MCB,STATUS,DISARMED,\n");
+  if (CurSTATUS == ARMED) Serial.print("MCB,STATUS,ARMED,\n");
+  status_t NewSTATUS = CurSTATUS;
 
-
-  while (STATUS)
+  while (!ABORT)
   {
-
-
-
-    if (updateState)
-    {
-      if (STATUS == DISARMED) Serial.print("MCB,STATUS,DISARMED,\n");
-      if (STATUS == ARMED) Serial.print("MCB,STATUS,ARMED,\n");
-      updateState = 0;
-    }
-
-    NewState = getState();
+    NewSTATUS = getSTATUS();
     delay(50);//debounce
-    if (NewState == getState())
+    if (NewSTATUS == getSTATUS())
     {
-      if ((NewState != CurState) && (STATUS > 1))
+      if (NewSTATUS != CurSTATUS)
       {
-        sendStates(NewState);
-        CurState = NewState;
-      }
-    }
+        CurSTATUS = NewSTATUS;
+        if (CurSTATUS == DISARMED) Serial.print("MCB,STATUS,DISARMED,\n");
+        if (CurSTATUS == ARMED) Serial.print("MCB,STATUS,ARMED,\n");
+      }//IF CHANGE STATUS
+    }//IF DEBOUNCE
+
+    if (CurSTATUS)
+    {
+      NewState = getState();
+      delay(50);//debounce
+      if (NewState == getState())
+      {
+        if ((NewState != CurState))
+        {
+          if (getSTATUS())
+          {
+            sendStates(NewState);
+            CurState = NewState;
+          }
+        }//IF CHANGE STATE
+      }//IF DEBOUNCE
+    }//IF STATUS
   }
+
+
 
   while (1)
   {
-    delay(100);
     Serial.print("MCB,ABORT,\n");
+    delay(100);
   }
+
 }//loop
 
 
@@ -123,10 +121,30 @@ void loop()
 //-----------------------------------------------------------------------------------------------
 
 
+uint16_t getState(void)
+{
+  uint16_t state = ((PIND & maskPD) >> 4) + ((PINC & maskPC) << 4);
+  return state;
+}
+
+
+status_t getSTATUS(void)
+{
+  if ((PIND & maskARMKEY) == 0)
+  {
+    return ARMED;
+  } else
+  {
+    return DISARMED;
+  }
+}
+
+
+
 void sendStates(uint16_t tempState)
 {
   Serial.print("MCB,CTRL,");
-  tempState = tempState >> 4;
+
   for (int i = 0; i < numValves; i++)
   {
     Serial.print(listValves[i]);
@@ -142,38 +160,20 @@ void sendStates(uint16_t tempState)
   Serial.print("\n");
 }
 
-uint16_t getState(void)
-{
-  uint16_t state = ((PIND & maskPD)) + ((PINB & maskPB) << 8);
-  return state;
-}
 
-
-void ISR_ARMINGKEY(void)
-{
-  delay(100);//debounce
-
-  uint8_t valARMKEY  = (PIND & maskARMKEY);
-
-  if ((valARMKEY == 0) && (STATUS != ARMED))
-  {
-    STATUS = ARMED;
-    updateState = 1;
-  } else if ((valARMKEY > 0) && (STATUS != DISARMED))
-  {
-    STATUS = DISARMED;
-    updateState = 1;
-  }
-
-
-}
-
-
+volatile int startTime = 0;
 void ISR_ABORT(void)
 {
-  delay(100);
+  for (int i = 0; i < 1000; i++)
+  {
+    if (PIND & maskABORT)
+    {
+      return;
+    }
+  }
   if ((PIND & maskABORT) == 0)
   {
-    STATUS = ABORT;
+    ABORT = true;
+    Serial.print("MCB,ABORT,\n");
   }
 }
