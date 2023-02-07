@@ -1,13 +1,11 @@
 # UVR Propulsion Development Platform - MCB Communications Runtime
 whoami = "MCC"
-import multiprocessing as mp
 import serial
-import time
 import queue
 import betterconfigs
 class connection():
     def __init__(self, port, device):
-        self.conf = betterconfigs.config(device)
+        self.conf = betterconfigs.config(device+".save")
         self.message_queue = queue.Queue()
         self.port = port
         self.device = device
@@ -51,6 +49,7 @@ class connection():
             elif mArr[1]=="SWITCHSTATE":
                 print("Recieved switch state information: "+mArr[2]+mArr[3])
                 self.conf[mArr[2]]=mArr[3]
+                
                 #recieved initial switchstate from device
                 #TODO implement this
                 return 1
@@ -68,6 +67,7 @@ class connection():
                     print("Aborted!")
                     self.status="ABORTED"
             elif mArr[1]=="PING":
+                
                 print("PONG!")
             elif mArr[1]=="ERROR":
                 if mArr[2]=="UNKNOWNCOMMAND":
@@ -83,10 +83,10 @@ class connection():
                 with self.message_queue.mutex:
                     self.message_queue.queue.clear()
                 try:
-                    confmsg = self.message_queue.get(timeout=0.5)
+                    confmsg = self.message_queue.get(timeout=3)
                     if confmsg=="VC,STATUS,ESTABLISH":
                         print("Connection Established.")
-                        self.status="Connected"
+                        self.status="CONN"
                         self.connected=True
                     break
                 except queue.Empty:
@@ -98,20 +98,3 @@ class connection():
         self.stream.close()
         self.status="DCONN"
         self.connected = False
-#test.stream = serial.Serial(port=test.port, baudrate=9600, timeout=0.1)
-#time.sleep(3)
-#while True:
-#    print(test.recieve())
-#while True:
-#    msg = input("Message: ")
-#    if msg=="":
-#        time.sleep(0.5)
-#        print(test.recieve())
-#    else:
-#        test.send(msg)
-#        time.sleep(0.5)
-#        print(test.recieve())
-#test.initConnection()
-#time.sleep(5)
-#print(test.parseTest())
-#test.close()

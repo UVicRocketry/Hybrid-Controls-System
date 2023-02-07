@@ -10,6 +10,7 @@ from qt.main import Ui_MainWindow
 import comm.comm_vc
 import threading
 import time
+from datetime import datetime
 from qt.VCPort import Ui_Dialog
 
 def thread_recieve():
@@ -18,6 +19,7 @@ def thread_recieve():
 def active_process():
     while True:
         vc.processCommand(vc.message_queue.get())
+        window.ui.l_PINGDYN.setText(datetime.now().strftime("%H:%M:%S"))
 def ping_vc():
     while True:
         if vc.connected==True:
@@ -44,12 +46,15 @@ def check_status():
             pass
         time.sleep(0.5)
 def flip_switch(switchID):
-    if vc.conf[switchID]=="OPEN":
-        vc.send("MCC,CTRL,"+switchID+",CLOSE")
-    elif vc.conf[switchID]=="CLOSE":
-        vc.send("MCC,CTRL,"+switchID+",OPEN")
-    else:
-        vc.send("MCC,CTRL,"+switchID+",OPEN")
+    try:
+        if vc.conf[switchID]=="OPEN":
+            vc.send("MCC,CTRL,"+switchID+",CLOSE")
+        elif vc.conf[switchID]=="CLOSE":
+            vc.send("MCC,CTRL,"+switchID+",OPEN")
+        else:
+            vc.send("MCC,CTRL,"+switchID+",OPEN")
+    except:
+        pass
 def close_and_exit():
     vc.close()
     os._exit(0)
@@ -75,7 +80,7 @@ class MainWindow(QMainWindow):
 
 if __name__ == '__main__':
     #connect to port
-    vc = comm.comm_vc.connection(port=comm.comm_vc.betterconfigs.config("VC"), device="VC")
+    vc = comm.comm_vc.connection(port="", device="VC")
     app = QApplication([])
     try:
         vc.stream()
@@ -83,11 +88,17 @@ if __name__ == '__main__':
         VCPort=QDialog()
         VCPort.ui = Ui_Dialog()
         VCPort.ui.setupUi(VCPort)
+        try:
+            VCPort.ui.t_VCPort.setText(comm.comm_vc.betterconfigs.config("VC.save")["port"])
+        except:
+            pass
         VCPort.exec()
-        vc.conf["port"]=VCPort.ui.t_VCPort.text()
-        vc = comm.comm_vc.connection(port=vc.conf["port"], device="VC")
+        vc=comm.comm_vc.connection(VCPort.ui.t_VCPort.text(), "VC")
+        
     window = MainWindow()
     window.show()
+    
+    print(vc.port)
     p=threading.Thread(target=thread_recieve)
     p.start()
     s=threading.Thread(target=check_status)

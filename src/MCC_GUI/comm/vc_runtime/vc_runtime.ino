@@ -70,6 +70,7 @@ void commandProcessing(String data){
       if(getSubstring(data,0)=="MCC"&&getSubstring(data,1)=="CTRL"){
         Serial.println("VC,SWITCHSTATE,"+getSubstring(data,2)+","+getSubstring(data,3));
       }
+      break;
     default:
       Serial.println("VC,ERROR,UNKNOWNCOMMAND");
       break;

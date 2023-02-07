@@ -21,10 +21,10 @@ class Ui_Dialog(object):
         self.b_VCPort.setStandardButtons(QtWidgets.QDialogButtonBox.Ok)
         self.b_VCPort.setObjectName("b_VCPort")
         self.t_VCPort = QtWidgets.QLineEdit(Dialog)
-        self.t_VCPort.setGeometry(QtCore.QRect(30, 40, 161, 21))
+        self.t_VCPort.setGeometry(QtCore.QRect(20, 40, 191, 21))
         self.t_VCPort.setObjectName("t_VCPort")
         self.l_VCPort = QtWidgets.QLabel(Dialog)
-        self.l_VCPort.setGeometry(QtCore.QRect(40, 20, 121, 16))
+        self.l_VCPort.setGeometry(QtCore.QRect(20, 10, 171, 31))
         self.l_VCPort.setObjectName("l_VCPort")
 
         self.retranslateUi(Dialog)
@@ -34,5 +34,5 @@ class Ui_Dialog(object):
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
-        self.l_VCPort.setText(_translate("Dialog", "Enter Serial Port"))
+        Dialog.setWindowTitle(_translate("Dialog", "Valve Cart Connection"))
+        self.l_VCPort.setText(_translate("Dialog", "Enter Valve Cart Serial Port"))
