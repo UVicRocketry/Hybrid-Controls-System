@@ -94,6 +94,7 @@ if __name__ == '__main__':
             pass
         VCPort.exec()
         vc=comm.comm_vc.connection(VCPort.ui.t_VCPort.text(), "VC")
+        vc.conf["port"]=VCPort.ui.t_VCPort.text()
         
     window = MainWindow()
     window.show()
