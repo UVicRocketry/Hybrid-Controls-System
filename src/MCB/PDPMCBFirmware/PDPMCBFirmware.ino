@@ -14,40 +14,38 @@
 /***************DEFINITIONS ******************/
 
 
-#define pinBUZZER 11
-
-
+/*************PINS and MASKS**************/
+#define pinBUZ 11
 #define pinABORT 2
 #define maskABORT (1<<pinABORT)
-
 #define pinARMKEY 3
 #define maskARMKEY 1<<pinARMKEY
-
 #define pinIGFIRE 4
+#define maskIGFIRE (1<<pinIGFIRE)
 #define pinIGPRIME 5
 #define maskIGPRIME (1<<pinIGPRIME)
-
-#define pinMEV 6
-
-
-#define numValves 10
-String listValves[numValves] = {"MEV", "IGPRIME", "IGFIRE", "EVV", "NCV", "RTV", "N2F", "N2OV", "N2OF", "S1"};
-
-
 #define maskPC 0x3F
 #define maskPD 0xF0
 
 
+
+/**************STRING OUTPUT FORMAT*******************/
+#define numValves 10
+String listValves[numValves] = {"MEV", "IGPRIME", "IGFIRE", "EVV", "NCV", "RTV", "N2F", "N2OV", "N2OF", "S1"};
+
+
+/****************TYPES******************/
 enum status_t {
   DISARMED,//0
   ARMED,//1
 };
 
+
+/**************GLOBALS****************/
+
 volatile bool ABORT = false;
-volatile uint8_t updateState = 0;
 volatile status_t CurSTATUS = NULL;
-
-
+volatile uint16_t CurState = NULL;
 
 
 
@@ -61,17 +59,18 @@ void setup() {
   Serial.flush();
   Serial.print("MCB,STATUS,STARTUP,\n");
 
+  cli();
   //sets pinmodes
   DDRD = 0x00;
   DDRC = 0x00;
   DDRB |= 0x04;
-  analogWrite(11, 0);
+  digitalWrite(11, 0);
+  abortSetup();
   buzzerSetup();
 
   PCICR |= B00000100; // Enable interrupts on PD port
   PCMSK2 |= B00101000;
-
-  attachInterrupt(digitalPinToInterrupt(pinABORT), ISR_ABORT, LOW);
+  sei();
   delay(100);
 
 }//setup
@@ -82,7 +81,7 @@ void setup() {
 void loop()
 {
 
-  uint16_t CurState = getState();
+  CurState = getState();
   uint16_t NewState = CurState;
   CurSTATUS = getSTATUS();
   if (CurSTATUS == DISARMED) Serial.print("MCB,STATUS,DISARMED,\n");
@@ -99,7 +98,6 @@ void loop()
   {
 
 
-    
     if (Serial.read() > 0)
     {
       if (CurSTATUS == DISARMED)
@@ -113,9 +111,6 @@ void loop()
       }
    
     }
-
-
-
 
     NewSTATUS = getSTATUS();
     delay(50);//debounce
@@ -168,12 +163,6 @@ void loop()
 //-----------------------------------------------------------------------------------------------
 
 
-void checkRequest(void)
-{
-
-
-}
-
 uint16_t getState(void)
 {
   uint16_t state = ((PIND & maskPD) >> 4) + ((PINC & maskPC) << 4);
@@ -217,38 +206,35 @@ void sendStates(uint16_t tempState)
 
 
 
+void abortSetup(void)
+{
 
+  EIMSK |= 0x01;//Enable INT0 on D2
+  EICRA |= _BV(ISC00) | _BV(ISC00);
+
+}
 
 void buzzerSetup(void)
 {
-  cli();
-
+ 
   TCCR1A = 0;// set entire TCCR1A register to 0
   TCCR1B = 0;// same for TCCR1B
   TCNT1  = 0;//initialize counter value to 0
   // set compare match register for 1hz increments
   OCR1A = 10000;
   // turn on CTC mode
-  TCCR1B |= (1 << WGM12);
+  TCCR1B |= _BV(WGM12);
   // Set CS10 and CS12 bits for 1024 prescaler
   // TCCR1B |= (1 << CS12) | (1 << CS10);
   // enable timer compare interrupt
-  TIMSK1 |= (1 << OCIE1A);
-
-  sei();
-}
-
-
-
-ISR (PCINT0_vect) {
-  // code to execute
+  TIMSK1 |= _BV(OCIE1A);
 }
 
 
 ISR(TIMER1_COMPA_vect)
 {
   analogWrite(11, 0);
-  TCCR1B &= !(1 << CS12) & !(1 << CS10);
+  TCCR1B &= !_BV(CS12) & !_BV(CS10);
 }
 
 
@@ -256,22 +242,24 @@ ISR (PCINT2_vect) {
   delay(50);
   if ((PIND & maskIGPRIME) == 0)
   {
-    analogWrite(11, 255);
+    digitalWrite(pinBUZ, 1);
     TCNT1 = 0;
-    TCCR1B |= (1 << CS12) | (1 << CS10);
+    TCCR1B |= _BV(CS12) | _BV(CS10);
   }
 
   
   if (((PIND & maskARMKEY) == 0) && (CurSTATUS == DISARMED))
   {
-    analogWrite(11, 255);
+    digitalWrite(pinBUZ, 1);
     TCNT1 = 0;
-    TCCR1B |= (1 << CS12) | (1 << CS10);
+    TCCR1B |= _BV(CS12) | _BV(CS10);
   }
 }
 
-void ISR_ABORT(void)
+
+ISR(INT0_vect)
 {
+
   for (int i = 0; i < 1000; i++)
   {
     if ((PIND & maskABORT) == 0)
@@ -283,8 +271,8 @@ void ISR_ABORT(void)
   {
     ABORT = true;
     Serial.print("MCB,ABORT,\n");
-    analogWrite(11, 255);
+    digitalWrite(pinBUZ, 1);
     TCNT1 = 0;
-    TCCR1B |= (1 << CS12) | (1 << CS10);
+    TCCR1B |= _BV(CS12) | _BV(CS10);
   }
 }
