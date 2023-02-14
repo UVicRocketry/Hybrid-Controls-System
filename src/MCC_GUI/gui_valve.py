@@ -1,8 +1,8 @@
-# UVR Propulsion Development Platform - Valve Cart Control Graphical User Interface
+#UVR Propulsion Development Platform - Valve Cart Control Graphical User Interface
 
 #Iain Rosen 2023
 
-#make sure to compile the ui file to py using: python3 -m PyQt5.uic.pyuic test.ui -o test.py
+#make sure to compile the ui file to py using: compileGUI.sh
 import sys
 import os
 from PyQt5.QtWidgets import *
@@ -22,13 +22,11 @@ def active_process():
         window.ui.l_PINGDYN.setText(datetime.now().strftime("%H:%M:%S"))
 def ping_vc():
     while True:
-        if vc.connected==True:
-            try:
-               for i in vc.valves:
-                    vc.send("MCC,GET,"+i)
-                    time.sleep(1)
-            except:
-                pass
+        try:
+            vc.send("MCC,SUMMARY")
+            time.sleep(1)
+        except:
+            pass
 def check_status():
     while True:
         try:
@@ -79,7 +77,6 @@ class MainWindow(QMainWindow):
         self.ui.b_MEV.clicked.connect(lambda: flip_switch("MEV"))
 
 if __name__ == '__main__':
-    #connect to port
     vc = comm.comm_vc.connection(port="", device="VC")
     app = QApplication([])
     try:

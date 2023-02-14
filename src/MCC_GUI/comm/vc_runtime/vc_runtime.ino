@@ -3,6 +3,17 @@ boolean established=false;
 String currentDataFocus;
 String whoami="VC";
 
+//define valve status bools
+boolean N2OF;
+boolean N2OV;
+boolean N2F;
+boolean RTV;
+boolean NCV;
+boolean EVV;
+boolean IGPRIME;
+boolean IGFIRE;
+boolean MEV;
+
 void setup() {
   Serial.begin(115200);
   Serial.setTimeout(2);
@@ -60,14 +71,21 @@ void commandProcessing(String data){
           //put abort code here
           Serial.println("VC,STATUS,ABORTED");
         }
+        else if(getSubstring(data,0)=="MCC"&&getSubstring(data,1)=="SUMMARY"){
+          //put abort code here
+          Serial.println("VC,SUMMARY,"+String(N2OF)+String(N2OV)+String(N2F)+String(RTV)+String(NCV)+String(EVV)+String(IGPRIME)+String(IGFIRE)+String(MEV));
+        }
         break;
     case 3:
       if(getSubstring(data,0)=="MCC"&&getSubstring(data,1)=="GET"){
+        //put valve status check code here
         Serial.println("VC,SWITCHSTATE,"+getSubstring(data,2)+",DUMMY");
       }
       break;
     case 4:
       if(getSubstring(data,0)=="MCC"&&getSubstring(data,1)=="CTRL"){
+        //put valve move code here
+        delay(2000);
         Serial.println("VC,SWITCHSTATE,"+getSubstring(data,2)+","+getSubstring(data,3));
       }
       break;

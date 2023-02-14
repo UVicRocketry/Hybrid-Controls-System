@@ -46,15 +46,21 @@ class connection():
             mArr = message.split(",")
             if mArr[0]!=self.device:
                 return 1 #incorrect device type, return error
+            elif mArr[1]=="SUMMARY":
+                print("Recieved Switch Summary")
+                s = 3
+                for i in self.valves:
+                    self.conf[i]=mArr[s]
+                    s=s+1
             elif mArr[1]=="SWITCHSTATE":
                 print("Recieved switch state information: "+mArr[2]+mArr[3])
                 self.conf[mArr[2]]=mArr[3]
-                
                 #recieved initial switchstate from device
                 #TODO implement this
                 return 1
             elif mArr[1]=="STATUS":
                 if mArr[2]=="STARTUP":
+                    self.connected=False
                     print("Initializing...")
                     self.initConnection()
                 elif mArr[2]=="DISARMED":
