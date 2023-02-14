@@ -289,7 +289,7 @@ Prime</string>
     <widget class="QLabel" name="l_IGPRIME">
      <property name="geometry">
       <rect>
-       <x>210</x>
+       <x>180</x>
        <y>30</y>
        <width>60</width>
        <height>16</height>
@@ -302,7 +302,7 @@ Prime</string>
     <widget class="QLabel" name="l_IGFIRE">
      <property name="geometry">
       <rect>
-       <x>340</x>
+       <x>320</x>
        <y>30</y>
        <width>60</width>
        <height>16</height>
@@ -315,7 +315,7 @@ Prime</string>
     <widget class="QLabel" name="l_MEV">
      <property name="geometry">
       <rect>
-       <x>480</x>
+       <x>460</x>
        <y>30</y>
        <width>60</width>
        <height>16</height>
