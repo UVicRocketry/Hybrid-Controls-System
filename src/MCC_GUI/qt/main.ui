@@ -422,6 +422,80 @@ Prime</string>
      <string>Unknown</string>
     </property>
    </widget>
+   <widget class="QFrame" name="frame_4">
+    <property name="geometry">
+     <rect>
+      <x>840</x>
+      <y>160</y>
+      <width>321</width>
+      <height>221</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QLabel" name="l_static_status">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>81</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>MCB Status</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="l_dyn_status">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>10</y>
+       <width>60</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>None</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="l_static_desync">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>81</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Desync</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="l_dyn_desync">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>30</y>
+       <width>181</width>
+       <height>81</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>None</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -438,6 +512,14 @@ Prime</string>
     </property>
     <addaction name="actionPerform_Reconnect"/>
    </widget>
+   <widget class="QMenu" name="menuOpen">
+    <property name="title">
+     <string>Open</string>
+    </property>
+    <addaction name="actionConnection_Selector"/>
+    <addaction name="actionDebug_Console"/>
+   </widget>
+   <addaction name="menuOpen"/>
    <addaction name="menuConnect"/>
   </widget>
   <widget class="QToolBar" name="toolBar">
@@ -459,6 +541,16 @@ Prime</string>
   <action name="actionPerform_Reconnect">
    <property name="text">
     <string>Perform Reconnect</string>
+   </property>
+  </action>
+  <action name="actionConnection_Selector">
+   <property name="text">
+    <string>Connection Selector...</string>
+   </property>
+  </action>
+  <action name="actionDebug_Console">
+   <property name="text">
+    <string>Debug Console</string>
    </property>
   </action>
  </widget>

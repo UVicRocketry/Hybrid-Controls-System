@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'VCPort.ui'
+# Form implementation generated from reading ui file 'PortSel.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.8
 #
@@ -14,18 +14,24 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(231, 122)
+        Dialog.resize(291, 130)
         self.b_VCPort = QtWidgets.QDialogButtonBox(Dialog)
-        self.b_VCPort.setGeometry(QtCore.QRect(30, 80, 191, 32))
+        self.b_VCPort.setGeometry(QtCore.QRect(20, 90, 221, 32))
         self.b_VCPort.setOrientation(QtCore.Qt.Horizontal)
         self.b_VCPort.setStandardButtons(QtWidgets.QDialogButtonBox.Ok)
         self.b_VCPort.setObjectName("b_VCPort")
         self.t_VCPort = QtWidgets.QLineEdit(Dialog)
-        self.t_VCPort.setGeometry(QtCore.QRect(20, 40, 191, 21))
+        self.t_VCPort.setGeometry(QtCore.QRect(80, 10, 181, 21))
         self.t_VCPort.setObjectName("t_VCPort")
         self.l_VCPort = QtWidgets.QLabel(Dialog)
-        self.l_VCPort.setGeometry(QtCore.QRect(20, 10, 171, 31))
+        self.l_VCPort.setGeometry(QtCore.QRect(10, 10, 71, 21))
         self.l_VCPort.setObjectName("l_VCPort")
+        self.l_MCBPort = QtWidgets.QLabel(Dialog)
+        self.l_MCBPort.setGeometry(QtCore.QRect(40, 50, 41, 16))
+        self.l_MCBPort.setObjectName("l_MCBPort")
+        self.t_MCBPort = QtWidgets.QLineEdit(Dialog)
+        self.t_MCBPort.setGeometry(QtCore.QRect(80, 50, 181, 21))
+        self.t_MCBPort.setObjectName("t_MCBPort")
 
         self.retranslateUi(Dialog)
         self.b_VCPort.accepted.connect(Dialog.accept) # type: ignore
@@ -35,4 +41,5 @@ class Ui_Dialog(object):
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "Valve Cart Connection"))
-        self.l_VCPort.setText(_translate("Dialog", "Enter Valve Cart Serial Port"))
+        self.l_VCPort.setText(_translate("Dialog", "Valve Cart"))
+        self.l_MCBPort.setText(_translate("Dialog", "MCB"))

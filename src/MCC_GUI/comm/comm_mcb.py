@@ -1,4 +1,4 @@
-# UVR Propulsion Development Platform - Valve Cart Communications Runtime
+# UVR Propulsion Development Platform - MCB Communications Runtime
 whoami = "MCC"
 import serial
 import queue
@@ -7,24 +7,27 @@ class connection():
     def __init__(self, device):
         self.conf = betterconfigs.config(device+".save")
         self.message_queue = queue.Queue()
+        self.control_queue = queue.Queue()
         try:
             self.port = self.conf["port"]
         except:
-            self.port = ""
+            self.port = "" #set blank port if no config file
         self.device = device
         self.connected = False
+        self.desyncList=[]
         try:
             self.stream = serial.Serial(port=self.port, baudrate=115200, timeout=0.1)
         except:
             pass
         self.status="DCONN"
         self.valves=["N2OF", "N2OV", "N2F", "RTV", "NCV", "EVV", "IGPRIME", "IGFIRE", "MEV"]
+    def dummyData(self, data):
+        self.message_queue.put(data)
     def doAbort(self):
         with self.message_queue.mutex:
             self.message_queue.queue.clear()
         self.send("MCC,ABORT")
-    def dummyData(self, data):
-        self.message_queue.put(data)
+
     def send(self, message):
         print("Sending "+message)
         try:
@@ -50,32 +53,30 @@ class connection():
             mArr = message.split(",")
             if mArr[0]!=self.device:
                 return 1 #incorrect device type, return error
+            elif mArr[1]=="SWITCHSTATE":
+                print("MCB Set Switch State: "+mArr[2]+mArr[3])
+                self.conf[mArr[2]]=mArr[3]
+                self.control_queue.put([mArr[2],mArr[3]])
+                return 1
             elif mArr[1]=="SUMMARY":
-                print("Recieved VC Switch Summary")
+                print("Recieved MCB Switch Summary")
                 for i in range(2,11):
                     self.conf[self.valves[i-2]]=mArr[i]
-            elif mArr[1]=="SWITCHSTATE":
-                print("Recieved switch state information: "+mArr[2]+mArr[3])
-                self.conf[mArr[2]]=mArr[3]
-                #recieved initial switchstate from device
-                #TODO implement this
-                return 1
             elif mArr[1]=="STATUS":
                 if mArr[2]=="STARTUP":
                     self.connected=False
-                    print("Initializing...")
+                    print("Initializing connection to MCB...")
                     self.initConnection()
                 elif mArr[2]=="DISARMED":
-                    print("Disarmed!")
-                    self.status="ARMED"
-                elif mArr[2]=="ARMED":
-                    print("Armed!")
+                    print("MCB Disarmed!")
                     self.status="DISARMED"
+                elif mArr[2]=="ARMED":
+                    print("MCB Armed!")
+                    self.status="ARMED"
                 elif mArr[2]=="ABORTED":
                     print("Aborted!")
                     self.status="ABORTED"
             elif mArr[1]=="PING":
-                
                 print("PONG!")
             elif mArr[1]=="ERROR":
                 if mArr[2]=="UNKNOWNCOMMAND":
@@ -92,7 +93,7 @@ class connection():
                     self.message_queue.queue.clear()
                 try:
                     confmsg = self.message_queue.get(timeout=3)
-                    if confmsg=="VC,STATUS,ESTABLISH":
+                    if confmsg=="MCB,STATUS,ESTABLISH":
                         print("Connection Established.")
                         self.status="CONN"
                         self.connected=True
