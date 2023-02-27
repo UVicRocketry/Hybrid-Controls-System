@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>291</width>
+    <width>435</width>
     <height>130</height>
    </rect>
   </property>
@@ -18,7 +18,7 @@
     <rect>
      <x>20</x>
      <y>90</y>
-     <width>221</width>
+     <width>391</width>
      <height>32</height>
     </rect>
    </property>
@@ -72,6 +72,26 @@
      <y>50</y>
      <width>181</width>
      <height>21</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="c_vc">
+   <property name="geometry">
+    <rect>
+     <x>270</x>
+     <y>10</y>
+     <width>151</width>
+     <height>26</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="c_mcb">
+   <property name="geometry">
+    <rect>
+     <x>270</x>
+     <y>50</y>
+     <width>151</width>
+     <height>26</height>
     </rect>
    </property>
   </widget>

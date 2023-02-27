@@ -14,9 +14,9 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(291, 130)
+        Dialog.resize(435, 130)
         self.b_VCPort = QtWidgets.QDialogButtonBox(Dialog)
-        self.b_VCPort.setGeometry(QtCore.QRect(20, 90, 221, 32))
+        self.b_VCPort.setGeometry(QtCore.QRect(20, 90, 391, 32))
         self.b_VCPort.setOrientation(QtCore.Qt.Horizontal)
         self.b_VCPort.setStandardButtons(QtWidgets.QDialogButtonBox.Ok)
         self.b_VCPort.setObjectName("b_VCPort")
@@ -32,6 +32,12 @@ class Ui_Dialog(object):
         self.t_MCBPort = QtWidgets.QLineEdit(Dialog)
         self.t_MCBPort.setGeometry(QtCore.QRect(80, 50, 181, 21))
         self.t_MCBPort.setObjectName("t_MCBPort")
+        self.c_vc = QtWidgets.QComboBox(Dialog)
+        self.c_vc.setGeometry(QtCore.QRect(270, 10, 151, 26))
+        self.c_vc.setObjectName("c_vc")
+        self.c_mcb = QtWidgets.QComboBox(Dialog)
+        self.c_mcb.setGeometry(QtCore.QRect(270, 50, 151, 26))
+        self.c_mcb.setObjectName("c_mcb")
 
         self.retranslateUi(Dialog)
         self.b_VCPort.accepted.connect(Dialog.accept) # type: ignore

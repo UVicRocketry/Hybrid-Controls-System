@@ -49,6 +49,7 @@ class connection():
         if "," in message:
             mArr = message.split(",")
             if mArr[0]!=self.device:
+                self.status="DEVERR"
                 return 1 #incorrect device type, return error
             elif mArr[1]=="SUMMARY":
                 print("Recieved VC Switch Summary")

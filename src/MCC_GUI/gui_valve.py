@@ -11,43 +11,35 @@ import comm.comm_vc
 import comm.comm_mcb
 import threading
 import time
+import serial.tools.list_ports
 from datetime import datetime
 import qt.PortSel
 import qt.confirm
-def connection_init(vcPort, mcbPort):
-    vc.port=vcPort
-    mcb.port=mcbPort
-    vc.conf["port"]=vcPort
-    mcb.conf["port"]=mcbPort
-def vc_recieve():
+import qt.debug
+
+#multi-threading processes
+def thread_recieve():
     while True:
         vc.recieve()
-def mcb_recieve():
-    while True:
         mcb.recieve()
-def vc_active_process():
+def thread_active_process():
         while True:
-            vc.processCommand(vc.message_queue.get())
-            window.ui.l_PINGDYN.setText(datetime.now().strftime("%H:%M:%S"))
-def mcb_active_process():
+            if vc.message_queue.qsize() != 0:
+                vc.processCommand(vc.message_queue.get())
+                window.ui.l_PINGDYN.setText(datetime.now().strftime("%H:%M:%S"))
+            if mcb.message_queue.qsize() != 0:
+                mcb.processCommand(mcb.message_queue.get())
+                window.ui.l_PINGDYN.setText(datetime.now().strftime("%H:%M:%S"))
+def thread_ping_status():
     while True:
-        mcb.processCommand(mcb.message_queue.get())
-def control_queue_process():
-    while True:
-        ctrlcmd = mcb.control_queue.get()
-        if ctrlcmd[0] not in mcb.desyncList:
-            vc.send("MCC,CTRL,"+ctrlcmd[0]+","+ctrlcmd[1])
-def ping_vc():
-    while vc.connected:
         try:
-            vc.send("MCC,SUMMARY")
-            time.sleep(1)
+            if vc.connected:
+                vc.send("MCC,SUMMARY")
         except:
             pass
-def check_status():
-    while True:
         try:
             window.ui.l_STATUS.setText(vc.status)
+            window.ui.l_dyn_status.setText(mcb.status)
             window.ui.l_N2OFlow.setText(vc.conf["N2OF"])
             window.ui.l_N2OValve.setText(vc.conf["N2OV"])
             window.ui.l_N2Flow.setText(vc.conf["N2F"])
@@ -69,9 +61,42 @@ def check_status():
         except:
             pass
         time.sleep(0.5)
+def thread_control_queue_process():
+    while True:
+        ctrlcmd = mcb.control_queue.get()
+        if ctrlcmd[0] not in mcb.desyncList:
+            vc.send("MCC,CTRL,"+ctrlcmd[0]+","+ctrlcmd[1])
+def thread_debug():
+    while True:
+        with open("VC.log", "r") as vclog:
+            debugcon.ui.pt_mcb.setPlainText(vclog.read())
+        with open("MCB.log", "r") as mcblog:
+            debugcon.ui.pt_vc.setPlainText(mcblog.read())
+        time.sleep(1)
+        
+        
+def change_port(vcPort, mcbPort):
+    vc.port=vcPort
+    mcb.port=mcbPort
+    vc.conf["port"]=vcPort
+    mcb.conf["port"]=mcbPort
 def flip_switch(switchID):
     try:
-    #get the desired state
+        #check if abort pressed
+        if switchID=="ABORT":
+            confirm.ui.l_actionList.setText("ABORT VALVE CART")
+            confirm.ui.c_confirm.setCheckState(False)
+            confirm.exec()
+            if confirm.ui.c_confirm.isChecked():
+                vc.doAbort()
+                mcb.doAbort()
+                return
+            else:
+                return
+    except:
+        pass
+    try:
+        #get the desired state
         if vc.conf[switchID]=="OPEN":
             dState = "CLOSE"
         elif vc.conf[switchID]=="CLOSE":
@@ -84,7 +109,6 @@ def flip_switch(switchID):
     confirm.ui.l_actionList.setText(switchID+" "+dState)
     confirm.ui.c_confirm.setCheckState(False)
     confirm.exec()
-
     if not confirm.ui.c_confirm.isChecked():
         return
     else:
@@ -92,6 +116,7 @@ def flip_switch(switchID):
             vc.send("MCC,CTRL,"+switchID+","+dState)
         except:
             pass
+    
 def close_and_exit():
     vc.close()
     mcb.close()
@@ -103,7 +128,7 @@ class MainWindow(QMainWindow):
         self.ui.setupUi(self)
         #triggers
         self.ui.actionPerform_Reconnect.triggered.connect(vc.initConnection)
-        self.ui.b_ABORT.clicked.connect(vc.doAbort)
+        self.ui.b_ABORT.clicked.connect(lambda: flip_switch("ABORT"))
         self.ui.b_CLOSE.clicked.connect(close_and_exit)
         self.ui.b_N2OFlow.clicked.connect(lambda: flip_switch("N2OF"))
         self.ui.b_N2OValve.clicked.connect(lambda: flip_switch("N2OV"))
@@ -115,6 +140,7 @@ class MainWindow(QMainWindow):
         self.ui.b_IGFIRE.clicked.connect(lambda: flip_switch("IGFIRE"))
         self.ui.b_MEV.clicked.connect(lambda: flip_switch("MEV"))
         self.ui.actionConnection_Selector.triggered.connect(lambda: portsel.exec())
+        self.ui.actionDebug_Console.triggered.connect(lambda: debugcon.show())
 class PortSelector(QDialog):
     def __init__(self):
         super(PortSelector, self).__init__()
@@ -123,14 +149,29 @@ class PortSelector(QDialog):
         #prefill
         self.ui.t_VCPort.setText(vc.port)
         self.ui.t_MCBPort.setText(mcb.port)
+        for port in serial.tools.list_ports.comports():
+            self.ui.c_vc.addItem(port[0])
+            self.ui.c_mcb.addItem(port[0])
         #triggers
-        self.ui.b_VCPort.clicked.connect(lambda: connection_init(vcPort=self.ui.t_VCPort.text(), mcbPort=self.ui.t_MCBPort.text()))
+        self.ui.b_VCPort.clicked.connect(lambda: change_port(vcPort=self.ui.t_VCPort.text(), mcbPort=self.ui.t_MCBPort.text()))
+        self.ui.c_vc.currentIndexChanged.connect(lambda: self.ui.t_VCPort.setText(self.ui.c_vc.currentText()))
+        self.ui.c_mcb.currentIndexChanged.connect(lambda: self.ui.t_MCBPort.setText(self.ui.c_mcb.currentText()))
 class ConfirmDiag(QDialog):
     def __init__(self):
         super(ConfirmDiag, self).__init__()
         self.ui = qt.confirm.Ui_Dialog()
         self.ui.setupUi(self)
-        
+class DebugConsole(QDialog):
+    def __init__(self):
+        super(DebugConsole, self).__init__()
+        self.ui = qt.debug.Ui_Dialog()
+        self.ui.setupUi(self)
+        self.ui.pt_mcb.setPlainText("Test")
+        self.ui.pt_vc.setPlainText("Test")
+        self.ui.le_mcb.returnPressed.connect(lambda: mcb.dummyData(self.ui.le_mcb.text()))
+        self.ui.le_mcb.returnPressed.connect(lambda: self.ui.le_mcb.setText(""))
+        self.ui.le_vc.returnPressed.connect(lambda: vc.dummyData(self.ui.le_vc.text()))
+        self.ui.le_vc.returnPressed.connect(lambda: self.ui.le_vc.setText(""))
 if __name__ == '__main__':
     #setup connections with blank params
     vc = comm.comm_vc.connection(device="VC")
@@ -140,13 +181,12 @@ if __name__ == '__main__':
     window = MainWindow()
     portsel = PortSelector()
     confirm = ConfirmDiag()
+    debugcon = DebugConsole()
     portsel.exec()
     window.show()
-    threading.Thread(target=vc_recieve).start()
-    threading.Thread(target=mcb_recieve).start()
-    threading.Thread(target=check_status).start()
-    threading.Thread(target=vc_active_process).start()
-    threading.Thread(target=mcb_active_process).start()
-    threading.Thread(target=ping_vc).start()
-    threading.Thread(target=control_queue_process).start()
+    #threading.Thread(target=thread_debug).start()
+    threading.Thread(target=thread_recieve).start()
+    threading.Thread(target=thread_ping_status).start()
+    threading.Thread(target=thread_active_process).start()
+    threading.Thread(target=thread_control_queue_process).start()
     sys.exit(app.exec_())

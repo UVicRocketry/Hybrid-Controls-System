@@ -52,6 +52,7 @@ class connection():
         if "," in message:
             mArr = message.split(",")
             if mArr[0]!=self.device:
+                self.status="DEVERR"
                 return 1 #incorrect device type, return error
             elif mArr[1]=="SWITCHSTATE":
                 print("MCB Set Switch State: "+mArr[2]+mArr[3])

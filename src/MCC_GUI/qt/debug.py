@@ -15,11 +15,6 @@ class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
         Dialog.resize(508, 338)
-        self.buttonBox = QtWidgets.QDialogButtonBox(Dialog)
-        self.buttonBox.setGeometry(QtCore.QRect(30, 290, 451, 32))
-        self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
-        self.buttonBox.setStandardButtons(QtWidgets.QDialogButtonBox.Close)
-        self.buttonBox.setObjectName("buttonBox")
         self.le_vc = QtWidgets.QLineEdit(Dialog)
         self.le_vc.setGeometry(QtCore.QRect(30, 260, 211, 21))
         self.le_vc.setObjectName("le_vc")
@@ -41,8 +36,6 @@ class Ui_Dialog(object):
         self.l_mcb.setObjectName("l_mcb")
 
         self.retranslateUi(Dialog)
-        self.buttonBox.accepted.connect(Dialog.accept) # type: ignore
-        self.buttonBox.rejected.connect(Dialog.reject) # type: ignore
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def retranslateUi(self, Dialog):
