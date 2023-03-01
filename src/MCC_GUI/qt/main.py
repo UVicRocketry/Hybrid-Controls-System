@@ -15,6 +15,9 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1196, 614)
+        MainWindow.setMinimumSize(QtCore.QSize(1196, 614))
+        MainWindow.setMaximumSize(QtCore.QSize(1196, 614))
+        MainWindow.setUnifiedTitleAndToolBarOnMac(False)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.l_STATUS = QtWidgets.QLabel(self.centralwidget)

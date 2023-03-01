@@ -84,6 +84,8 @@ void commandProcessing(String data){
           Serial.println("VC,PING");
         }
         else if(getSubstring(data,0)=="MCC"&&getSubstring(data,1)=="ABORT"){
+          //this is just example code to show updating status on the GUI
+          delay(50);SetValve("N2OF", "OPEN");SetValve("N2OV", "OPEN");SetValve("N2F", "CLOSE");delay(100);SetValve("IGFIRE","ABRT");
           //put abort code here
           Serial.println("VC,STATUS,ABORTED");
         }
@@ -102,7 +104,6 @@ void commandProcessing(String data){
       if(getSubstring(data,0)=="MCC"&&getSubstring(data,1)=="CTRL"){
         SetValve(getSubstring(data,2), getSubstring(data,3));
         //put valve move code here
-        delay(2000);
         Serial.println("VC,SWITCHSTATE,"+getSubstring(data,2)+","+LookupValve(getSubstring(data,2)));
       }
       break;

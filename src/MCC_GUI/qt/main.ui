@@ -10,8 +10,23 @@
     <height>614</height>
    </rect>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>1196</width>
+    <height>614</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>1196</width>
+    <height>614</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>UVC Mission Control</string>
+  </property>
+  <property name="unifiedTitleAndToolBarOnMac">
+   <bool>false</bool>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLabel" name="l_STATUS">
