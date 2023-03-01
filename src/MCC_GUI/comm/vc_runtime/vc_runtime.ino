@@ -4,16 +4,32 @@ String currentDataFocus;
 String whoami="VC";
 
 //define valve status bools
-boolean N2OF;
-boolean N2OV;
-boolean N2F;
-boolean RTV;
-boolean NCV;
-boolean EVV;
-boolean IGPRIME;
-boolean IGFIRE;
-boolean MEV;
+String valves[9][2] = {
+{"N2OF", "UNKWN"},
+{"N2OV", "UNKWN"},
+{"N2F", "UNKWN"},
+{"RTV", "UNKWN"},
+{"NCV", "UNKWN"},
+{"EVV", "UNKWN"},
+{"IGPRIME", "UNKWN"},
+{"IGFIRE", "UNKWN"},
+{"MEV", "UNKWN"},
+};
 
+String LookupValve(String valveName){
+  for(int i=0; i<=9; i++){
+    if(valves[i][0]==valveName){
+      return(valves[i][1]);
+    }    
+  }
+}
+void SetValve(String valveName, String newVal){
+  for(int i=0; i<=9; i++){
+    if(valves[i][0]==valveName){
+      valves[i][1]=newVal;
+    }    
+  }
+}
 void setup() {
   Serial.begin(115200);
   Serial.setTimeout(2);
@@ -73,7 +89,7 @@ void commandProcessing(String data){
         }
         else if(getSubstring(data,0)=="MCC"&&getSubstring(data,1)=="SUMMARY"){
           //put abort code here
-          Serial.println("VC,SUMMARY,"+String(N2OF)+String(N2OV)+String(N2F)+String(RTV)+String(NCV)+String(EVV)+String(IGPRIME)+String(IGFIRE)+String(MEV));
+          Serial.println("VC,SUMMARY,"+LookupValve("N2OF")+","+LookupValve("N2OV")+","+LookupValve("N2F")+","+LookupValve("RTV")+","+LookupValve("NCV")+","+LookupValve("EVV")+","+LookupValve("IGPRIME")+","+LookupValve("IGFIRE")+","+LookupValve("MEV"));
         }
         break;
     case 3:
@@ -84,9 +100,10 @@ void commandProcessing(String data){
       break;
     case 4:
       if(getSubstring(data,0)=="MCC"&&getSubstring(data,1)=="CTRL"){
+        SetValve(getSubstring(data,2), getSubstring(data,3));
         //put valve move code here
         delay(2000);
-        Serial.println("VC,SWITCHSTATE,"+getSubstring(data,2)+","+getSubstring(data,3));
+        Serial.println("VC,SWITCHSTATE,"+getSubstring(data,2)+","+LookupValve(getSubstring(data,2)));
       }
       break;
     default:
