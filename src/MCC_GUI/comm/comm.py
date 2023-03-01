@@ -117,10 +117,13 @@ class connection():
                 
                     
     def close(self):
-        self.stream.close()
-        self.status="DCONN"
-        self.connected = False
-        self.log.log("INFO", "Closed connection")
+        try:
+            self.stream.close()
+            self.status="DCONN"
+            self.connected = False
+            self.log.log("INFO", "Closed connection")
+        except:
+            pass
     def getLog(self):
         try:
             with open(self.device+".log", "r") as mcblog:
