@@ -7,8 +7,7 @@ import sys
 import os
 from PyQt5.QtWidgets import *
 from qt.main import Ui_MainWindow
-import comm.comm_vc
-import comm.comm_mcb
+import comm.comm
 import threading
 import time
 import serial.tools.list_ports
@@ -30,6 +29,7 @@ def thread_active_process():
             if mcb.message_queue.qsize() != 0:
                 mcb.processCommand(mcb.message_queue.get())
                 window.ui.l_PINGDYN.setText(datetime.now().strftime("%H:%M:%S"))
+            time.sleep(0.1)
 def thread_ping_status():
     while True:
         try:
@@ -66,20 +66,12 @@ def thread_control_queue_process():
         ctrlcmd = mcb.control_queue.get()
         if ctrlcmd[0] not in mcb.desyncList:
             vc.send("MCC,CTRL,"+ctrlcmd[0]+","+ctrlcmd[1])
-def thread_debug():
-    while True:
-        with open("VC.log", "r") as vclog:
-            debugcon.ui.pt_mcb.setPlainText(vclog.read())
-        with open("MCB.log", "r") as mcblog:
-            debugcon.ui.pt_vc.setPlainText(mcblog.read())
-        time.sleep(1)
-        
 
 def change_port(vcPort, mcbPort):
-    vc.port=vcPort
-    mcb.port=mcbPort
     vc.conf["port"]=vcPort
     mcb.conf["port"]=mcbPort
+    vc.init_stream()
+    mcb.init_stream()
 def flip_switch(switchID):
     try:
         #check if abort pressed
@@ -109,6 +101,7 @@ def flip_switch(switchID):
     confirm.ui.l_actionList.setText(switchID+" "+dState)
     confirm.ui.c_confirm.setCheckState(False)
     confirm.exec()
+    vc.conf[switchID]="..."
     if not confirm.ui.c_confirm.isChecked():
         return
     else:
@@ -168,16 +161,22 @@ class DebugConsole(QDialog):
         super(DebugConsole, self).__init__()
         self.ui = qt.debug.Ui_Dialog()
         self.ui.setupUi(self)
-        self.ui.pt_mcb.setPlainText("Test")
-        self.ui.pt_vc.setPlainText("Test")
+        self.ui.pt_mcb.setPlainText(datetime.now().strftime("%H:%M:%S"))
+        self.ui.pt_vc.setPlainText(datetime.now().strftime("%H:%M:%S"))
         self.ui.le_mcb.returnPressed.connect(lambda: mcb.dummyData(self.ui.le_mcb.text()))
         self.ui.le_mcb.returnPressed.connect(lambda: self.ui.le_mcb.setText(""))
         self.ui.le_vc.returnPressed.connect(lambda: vc.dummyData(self.ui.le_vc.text()))
         self.ui.le_vc.returnPressed.connect(lambda: self.ui.le_vc.setText(""))
+        self.timer = qt.debug.QtCore.QTimer()
+        self.timer.timeout.connect(lambda: self.ui.pt_mcb.setPlainText(mcb.getLog()))
+        self.timer.timeout.connect(lambda: self.ui.pt_mcb.verticalScrollBar().setValue(self.ui.pt_mcb.verticalScrollBar().maximum()))
+        self.timer.timeout.connect(lambda: self.ui.pt_vc.setPlainText(vc.getLog()))
+        self.timer.timeout.connect(lambda: self.ui.pt_vc.verticalScrollBar().setValue(self.ui.pt_vc.verticalScrollBar().maximum()))
+        self.timer.start(1000)
 if __name__ == '__main__':
     #setup connections with blank params
-    vc = comm.comm_vc.connection(device="VC")
-    mcb = comm.comm_mcb.connection(device="MCB")
+    vc = comm.comm.connection(device="VC")
+    mcb = comm.comm.connection(device="MCB")
     #setup QApplication
     app = QApplication([])
     window = MainWindow()
@@ -186,7 +185,6 @@ if __name__ == '__main__':
     debugcon = DebugConsole()
     portsel.exec()
     window.show()
-    #threading.Thread(target=thread_debug).start()
     threading.Thread(target=thread_recieve).start()
     threading.Thread(target=thread_ping_status).start()
     threading.Thread(target=thread_active_process).start()

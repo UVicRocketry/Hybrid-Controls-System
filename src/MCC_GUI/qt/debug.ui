@@ -6,88 +6,69 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>508</width>
-    <height>338</height>
+    <width>820</width>
+    <height>622</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Debug Tools</string>
   </property>
-  <widget class="QLineEdit" name="le_vc">
-   <property name="geometry">
-    <rect>
-     <x>30</x>
-     <y>260</y>
-     <width>211</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="placeholderText">
-    <string>VC Dummy Input</string>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="le_mcb">
-   <property name="geometry">
-    <rect>
-     <x>270</x>
-     <y>260</y>
-     <width>211</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="placeholderText">
-    <string>MCB Dummy Input</string>
-   </property>
-  </widget>
-  <widget class="QPlainTextEdit" name="pt_vc">
-   <property name="geometry">
-    <rect>
-     <x>30</x>
-     <y>60</y>
-     <width>211</width>
-     <height>191</height>
-    </rect>
-   </property>
-   <property name="plainText">
-    <string/>
-   </property>
-  </widget>
-  <widget class="QPlainTextEdit" name="pt_mcb">
-   <property name="geometry">
-    <rect>
-     <x>270</x>
-     <y>60</y>
-     <width>211</width>
-     <height>191</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QLabel" name="l_vc">
-   <property name="geometry">
-    <rect>
-     <x>30</x>
-     <y>40</y>
-     <width>81</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Valve Cart</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="l_mcb">
-   <property name="geometry">
-    <rect>
-     <x>270</x>
-     <y>40</y>
-     <width>151</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Mission Control Board</string>
-   </property>
-  </widget>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <widget class="QLabel" name="l_vc">
+     <property name="text">
+      <string>Valve Cart</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QLabel" name="l_mcb">
+     <property name="text">
+      <string>Mission Control Board</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QPlainTextEdit" name="pt_vc">
+     <property name="verticalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOff</enum>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+     <property name="plainText">
+      <string/>
+     </property>
+     <property name="textInteractionFlags">
+      <set>Qt::NoTextInteraction</set>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QPlainTextEdit" name="pt_mcb">
+     <property name="verticalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOff</enum>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLineEdit" name="le_vc">
+     <property name="placeholderText">
+      <string>VC Dummy Input</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QLineEdit" name="le_mcb">
+     <property name="placeholderText">
+      <string>MCB Dummy Input</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
  </widget>
  <resources/>
  <connections/>
