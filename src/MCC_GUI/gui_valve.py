@@ -60,7 +60,7 @@ def thread_ping_status():
             window.ui.l_dyn_desync.setText(str(mcb.desyncList))
         except:
             pass
-        time.sleep(0.5)
+        time.sleep(1)
 def thread_control_queue_process():
     while True:
         ctrlcmd = mcb.control_queue.get()
@@ -74,7 +74,7 @@ def thread_debug():
             debugcon.ui.pt_vc.setPlainText(mcblog.read())
         time.sleep(1)
         
-        
+
 def change_port(vcPort, mcbPort):
     vc.port=vcPort
     mcb.port=mcbPort
@@ -149,6 +149,8 @@ class PortSelector(QDialog):
         #prefill
         self.ui.t_VCPort.setText(vc.port)
         self.ui.t_MCBPort.setText(mcb.port)
+        self.ui.c_vc.addItem("")
+        self.ui.c_mcb.addItem("")
         for port in serial.tools.list_ports.comports():
             self.ui.c_vc.addItem(port[0])
             self.ui.c_mcb.addItem(port[0])

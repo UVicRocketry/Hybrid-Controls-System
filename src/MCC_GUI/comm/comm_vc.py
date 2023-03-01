@@ -87,6 +87,8 @@ class connection():
             return message
         
     def initConnection(self):
+            with self.message_queue.mutex:
+                self.message_queue.queue.clear()
             while True:
                 self.send("MCC,CONNECT")
                 with self.message_queue.mutex:
