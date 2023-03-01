@@ -51,11 +51,14 @@ class connection():
             if message.endswith("\n"):
                 message = message.strip()
                 self.message_queue.put(message)
+            else:
+                self.log.log("WARN", "Recieved Incomplete Message: "+message)
             if "ABORT" in message:
                 with self.message_queue.mutex:
                         self.message_queue.queue.clear()
                 self.message_queue.put(message)
         except:
+            self.log.log("WARN", "Unable to decode message: "+message)
             return 1
     def processCommand(self,message):
         if "," in message:
@@ -114,8 +117,14 @@ class connection():
                 except queue.Empty:
                     self.log.log("ERROR", "Unable to connect to device, no response")
                     break
-                
-                    
+    def messagePending(self):
+        try:
+            if self.stream.in_waiting>0:
+                return True
+            else:
+                return False   
+        except:
+            pass    
     def close(self):
         try:
             self.stream.close()

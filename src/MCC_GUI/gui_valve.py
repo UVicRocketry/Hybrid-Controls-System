@@ -19,8 +19,10 @@ import qt.debug
 #multi-threading processes
 def thread_recieve():
     while True:
-        vc.recieve()
-        mcb.recieve()
+        if vc.messagePending():
+            vc.recieve()
+        if mcb.messagePending():
+            mcb.recieve()
 def thread_active_process():
         while True:
             if vc.message_queue.qsize() != 0:
