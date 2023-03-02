@@ -136,6 +136,8 @@ class MainWindow(QMainWindow):
         self.ui.b_MEV.clicked.connect(lambda: flip_switch("MEV"))
         self.ui.actionConnection_Selector.triggered.connect(lambda: portsel.exec())
         self.ui.actionDebug_Console.triggered.connect(lambda: debugcon.show())
+        self.ui.actionVC_Logs.triggered.connect(lambda: vc.clearLog())
+        self.ui.actionMCB_Logs.triggered.connect(lambda: mcb.clearLog())
 class PortSelector(QDialog):
     def __init__(self):
         super(PortSelector, self).__init__()

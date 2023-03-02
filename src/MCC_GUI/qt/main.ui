@@ -534,8 +534,22 @@ Prime</string>
     <addaction name="actionConnection_Selector"/>
     <addaction name="actionDebug_Console"/>
    </widget>
+   <widget class="QMenu" name="menuReset">
+    <property name="title">
+     <string>Reset</string>
+    </property>
+    <widget class="QMenu" name="menuLogs">
+     <property name="title">
+      <string>Logs</string>
+     </property>
+     <addaction name="actionMCB_Logs"/>
+     <addaction name="actionVC_Logs"/>
+    </widget>
+    <addaction name="menuLogs"/>
+   </widget>
    <addaction name="menuOpen"/>
    <addaction name="menuConnect"/>
+   <addaction name="menuReset"/>
   </widget>
   <widget class="QToolBar" name="toolBar">
    <property name="windowTitle">
@@ -565,7 +579,17 @@ Prime</string>
   </action>
   <action name="actionDebug_Console">
    <property name="text">
-    <string>Debug Console</string>
+    <string>Debug Console...</string>
+   </property>
+  </action>
+  <action name="actionMCB_Logs">
+   <property name="text">
+    <string>MCB Log</string>
+   </property>
+  </action>
+  <action name="actionVC_Logs">
+   <property name="text">
+    <string>VC Log</string>
    </property>
   </action>
  </widget>

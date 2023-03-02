@@ -4,6 +4,7 @@ import serial
 import queue
 import betterconfigs
 import support.ezlogs
+import os
 class connection():
     def __init__(self, device):
         self.log=support.ezlogs.LogFile(device+'.log')
@@ -139,3 +140,9 @@ class connection():
                 return mcblog.read()
         except:
             return "No Log Found."
+    def clearLog(self):
+        try:
+            os.remove(self.device+'.log')
+            self.log.log("INFO", "Cleared log file")
+        except:
+            self.log.log("WARN", "Tried to delete log but file was busy")
