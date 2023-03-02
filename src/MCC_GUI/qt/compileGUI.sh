@@ -1,4 +1,5 @@
 #!/bin/bash
+cd src/MCC_GUI/qt
 rm main.py
 rm PortSel.py
 rm confirm.py
