@@ -16,9 +16,9 @@
   <widget class="QDialogButtonBox" name="b_VCPort">
    <property name="geometry">
     <rect>
-     <x>20</x>
+     <x>330</x>
      <y>90</y>
-     <width>391</width>
+     <width>81</width>
      <height>32</height>
     </rect>
    </property>
@@ -93,6 +93,19 @@
      <width>151</width>
      <height>26</height>
     </rect>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="b_refresh">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>90</y>
+     <width>81</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Refresh</string>
    </property>
   </widget>
  </widget>

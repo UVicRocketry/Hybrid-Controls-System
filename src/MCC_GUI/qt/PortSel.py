@@ -16,7 +16,7 @@ class Ui_Dialog(object):
         Dialog.setObjectName("Dialog")
         Dialog.resize(435, 130)
         self.b_VCPort = QtWidgets.QDialogButtonBox(Dialog)
-        self.b_VCPort.setGeometry(QtCore.QRect(20, 90, 391, 32))
+        self.b_VCPort.setGeometry(QtCore.QRect(330, 90, 81, 32))
         self.b_VCPort.setOrientation(QtCore.Qt.Horizontal)
         self.b_VCPort.setStandardButtons(QtWidgets.QDialogButtonBox.Ok)
         self.b_VCPort.setObjectName("b_VCPort")
@@ -38,6 +38,9 @@ class Ui_Dialog(object):
         self.c_mcb = QtWidgets.QComboBox(Dialog)
         self.c_mcb.setGeometry(QtCore.QRect(270, 50, 151, 26))
         self.c_mcb.setObjectName("c_mcb")
+        self.b_refresh = QtWidgets.QPushButton(Dialog)
+        self.b_refresh.setGeometry(QtCore.QRect(250, 90, 81, 32))
+        self.b_refresh.setObjectName("b_refresh")
 
         self.retranslateUi(Dialog)
         self.b_VCPort.accepted.connect(Dialog.accept) # type: ignore
@@ -49,3 +52,4 @@ class Ui_Dialog(object):
         Dialog.setWindowTitle(_translate("Dialog", "Valve Cart Connection"))
         self.l_VCPort.setText(_translate("Dialog", "Valve Cart"))
         self.l_MCBPort.setText(_translate("Dialog", "MCB"))
+        self.b_refresh.setText(_translate("Dialog", "Refresh"))

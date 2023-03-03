@@ -31,7 +31,7 @@ def thread_active_process():
             if mcb.message_queue.qsize() != 0:
                 mcb.processCommand(mcb.message_queue.get())
                 window.ui.l_PINGDYN.setText(datetime.now().strftime("%H:%M:%S"))
-            time.sleep(0.1)
+            time.sleep(0.3)
 def thread_ping_status():
     while True:
         try:
@@ -155,6 +155,15 @@ class PortSelector(QDialog):
         self.ui.b_VCPort.clicked.connect(lambda: change_port(vcPort=self.ui.t_VCPort.text(), mcbPort=self.ui.t_MCBPort.text()))
         self.ui.c_vc.currentIndexChanged.connect(lambda: self.ui.t_VCPort.setText(self.ui.c_vc.currentText()))
         self.ui.c_mcb.currentIndexChanged.connect(lambda: self.ui.t_MCBPort.setText(self.ui.c_mcb.currentText()))
+        self.ui.b_refresh.clicked.connect(self.refreshConnections)
+    def refreshConnections(self):
+        self.ui.c_mcb.clear()
+        self.ui.c_vc.clear()
+        self.ui.c_vc.addItem("")
+        self.ui.c_mcb.addItem("")
+        for port in serial.tools.list_ports.comports():
+            self.ui.c_vc.addItem(port[0])
+            self.ui.c_mcb.addItem(port[0])
 class ConfirmDiag(QDialog):
     def __init__(self):
         super(ConfirmDiag, self).__init__()
@@ -165,16 +174,20 @@ class DebugConsole(QDialog):
         super(DebugConsole, self).__init__()
         self.ui = qt.debug.Ui_Dialog()
         self.ui.setupUi(self)
+        #triggers
         self.ui.pt_mcb.setPlainText(datetime.now().strftime("%H:%M:%S"))
         self.ui.pt_vc.setPlainText(datetime.now().strftime("%H:%M:%S"))
         self.ui.le_mcb.returnPressed.connect(lambda: mcb.dummyData(self.ui.le_mcb.text()))
         self.ui.le_mcb.returnPressed.connect(lambda: self.ui.le_mcb.setText(""))
         self.ui.le_vc.returnPressed.connect(lambda: vc.dummyData(self.ui.le_vc.text()))
         self.ui.le_vc.returnPressed.connect(lambda: self.ui.le_vc.setText(""))
+        self.ui.c_vc_verbose.stateChanged.connect(lambda: vc.setVerbose(self.ui.c_vc_verbose.isChecked()))
+        self.ui.c_mcb_verbose.stateChanged.connect(lambda: mcb.setVerbose(self.ui.c_mcb_verbose.isChecked()))
+        #timed triggers
         self.timer = qt.debug.QtCore.QTimer()
-        self.timer.timeout.connect(lambda: self.ui.pt_mcb.setPlainText(mcb.getLog()))
+        self.timer.timeout.connect(lambda: self.ui.pt_mcb.setPlainText(mcb.log.read()))
         self.timer.timeout.connect(lambda: self.ui.pt_mcb.verticalScrollBar().setValue(self.ui.pt_mcb.verticalScrollBar().maximum()))
-        self.timer.timeout.connect(lambda: self.ui.pt_vc.setPlainText(vc.getLog()))
+        self.timer.timeout.connect(lambda: self.ui.pt_vc.setPlainText(vc.log.read()))
         self.timer.timeout.connect(lambda: self.ui.pt_vc.verticalScrollBar().setValue(self.ui.pt_vc.verticalScrollBar().maximum()))
         self.timer.start(1000)
 if __name__ == '__main__':

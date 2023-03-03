@@ -11,6 +11,7 @@ class connection():
         self.conf = betterconfigs.config(device+".save")
         self.message_queue = queue.Queue()
         self.control_queue = queue.Queue()
+        self.verbose=False
         try:
             self.port = self.conf["port"]
         except:
@@ -40,7 +41,8 @@ class connection():
     def send(self, message):
         try:
             self.stream.write(message.encode())
-            self.log.log("INFO", "Sent: "+message)
+            if self.verbose:
+                self.log.log("INFO", "Sent: "+message)
             return 0
         except:
             self.log.log("WARN", "Tried to send: "+message)
@@ -75,9 +77,12 @@ class connection():
                     self.control_queue.put([mArr[2],mArr[3]])
                 return 1
             elif mArr[1]=="SUMMARY":
-                self.log.log("INFO","Recieved Switch Summary")
+                if self.verbose:
+                    self.log.log("INFO","Recieved Switch Summary")
                 for i in range(2,11):
                     self.conf[self.valves[i-2]]=mArr[i]
+                    if self.verbose:
+                        self.log.log("INFO",self.valves[i-2]+mArr[i])
             elif mArr[1]=="STATUS":
                 if mArr[2]=="STARTUP":
                     self.connected=False
@@ -146,3 +151,6 @@ class connection():
             self.log.log("INFO", "Cleared log file")
         except:
             self.log.log("WARN", "Tried to delete log but file was busy")
+    def setVerbose(self, set):
+        self.log.log("INFO", "Set Logging Verbose to "+str(set))
+        self.verbose=set
