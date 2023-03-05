@@ -6,8 +6,8 @@ class Valve {
     private:
     int upperBound;
     int lowerBound;
-
-
+    int change;
+    int prevState;
 
     public:
     // Constructor
@@ -20,5 +20,6 @@ class Valve {
     // Getters
     int getUpperbound();
     int getlowerBound();
+    int getChange();
 };
 #endif 
