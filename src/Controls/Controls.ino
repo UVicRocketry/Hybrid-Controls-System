@@ -83,6 +83,10 @@ String parseCommand(String * Buffer);
 void setTarget (String Buffer);
 void sendState (void);
 
+
+
+
+
 void setup() {
   // Sets Limmit Pins
   pinMode(Lim1Mot1, INPUT_PULLUP);
@@ -191,20 +195,24 @@ void loop() {
 
     if (TYPE == "ABORT")
     {
+      Serial.println("VCA, ACK");
       Serial.println("VCA,CF,ABORT");
       digitalWrite(Igniter, LOW);
       digitalWrite(Mot7, LOW);
-    }
-
-    if (TYPE == "CTRL")
+    }else if (TYPE == "CTRL")
     {
+      Serial.println("VCA, ACK");
       setTarget();
+    }else if(TYPE == "STATUS")
+    {
+      Serial.println("VCA, ACK");
+      sendState();
+    }else
+    {
+       Serial.println("VCA, NACK");
     }
 
-    if(TYPE == "STATUS")
-    {
-      sendState();
-    }
+    
   }
 
   MoveToTarget();
@@ -311,7 +319,7 @@ String parseCommand()
   String Command = "";
   char c;
   c = Buffer[0];
-  while (c != '\n' && c !=  ',' && Buffer.length()>0) {
+  while (c != '\n' && c !=  ',' && Buffer.length()>1) {
     Command += c;
     Buffer.remove(0,1);  
     c = Buffer[0];  
@@ -326,11 +334,13 @@ void setTarget ()
   String Label = "";
   String Value = "";
   int index = 0;
-  while (Buffer.length() > 0)
+  while (Buffer.length() > 1)
   {
     Label = parseCommand();
     Value = parseCommand();
 
+
+    
     if (Value == "OPEN")
     {
       TargetState[index] = 1;
@@ -341,6 +351,7 @@ void setTarget ()
     } else
     {
       TargetState[index] = 0;
+      Serial.println("VCA, NACK");
     }
 
     index ++;
