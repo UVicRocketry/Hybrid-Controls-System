@@ -1,8 +1,9 @@
-/*  Valve Cart and Feed System: Controls - Valve Controls - Full Asembly V 0.1
+/*  Valve Cart and Feed System: Controls - Valve Controls - Full Asembly V 1.1
    Author(s):
+   Matthew Ebert
    Logan Sewell
    JJ
-   Organizarion: Uvic Rocketry
+   Organizarion: UVic Rocketry
 */
 //#include "AccelStepper.h"
 #include "Valve.h"
@@ -53,7 +54,6 @@
 //****************************
 
 
-
 //Assining Valves (be sure to set proper oriention baied on mottor direction)
 Valve N2OF = Valve(Lim1Mot1, Lim2Mot1, StepMot1, DirMot1, 20);
 Valve N2OV = Valve(Lim2Mot2, Lim1Mot2, StepMot2, DirMot2, 20);
@@ -64,16 +64,11 @@ Valve MEV  = Valve(Lim1Mot6, Lim2Mot6, StepMot6, DirMot6, 20);
 Valve NCV  = Valve(Lim1NCV, Lim2NCV);
 
 int IgniterState = 0;
-
 int TargetState [8];
-//uint16_t EventGroup_ValveState = 0x00;
-
-String rxBuffer;
-//*********************
 
 void MoveToTarget();
-String parseRxBuffer ();
-void setTarget ();
+void setTarget (String valveCommands);
+String readValue(String * rxBuf);
 void sendState (void);
 
 
@@ -102,15 +97,7 @@ void setup() {
   pinMode(mot4Enab, OUTPUT);
   pinMode(mot5Enab, OUTPUT);
   pinMode(mot6Enab, OUTPUT);
-
-  //initalize all drivers to off:
-//  digitalWrite(mot1Enab, LOW);
-//  digitalWrite(mot2Enab, LOW);
-//  digitalWrite(mot3Enab, LOW);
-//  digitalWrite(mot4Enab, LOW);
-//  digitalWrite(mot5Enab, LOW);
-//  digitalWrite(mot6Enab, LOW);
-
+  
   digitalWrite(mot1Enab, HIGH);
   digitalWrite(mot2Enab, HIGH);
   digitalWrite(mot3Enab, HIGH);
@@ -150,8 +137,8 @@ void loop() {
     String SOURCE = "";
 
    
-    SOURCE = parseRxBuffer ();
-    TYPE = parseRxBuffer ();
+    SOURCE = readValue(&rxBuffer);
+    TYPE = readValue(&rxBuffer);
 
     if (TYPE == "ABORT")
     {
@@ -162,7 +149,7 @@ void loop() {
     }else if (TYPE == "CTRL")
     {
       Serial.println("VCA, ACK");
-      setTarget();
+      setTarget(rxBuffer);
     }else if(TYPE == "STATUS")
     {
       Serial.println("VCA, ACK");
@@ -179,6 +166,8 @@ void loop() {
 }
 
 
+/***********FUNCTIONS*******************/
+
 
 void sendState (void)
 {
@@ -192,6 +181,51 @@ void sendState (void)
   Serial.print(",NCV," +  NCV.strState());
   Serial.println("");
 }
+
+
+String readValue (String * rxBuf)
+{
+  String Command = "";
+  char c;
+  c = (*rxBuf)[0];
+  while (c != '\n' && c !=  ',' && (*rxBuf).length()>1) {
+    Command += c;
+    (*rxBuf).remove(0,1);  
+    c = (*rxBuf)[0];  
+  }
+  (*rxBuf).remove(0,1); 
+  return Command;
+}
+
+
+void setTarget (String valveCommands)
+{
+  String Label = "";
+  String Value = "";
+  int index = 0;
+  while (valveCommands.length() > 1)
+  {
+    Label = readValue(&valveCommands);
+    Value = readValue(&valveCommands);
+
+    if (Value == "OPEN")
+    {
+      TargetState[index] = 1;
+    }
+    else if (Value == "CLOSE")
+    {
+      TargetState[index] = -1;
+    } else
+    {
+      TargetState[index] = 0;
+      //Serial.println("VCA, NACK");
+    }
+    index ++;
+  }
+}
+
+
+
 
 
 void MoveToTarget()
@@ -262,48 +296,5 @@ void MoveToTarget()
       IgniterState = 0;
     }
     sendState();
-  }
-
-
-}
-
-String parseRxBuffer ()
-{
-  String Command = "";
-  char c;
-  c = rxBuffer[0];
-  while (c != '\n' && c !=  ',' && rxBuffer.length()>1) {
-    Command += c;
-    rxBuffer.remove(0,1);  
-    c = rxBuffer[0];  
-  }
-  rxBuffer.remove(0,1); 
-  return Command;
-}
-
-
-void setTarget ()
-{
-  String Label = "";
-  String Value = "";
-  int index = 0;
-  while (rxBuffer.length() > 1)
-  {
-    Label = parseRxBuffer ();
-    Value = parseRxBuffer ();
-
-    if (Value == "OPEN")
-    {
-      TargetState[index] = 1;
-    }
-    else if (Value == "CLOSE")
-    {
-      TargetState[index] = -1;
-    } else
-    {
-      TargetState[index] = 0;
-      //Serial.println("VCA, NACK");
-    }
-    index ++;
   }
 }
