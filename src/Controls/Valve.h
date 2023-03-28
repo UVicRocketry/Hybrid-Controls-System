@@ -8,14 +8,20 @@ class Valve {
     int lowerBound;
     int change;
     int prevState;
+    int StepTime;
+    int StepPin;
+    int DirPin;
+    int StepSpeed;
 
     public:
     // Constructor
     Valve(int upperBound, int lowerBound);
+    Valve(int upperBound, int lowerBound, int StepPin, int DirPin, int StepSpeed);
 
     //State functions
     int state();
     String strState();
+    bool moveStep(int Dir);
 
     // Getters
     int getUpperbound();

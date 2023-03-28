@@ -8,6 +8,17 @@ Valve::Valve(int upperBound, int lowerBound) {
   this->prevState = 0;//!digitalRead(upperBound) | !digitalRead(lowerBound);
 }
 
+Valve::Valve(int upperBound, int lowerBound, int StepPin, int StepDir, int StepSpeed) {
+  this->upperBound = upperBound;
+  this->lowerBound = lowerBound;
+  this->StepPin = StepPin;
+  this->DirPin = DirPin;
+  this->StepSpeed = StepSpeed;
+  this->change = 0;
+  this->prevState = 0;//!digitalRead(upperBound) | !digitalRead(lowerBound);
+  StepTime = millis();
+}
+
 //*********State functions*********
 int Valve::state() {
   if (digitalRead(upperBound) == LOW) {
@@ -41,6 +52,19 @@ String Valve::strState() {
   }
 }
 
+
+bool Valve::moveStep(int Dir)
+{
+  if ((millis() - StepTime) > StepSpeed)
+  {
+    digitalWrite(DirPin, Dir);
+    digitalWrite(StepPin, 0);
+    digitalWrite(StepPin, 1);
+    StepTime=millis();
+    return true;
+  }
+  return false;
+}
 //*********Getters*********
 int Valve::getUpperbound() {
   return this->upperBound;
