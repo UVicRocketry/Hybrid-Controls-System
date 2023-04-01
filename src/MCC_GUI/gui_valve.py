@@ -7,7 +7,7 @@ import sys
 import os
 from PyQt5.QtWidgets import *
 from qt.main import Ui_MainWindow
-import comm.comm
+import commlib.commlib
 import threading
 import time
 import serial.tools.list_ports
@@ -192,8 +192,8 @@ class DebugConsole(QDialog):
         self.timer.start(1000)
 if __name__ == '__main__':
     #setup connections with blank params
-    vc = comm.comm.connection(device="VC")
-    mcb = comm.comm.connection(device="MCB")
+    vc = commlib.commlib.connection(device="VC")
+    mcb = commlib.commlib.connection(device="MCB")
     #setup QApplication
     app = QApplication([])
     window = MainWindow()

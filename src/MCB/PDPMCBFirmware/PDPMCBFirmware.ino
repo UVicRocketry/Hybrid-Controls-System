@@ -30,9 +30,9 @@
 
 
 /**************STRING OUTPUT FORMAT*******************/
-#define numValves 10
-String listValves[numValves] = {"MEV", "IGPRIME", "IGFIRE", "EVV", "NCV", "RTV", "N2F", "N2OV", "N2OF", "S1"};
-
+#define numValves 9
+String listValves[numValves] = {"MEV", "IGPRIME", "IGFIRE", "EVV", "NCV", "RTV", "N2F", "N2OV", "N2OF"};
+//String listValves[numValves] = ("N2OF", "N2OV", "N2F", "RTV", "NCV", "EVV", "IGPRIME", "IGFIRE", "MEV");
 
 /****************TYPES******************/
 enum status_t {
@@ -51,14 +51,13 @@ volatile uint16_t CurState = NULL;
 
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(115200);
   
   while (!Serial) {};
 
   Serial.setTimeout(100);
   Serial.flush();
-  Serial.print("MCB,STATUS,STARTUP,\n");
-
+  Serial.print("MCB,STATUS,STARTUP\n");
   cli();
   //sets pinmodes
   DDRD = 0x00;
@@ -72,7 +71,6 @@ void setup() {
   PCMSK2 |= B00101000;
   sei();
   delay(100);
-
 }//setup
 
 
@@ -84,10 +82,10 @@ void loop()
   CurState = getState();
   uint16_t NewState = CurState;
   CurSTATUS = getSTATUS();
-  if (CurSTATUS == DISARMED) Serial.print("MCB,STATUS,DISARMED,\n");
+  if (CurSTATUS == DISARMED) Serial.print("MCB,STATUS,DISARMED\n");
   if (CurSTATUS == ARMED)
   {
-    Serial.print("MCB,STATUS,ARMED,\n");
+    Serial.print("MCB,STATUS,ARMED\n");
     sendStates(NewState);
   }
   status_t NewSTATUS = CurSTATUS;
@@ -102,11 +100,11 @@ void loop()
     {
       if (CurSTATUS == DISARMED)
       {
-        if (CurSTATUS == DISARMED) Serial.print("MCB,STATUS,DISARMED,\n");
+        if (CurSTATUS == DISARMED) Serial.print("MCB,STATUS,DISARMED\n");
         return;
       } else
       {
-        if (CurSTATUS == ARMED) Serial.print("MCB,STATUS,ARMED,\n");
+        if (CurSTATUS == ARMED) Serial.print("MCB,STATUS,ARMED\n");
         sendStates(CurState);
       }
    
@@ -119,8 +117,8 @@ void loop()
       if (NewSTATUS != CurSTATUS)
       {
         CurSTATUS = NewSTATUS;
-        if (CurSTATUS == DISARMED) Serial.print("MCB,STATUS,DISARMED,\n");
-        if (CurSTATUS == ARMED) Serial.print("MCB,STATUS,ARMED,\n");
+        if (CurSTATUS == DISARMED) Serial.print("MCB,STATUS,DISARMED\n");
+        if (CurSTATUS == ARMED) Serial.print("MCB,STATUS,ARMED\n");
       }//IF CHANGE STATUS
     }//IF DEBOUNCE
 
@@ -152,7 +150,7 @@ void loop()
 //When ABORT PRESSED
   while (1)
   {
-    Serial.print("MCB,ABORT,\n");
+    Serial.print("MCB,ABORTED\n");
     delay(100);
   }
 
@@ -187,19 +185,24 @@ status_t getSTATUS(void)
 
 void sendStates(uint16_t tempState)
 {
-  Serial.print("MCB,CTRL,");
+  Serial.print("MCB,SUMMARY,");
 
   for (int i = 0; i < numValves; i++)
   {
     Serial.print(listValves[i]);
+    Serial.print(",");
     if (tempState & 0x01)
     {
-      Serial.print(",CLOSE,");
+      Serial.print("CLOSE");
     } else
     {
-      Serial.print(",OPEN,");
+      Serial.print("OPEN");
     }
     tempState = tempState >> 1;
+    if(!(i==numValves-1)){
+      Serial.print(",");
+    }
+    
   }
   Serial.print("\n");
 }
