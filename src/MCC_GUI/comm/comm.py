@@ -64,8 +64,6 @@ class connection():
             self.log.log("WARN", "Unable to decode message: "+message)
             return 1
     def processCommand(self,message):
-        if self.verbose:
-            self.log.log("INFO","Recieved Serial Data: "+message)
         if "," in message:
             mArr = message.split(",")
             if mArr[0]!=self.device:
@@ -81,23 +79,20 @@ class connection():
             elif mArr[1]=="SUMMARY":
                 if self.verbose:
                     self.log.log("INFO","Recieved Switch Summary")
-                for i in range(2,20,2):
-                    self.conf[mArr[i]]=mArr[i+1]
+                for i in range(2,11):
+                    self.conf[self.valves[i-2]]=mArr[i]
                     if self.verbose:
-                        self.log.log("INFO",mArr[i]+mArr[i+1])
+                        self.log.log("INFO",self.valves[i-2]+mArr[i])
             elif mArr[1]=="STATUS":
                 if mArr[2]=="STARTUP":
                     self.connected=False
                     self.log.log("INFO","Recieved startup signal, initializing connection.")
-                    if self.device=="MCB":
-                        self.connected=True #don't init connection if mcb
-                    else:
-                        self.initConnection()
+                    self.initConnection()
                 elif mArr[2]=="DISARMED":
                     self.log.log("INFO","Recieved Disarm Signal")
                     self.status="DISARMED"
                 elif mArr[2]=="ARMED":
-                    self.log.log("WARN","Recieved Arm Signal")
+                    self.log.log("WARN","Recieved Disarm Signal")
                     self.status="ARMED"
                 elif mArr[2]=="ABORTED":
                     self.log.log("WARN","Recieved Abort Signal")
