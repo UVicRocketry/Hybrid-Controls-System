@@ -6,9 +6,11 @@ Valve::Valve(int upperBound, int lowerBound) {
   this->lowerBound = lowerBound;
   this->change = 0;
   this->prevState = 0;//!digitalRead(upperBound) | !digitalRead(lowerBound);
+  pinMode(upperBound, INPUT_PULLUP);
+  pinMode(lowerBound, INPUT_PULLUP);
 }
 
-Valve::Valve(int upperBound, int lowerBound, int StepPin, int StepDir, int StepSpeed) {
+Valve::Valve(int upperBound, int lowerBound, int StepPin, int DirPin, int StepSpeed) {
   this->upperBound = upperBound;
   this->lowerBound = lowerBound;
   this->StepPin = StepPin;
@@ -16,6 +18,8 @@ Valve::Valve(int upperBound, int lowerBound, int StepPin, int StepDir, int StepS
   this->StepSpeed = StepSpeed;
   this->change = 0;
   this->prevState = 0;//!digitalRead(upperBound) | !digitalRead(lowerBound);
+  pinMode(upperBound, INPUT_PULLUP);
+  pinMode(lowerBound, INPUT_PULLUP);
   pinMode(DirPin, OUTPUT);
   pinMode(StepPin, OUTPUT);
   StepTime = millis();
@@ -57,12 +61,26 @@ String Valve::strState() {
 
 bool Valve::moveStep(int Dir)
 {
+Serial.println(Dir);
+ Serial.println(DirPin);
+//  Serial.println(this->StepPin);
+
+  
   if ((millis() - StepTime) > StepSpeed)
   {
-    digitalWrite(DirPin, Dir);
+     if(Dir==1)
+    {
+       digitalWrite(DirPin, 1);
+    }else
+    {
+      digitalWrite(DirPin, 0);
+    }
+   //digitalWrite(DirPin, Dir);
+    delayMicroseconds(50);
     digitalWrite(StepPin, 0);
-    delayMicroseconds(5);
+    delayMicroseconds(10);
     digitalWrite(StepPin, 1);
+    
     StepTime=millis();
     return true;
   }

@@ -52,14 +52,7 @@
 //****************************
 
 
-//Assining Valves (be sure to set proper oriention baied on mottor direction)
-Valve N2F = Valve(Lim1Mot4, Lim2Mot4, StepMot4, DirMot4, 15);
-Valve N2OV = Valve(Lim2Mot2, Lim1Mot2, StepMot2, DirMot2, 20);
-Valve N2OF  = Valve(Lim1Mot1, Lim2Mot1, StepMot1, DirMot1, 20);
-Valve RTV  = Valve(Lim1Mot3, Lim2Mot3);
-Valve EVV  = Valve(Lim1Mot5, Lim2Mot5, StepMot5, DirMot5, 20);
-Valve MEV  = Valve(Lim1Mot6, Lim2Mot6, StepMot6, DirMot6, 20);
-Valve NCV  = Valve(Lim1NCV, Lim2NCV);
+
 
 int IgniterState = 0;
 int TargetState [8];
@@ -70,24 +63,17 @@ String readValue(String * rxBuf);
 void sendState (void);
 
 
+//Assining Valves (be sure to set proper oriention baied on mottor direction)
+Valve N2F = Valve(Lim2Mot4, Lim1Mot4, StepMot4, DirMot4, 15);
+Valve N2OV = Valve(Lim2Mot2, Lim1Mot2, StepMot2, DirMot2, 15);
+Valve N2OF  = Valve(Lim1Mot1, Lim2Mot1, StepMot1, DirMot1, 15);
+Valve RTV  = Valve(Lim1Mot3, Lim2Mot3);
+Valve EVV  = Valve(Lim1Mot5, Lim2Mot5, StepMot5, DirMot5, 20);
+Valve MEV  = Valve(Lim1Mot6, Lim2Mot6, StepMot6, DirMot6, 20);
+Valve NCV  = Valve(Lim1NCV, Lim2NCV);
+
 void setup() {
   // Sets Limmit Pins
-  pinMode(Lim1Mot1, INPUT_PULLUP);
-  pinMode(Lim2Mot1, INPUT_PULLUP);
-  pinMode(Lim1Mot2, INPUT_PULLUP);
-  pinMode(Lim2Mot2, INPUT_PULLUP);
-  pinMode(Lim1Mot3, INPUT_PULLUP);
-  pinMode(Lim2Mot3, INPUT_PULLUP);
-  pinMode(Lim1Mot4, INPUT_PULLUP);
-  pinMode(Lim2Mot4, INPUT_PULLUP);
-  pinMode(Lim1Mot5, INPUT_PULLUP);
-  pinMode(Lim2Mot5, INPUT_PULLUP);
-  pinMode(Lim1Mot6, INPUT_PULLUP);
-  pinMode(Lim2Mot6, INPUT_PULLUP);
-  pinMode(Lim1NCV, INPUT_PULLUP);
-  pinMode(Lim2NCV, INPUT_PULLUP);
-  //*********************************************
-
   //enable set up
   pinMode(mot1Enab, OUTPUT);
   pinMode(mot2Enab, OUTPUT);
@@ -96,28 +82,16 @@ void setup() {
   pinMode(mot5Enab, OUTPUT);
   pinMode(mot6Enab, OUTPUT);
 
- // pinMode(DirMot1, OUTPUT);
-  //pinMode(StepMot1, OUTPUT);
-  
-  pinMode(mot2Enab, OUTPUT);
-  pinMode(mot3Enab, OUTPUT);
-  pinMode(mot4Enab, OUTPUT);
-  pinMode(mot5Enab, OUTPUT);
-  pinMode(mot6Enab, OUTPUT);
   
   digitalWrite(mot1Enab, HIGH);
   digitalWrite(mot2Enab, HIGH);
   digitalWrite(mot3Enab, HIGH);
   digitalWrite(mot4Enab, HIGH);
   digitalWrite(mot5Enab, HIGH);
-  digitalWrite(mot6Enab, HIGH);
-
-
+  digitalWrite(mot6Enab, LOW);
 
   pinMode(Mot7, OUTPUT);
   pinMode(Igniter, OUTPUT);
-  pinMode(DirMot2, OUTPUT);
-  pinMode(StepMot2, OUTPUT);
   digitalWrite(Igniter, LOW);
   //********************
 
@@ -132,15 +106,29 @@ void setup() {
 
 
   sendState();
-  
-  while (N2OF.state() ==0)
-  {  
-    N2OF
+
+  while(1)
+  {
     sendState();
-    delay(500);
-    
+   // MEV.moveStep(1);
+    delay(100);
+  }
+  while(1)
+  {
+  while (N2OF.state() !=1)
+  {   //sendState();
+      
+      N2OF.moveStep(1);
+      //delay(100);
   }
 
+  while (N2OF.state() !=-1)
+  {   //sendState();
+      
+      N2OF.moveStep(-1);
+      //delay(100);
+  }
+  }
 
   while(1);
 
