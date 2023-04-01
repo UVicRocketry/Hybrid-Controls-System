@@ -60,12 +60,7 @@ String Valve::strState() {
 
 
 bool Valve::moveStep(int Dir)
-{
-Serial.println(Dir);
- Serial.println(DirPin);
-//  Serial.println(this->StepPin);
-
-  
+{ Serial.println(Dir);
   if ((millis() - StepTime) > StepSpeed)
   {
      if(Dir==1)

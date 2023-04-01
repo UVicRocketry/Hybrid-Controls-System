@@ -36,13 +36,13 @@
 //*********Driver Pins********
 #define StepMot6 19
 #define DirMot6  18
-#define StepMot2 8 
-#define DirMot2  7 
-#define StepMot4 10 
+#define StepMot2 8
+#define DirMot2  7
+#define StepMot4 10
 #define DirMot4  9
-#define StepMot5 15 
+#define StepMot5 15
 #define DirMot5  14
-#define StepMot1 17 
+#define StepMot1 17
 #define DirMot1  16
 //****************************
 
@@ -82,13 +82,13 @@ void setup() {
   pinMode(mot5Enab, OUTPUT);
   pinMode(mot6Enab, OUTPUT);
 
-  
+
   digitalWrite(mot1Enab, HIGH);
   digitalWrite(mot2Enab, HIGH);
-  digitalWrite(mot3Enab, HIGH);
+  digitalWrite(mot3Enab, LOW);
   digitalWrite(mot4Enab, HIGH);
   digitalWrite(mot5Enab, HIGH);
-  digitalWrite(mot6Enab, LOW);
+  digitalWrite(mot6Enab, HIGH);
 
   pinMode(Mot7, OUTPUT);
   pinMode(Igniter, OUTPUT);
@@ -101,36 +101,10 @@ void setup() {
   //*********************************************
 
   //Auto_Home(On Start up)
- // Serial.println("VCA,CF,Initalizing_to_safe_state:(Not_Implimented)");
- // digitalWrite(Mot7, LOW);
-
+  // Serial.println("VCA,CF,Initalizing_to_safe_state:(Not_Implimented)");
+  // digitalWrite(Mot7, LOW);
 
   sendState();
-
-  while(1)
-  {
-    sendState();
-   // MEV.moveStep(1);
-    delay(100);
-  }
-  while(1)
-  {
-  while (N2OF.state() !=1)
-  {   //sendState();
-      
-      N2OF.moveStep(1);
-      //delay(100);
-  }
-
-  while (N2OF.state() !=-1)
-  {   //sendState();
-      
-      N2OF.moveStep(-1);
-      //delay(100);
-  }
-  }
-
-  while(1);
 
   //*********************************************
 }
@@ -144,30 +118,33 @@ void loop() {
     String TYPE = "";
     String SOURCE = "";
 
-   
+
     SOURCE = readValue(&rxBuffer);
     TYPE = readValue(&rxBuffer);
-
+    Serial.println(SOURCE);
+    Serial.println(TYPE);
     if (TYPE == "ABORT")
     {
       Serial.println("VCA, ACK");
       Serial.println("VCA,CF,ABORT");
       digitalWrite(Igniter, LOW);
       digitalWrite(Mot7, LOW);
-    }else if (TYPE == "CTRL")
+    } else if (TYPE == "CTRL")
     {
       Serial.println("VCA, ACK");
+   
       setTarget(rxBuffer);
-    }else if(TYPE == "STATUS")
+  
+    } else if (TYPE == "STATUS")
     {
       Serial.println("VCA, ACK");
       sendState();
-    }else
+    } else
     {
-       Serial.println("VCA, NACK");
+      Serial.println("VCA, NACK");
     }
 
-    
+
   }
 
   MoveToTarget();
@@ -196,12 +173,12 @@ String readValue (String * rxBuf)
   String Command = "";
   char c;
   c = (*rxBuf)[0];
-  while (c != '\n' && c !=  ',' && (*rxBuf).length()>1) {
+  while (c != '\n' && c !=  ',' && (*rxBuf).length() > 1) {
     Command += c;
-    (*rxBuf).remove(0,1);  
-    c = (*rxBuf)[0];  
+    (*rxBuf).remove(0, 1);
+    c = (*rxBuf)[0];
   }
-  (*rxBuf).remove(0,1); 
+  (*rxBuf).remove(0, 1);
   return Command;
 }
 
@@ -216,6 +193,33 @@ void setTarget (String valveCommands)
     Label = readValue(&valveCommands);
     Value = readValue(&valveCommands);
 
+
+    if (Label == "N2OF")
+    {
+    } else   if (Label ==  "N2OV")
+    {
+      index = 1;
+    } else if (Label ==  "N2F")
+    {
+      index = 2;
+    } else if (Label ==  "RTV")
+    {
+      index = 3;
+    } else if (Label ==  "EVV")
+    {
+      index = 4;
+    } else if (Label ==  "MEV")
+    {
+      index = 5;
+    } else if (Label ==  "IGNITE")
+    {
+      index = 6;
+    } else
+    {
+      index = 7;
+      Serial.println("VCA, NACK");
+    }
+
     if (Value == "OPEN")
     {
       TargetState[index] = 1;
@@ -228,7 +232,7 @@ void setTarget (String valveCommands)
       TargetState[index] = 0;
       //Serial.println("VCA, NACK");
     }
-    index ++;
+
   }
 }
 
@@ -239,7 +243,7 @@ void setTarget (String valveCommands)
 void MoveToTarget()
 {
 
-  if ( N2OF.state() != TargetState[0])
+  if ( N2OF.state() != TargetState[0] && TargetState[0]!=0)
   {
     N2OF.moveStep(TargetState[0]);
   }
@@ -248,59 +252,59 @@ void MoveToTarget()
     sendState();
   }
 
-  if ( N2OV.state() != TargetState[1])
+  if ( N2OV.state() != TargetState[1]&& TargetState[0]!=0)
   {
-    N2OV.moveStep(TargetState[0]);
+    N2OV.moveStep(TargetState[1]);
   }
   if ( N2OV.getChange())
   {
     sendState();
   }
 
-  if ( N2F.state() != TargetState[2])
+  if ( N2F.state() != TargetState[2]&& TargetState[0]!=0)
   {
-    N2F.moveStep(TargetState[0]);
+    N2F.moveStep(TargetState[2]);
   }
   if ( N2F.getChange())
   {
     sendState();
   }
 
-  if ( RTV.state() != TargetState[3])
+  if ( RTV.state() != TargetState[3]&& TargetState[0]!=0)
   {
-    RTV.moveStep(TargetState[0]);
+    //RTV.moveStep(TargetState[3]);
   }
   if ( RTV.getChange())
   {
     sendState();
   }
 
-  if ( EVV.state() != TargetState[4])
+  if ( EVV.state() != TargetState[4]&& TargetState[0]!=0)
   {
-    EVV.moveStep(TargetState[0]);
+    EVV.moveStep(TargetState[4]);
   }
   if ( EVV.getChange())
   {
     sendState();
   }
 
-  if ( MEV.state() != TargetState[5])
+  if ( MEV.state() != TargetState[5]&& TargetState[0]!=0)
   {
-    MEV.moveStep(TargetState[0]);
+    // MEV.moveStep(TargetState[5]);
   }
   if ( MEV.getChange())
   {
     sendState();
   }
 
-  if (IgniterState != TargetState[6])
+  if (IgniterState != TargetState[6]&& TargetState[0]!=0)
   {
     if (TargetState[6] == 1)
     {
-      digitalWrite(Igniter, HIGH);
+      //digitalWrite(Igniter, HIGH);
       IgniterState = 1;
     } else if (TargetState[6] == 0) {
-      digitalWrite(Igniter, HIGH);
+      //digitalWrite(Igniter, HIGH);
       IgniterState = 0;
     }
     sendState();
