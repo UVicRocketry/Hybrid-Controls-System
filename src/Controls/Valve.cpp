@@ -16,6 +16,8 @@ Valve::Valve(int upperBound, int lowerBound, int StepPin, int StepDir, int StepS
   this->StepSpeed = StepSpeed;
   this->change = 0;
   this->prevState = 0;//!digitalRead(upperBound) | !digitalRead(lowerBound);
+  pinMode(DirPin, OUTPUT);
+  pinMode(StepPin, OUTPUT);
   StepTime = millis();
 }
 
@@ -59,6 +61,7 @@ bool Valve::moveStep(int Dir)
   {
     digitalWrite(DirPin, Dir);
     digitalWrite(StepPin, 0);
+    delayMicroseconds(5);
     digitalWrite(StepPin, 1);
     StepTime=millis();
     return true;
