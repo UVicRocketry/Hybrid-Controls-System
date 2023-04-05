@@ -62,11 +62,11 @@ void sendState (void);
 
 
 //Assining Valves (be sure to set proper oriention baied on mottor direction)
-Valve N2F = Valve(OpenLimitN2F, CloseLimitN2F, StepN2F, DirN2F, 15);
-Valve N2OV = Valve(OpenLimitN2OV, CloseLimitN2OV, StepN2OV, DirN2OV, 15);
-Valve N2OF  = Valve(OpenLimitN2OF, CloseLimitN2OF, StepN2OF, DirN2OF, 15);
+Valve N2F = Valve(OpenLimitN2F, CloseLimitN2F, StepN2F, DirN2F, 8);
+Valve N2OV = Valve(OpenLimitN2OV, CloseLimitN2OV, StepN2OV, DirN2OV, 8);
+Valve N2OF  = Valve(OpenLimitN2OF, CloseLimitN2OF, StepN2OF, DirN2OF, 8);
 Valve RTV  = Valve(OpenLimitRTV, CloseLimitRTV);
-Valve EVV  = Valve(OpenLimitEVV, CloseLimitEVV, StepEVV, DirEVV, 20);
+Valve EVV  = Valve(OpenLimitEVV, CloseLimitEVV, StepEVV, DirEVV, 8);
 Valve MEV  = Valve(OpenLimitMEV, CloseLimitMEV, StepMEV, DirMEV, 20);
 Valve NCV  = Valve(OpenLimitNCV, CloseLimitNCV);
 
@@ -220,11 +220,11 @@ void setTarget (String valveCommands)
 
     if (Value == "OPEN")
     {
-      TargetState[index] = 1;
+      TargetState[index] = -1;
     }
     else if (Value == "CLOSE")
     {
-      TargetState[index] = -1;
+      TargetState[index] = 1;
     } else
     {
       TargetState[index] = 0;
@@ -241,8 +241,10 @@ void setTarget (String valveCommands)
 void MoveToTarget()
 {
 
+ // delay(100);
   if ( N2OF.state() != TargetState[0] && TargetState[0]!=0)
   {
+    //Serial.println(TargetState[0]);
     N2OF.moveStep(TargetState[0]);
   }
   if ( N2OF.getChange())
@@ -252,7 +254,7 @@ void MoveToTarget()
 
   if ( N2OV.state() != TargetState[1] && TargetState[1]!=0)
   {
-    N2OV.moveStep(TargetState[1]);
+    //N2OV.moveStep(TargetState[1]);
   }
   if ( N2OV.getChange())
   {

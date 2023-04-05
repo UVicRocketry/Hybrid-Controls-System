@@ -61,10 +61,13 @@ String Valve::strState() {
 
 bool Valve::moveStep(int Dir)
 { 
-  Serial.print("Stepping Pin:");
-  Serial.println(StepPin);
+  //Serial.print("Stepping Pin:");
+  //Serial.println(StepPin);
   if ((millis() - StepTime) > StepSpeed)
   {
+    //Serial.println(millis());
+    //Serial.println(StepTime);
+    //Serial.println(millis()-StepTime);
      if(Dir==1)
     {
        digitalWrite(DirPin, 1);
@@ -78,6 +81,11 @@ bool Valve::moveStep(int Dir)
     digitalWrite(StepPin, 0);
     StepTime=millis();
     return true;
+    
+  }else if(StepTime>millis())
+  {
+    //overflow of 32bit millis number
+    StepTime=millis();
   }
   return false;
 }

@@ -8,7 +8,7 @@ class Valve {
     int lowerBound;
     int change;
     int prevState;
-    int StepTime;
+    uint32_t StepTime;
     int StepPin;
     int DirPin;
     int StepSpeed;
