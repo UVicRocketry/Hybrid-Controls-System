@@ -60,7 +60,9 @@ String Valve::strState() {
 
 
 bool Valve::moveStep(int Dir)
-{ Serial.println(Dir);
+{ 
+  Serial.print("Stepping Pin:");
+  Serial.println(StepPin);
   if ((millis() - StepTime) > StepSpeed)
   {
      if(Dir==1)
@@ -70,12 +72,10 @@ bool Valve::moveStep(int Dir)
     {
       digitalWrite(DirPin, 0);
     }
-   //digitalWrite(DirPin, Dir);
+    delayMicroseconds(50);
+    digitalWrite(StepPin, 1);
     delayMicroseconds(50);
     digitalWrite(StepPin, 0);
-    delayMicroseconds(10);
-    digitalWrite(StepPin, 1);
-    
     StepTime=millis();
     return true;
   }
