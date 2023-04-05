@@ -5,20 +5,19 @@
    JJ
    Organizarion: UVic Rocketry
 */
-//#include "AccelStepper.h"
 #include "Valve.h"
 
 //*********Limit Pins*********
-#define OpenLimitMEV 31
-#define CloseLimitMEV 30
+#define OpenLimitMEV 30
+#define CloseLimitMEV 31
 #define OpenLimitN2OV 40
 #define CloseLimitN2OV 41
 #define OpenLimitRTV 39
 #define CloseLimitRTV 38
 #define OpenLimitN2F 42
 #define CloseLimitN2F 43
-#define OpenLimitEVV 35
-#define CloseLimitEVV 34
+#define OpenLimitERV 35
+#define CloseLimitERV 34
 #define OpenLimitN2OF 33
 #define CloseLimitN2OF 32
 #define OpenLimitNCV 29
@@ -30,7 +29,7 @@
 #define N2OVEnab 47
 #define RTVEnab 48
 #define N2FEnab 49
-#define EVVEnab 50
+#define ERVEnab 50
 #define MEVEnab 51
 
 //*********Driver Pins********
@@ -40,8 +39,8 @@
 #define DirN2OV  7
 #define StepN2F 10
 #define DirN2F  9
-#define StepEVV 15
-#define DirEVV  14
+#define StepERV 15
+#define DirERV  14
 #define StepN2OF 17
 #define DirN2OF  16
 //****************************
@@ -62,32 +61,34 @@ void sendState (void);
 
 
 //Assining Valves (be sure to set proper oriention baied on mottor direction)
-Valve N2F = Valve(OpenLimitN2F, CloseLimitN2F, StepN2F, DirN2F, 8);
+//Stepper Valves
+Valve N2F = Valve(OpenLimitN2F, CloseLimitN2F, StepN2F, DirN2F, 20);
 Valve N2OV = Valve(OpenLimitN2OV, CloseLimitN2OV, StepN2OV, DirN2OV, 8);
 Valve N2OF  = Valve(OpenLimitN2OF, CloseLimitN2OF, StepN2OF, DirN2OF, 8);
-Valve RTV  = Valve(OpenLimitRTV, CloseLimitRTV);
-Valve EVV  = Valve(OpenLimitEVV, CloseLimitEVV, StepEVV, DirEVV, 8);
-Valve MEV  = Valve(OpenLimitMEV, CloseLimitMEV, StepMEV, DirMEV, 20);
+Valve ERV  = Valve(OpenLimitERV, CloseLimitERV, StepERV, DirERV, 8);
+Valve MEV  = Valve(OpenLimitMEV, CloseLimitMEV, StepMEV, DirMEV, 100);
+
+//Other Valves
 Valve NCV  = Valve(OpenLimitNCV, CloseLimitNCV);
+Valve RTV  = Valve(OpenLimitRTV, CloseLimitRTV);
 
 void setup() {
   // Sets Limmit Pins
   //enable set up
   pinMode(N2OFEnab, OUTPUT);
   pinMode(N2OVEnab, OUTPUT);
-  pinMode(RTVEnab, OUTPUT);
   pinMode(N2FEnab, OUTPUT);
-  pinMode(EVVEnab, OUTPUT);
+  pinMode(ERVEnab, OUTPUT);
   pinMode(MEVEnab, OUTPUT);
-
-
+  pinMode(RTVEnab, OUTPUT);
+  
   digitalWrite(N2OFEnab, HIGH);
   digitalWrite(N2OVEnab, HIGH);
-  digitalWrite(RTVEnab, LOW);
   digitalWrite(N2FEnab, HIGH);
-  digitalWrite(EVVEnab, HIGH);
+  digitalWrite(ERVEnab, HIGH);
   digitalWrite(MEVEnab, HIGH);
-
+  digitalWrite(RTVEnab, LOW);
+  
   pinMode(Solenoid, OUTPUT);
   pinMode(Igniter, OUTPUT);
   digitalWrite(Igniter, LOW);
@@ -103,8 +104,14 @@ void setup() {
   // digitalWrite(Solenoid, LOW);
 
   sendState();
+  delay(1000);
 
-  //*********************************************
+  Serial.println("MOVING TO ALL-CLOSE");
+
+  for(int i = 0; i<8; i++)
+  {
+    TargetState[i] = 1;
+  }
 }
 
 
@@ -118,8 +125,6 @@ void loop() {
 
     SOURCE = readCSV(&rxBuffer);
     TYPE = readCSV(&rxBuffer);
-//    Serial.println(SOURCE);
-//    Serial.println(TYPE);
 
     Serial.print("VCA, ACK,");
     if (TYPE == "ABORT")
@@ -128,6 +133,13 @@ void loop() {
       Serial.println("VCA,CF,ABORT");
       digitalWrite(Igniter, LOW);
       digitalWrite(Solenoid, LOW);
+
+      while(1)
+      {
+        delay(1000);
+        Serial.println("VCA,ABORTED");
+        sendState();
+      }
     } else if (TYPE == "CTRL")
     {
       Serial.println(TYPE);
@@ -159,7 +171,7 @@ void sendState (void)
   Serial.print(",N2OV," +  N2OV.strState());
   Serial.print(",N2F," +  N2F.strState());
   Serial.print(",RTV," +  RTV.strState());
-  Serial.print(",EVV," +  EVV.strState());
+  Serial.print(",ERV," +  ERV.strState());
   Serial.print(",MEV," +  MEV.strState());
   Serial.print(",NCV," +  NCV.strState());
   Serial.println("");
@@ -200,13 +212,14 @@ void setTarget (String valveCommands)
     } else if (Label ==  "N2F")
     {
       index = 2;
-    } else if (Label ==  "RTV")
+    
+    } else if (Label ==  "ERV")
     {
       index = 3;
-    } else if (Label ==  "EVV")
+    } else if (Label ==  "MEV")
     {
       index = 4;
-    } else if (Label ==  "MEV")
+    } else if (Label ==  "RTV")
     {
       index = 5;
     } else if (Label ==  "IGNITE")
@@ -254,7 +267,8 @@ void MoveToTarget()
 
   if ( N2OV.state() != TargetState[1] && TargetState[1]!=0)
   {
-    //N2OV.moveStep(TargetState[1]);
+  //  delay(1);
+   // N2OV.moveStep(TargetState[1]);
   }
   if ( N2OV.getChange())
   {
@@ -270,31 +284,35 @@ void MoveToTarget()
     sendState();
   }
 
-  if ( RTV.state() != TargetState[3] && TargetState[3]!=0)
+  if ( ERV.state() != TargetState[3] && TargetState[3]!=0)
   {
-    //RTV.moveStep(TargetState[3]);
+    ERV.moveStep(TargetState[3]);
   }
-  if ( RTV.getChange())
-  {
-    sendState();
-  }
-
-  if ( EVV.state() != TargetState[4] && TargetState[4]!=0)
-  {
-    EVV.moveStep(TargetState[4]);
-  }
-  if ( EVV.getChange())
+  if ( ERV.getChange())
   {
     sendState();
   }
 
-  if ( MEV.state() != TargetState[5] && TargetState[5]!=0)
+  if ( MEV.state() != TargetState[4] && TargetState[4]!=0)
   {
-    // MEV.moveStep(TargetState[5]);
+    delay(1);
+    MEV.moveStep(TargetState[4]);
   }
+  
   if ( MEV.getChange())
   {
     sendState();
+  }
+
+
+
+  if ( RTV.state() != TargetState[5] && TargetState[5]!=0)
+  {
+    //RTV.moveStep(TargetState[5]);
+  }
+  if ( RTV.getChange())
+  {
+  //  sendState();
   }
 
   if (IgniterState != TargetState[6] && TargetState[6]!=0)
@@ -307,6 +325,6 @@ void MoveToTarget()
       //digitalWrite(Igniter, HIGH);
       IgniterState = 0;
     }
-    sendState();
+    //sendState();
   }
 }
