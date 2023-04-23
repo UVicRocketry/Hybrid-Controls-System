@@ -1,9 +1,9 @@
-/*  Valve Cart and Feed System: Controls - Valve Controls - Full Asembly V 1.1
+/*  Valve Cart and Feed System: Controls - Valve Controls - Rework V 1.1
    Author(s):
    Matthew Ebert
    Logan Sewell
    JJ
-   Organizarion: UVic Rocketry
+   Organization: UVic Rocketry
 */
 #include "Valve.h"
 
@@ -59,8 +59,8 @@ void setTarget (String valveCommands);
 String readCSV(String * rxBuf);
 void sendState (void);
 
-
-//Assining Valves (be sure to set proper oriention baied on mottor direction)
+bool ABORT = 0;
+//Assining Valves
 //Stepper Valves
 Valve N2F = Valve(OpenLimitN2F, CloseLimitN2F, StepN2F, DirN2F, 20);
 Valve N2OV = Valve(OpenLimitN2OV, CloseLimitN2OV, StepN2OV, DirN2OV, 8);
@@ -81,33 +81,34 @@ void setup() {
   pinMode(ERVEnab, OUTPUT);
   pinMode(MEVEnab, OUTPUT);
   pinMode(RTVEnab, OUTPUT);
-  
+
+  //Currently does not effect motors??
   digitalWrite(N2OFEnab, HIGH);
   digitalWrite(N2OVEnab, HIGH);
   digitalWrite(N2FEnab, HIGH);
   digitalWrite(ERVEnab, HIGH);
   digitalWrite(MEVEnab, HIGH);
   digitalWrite(RTVEnab, LOW);
-  
+
+  //Unsure how these operate
   pinMode(Solenoid, OUTPUT);
+  digitalWrite(Solenoid, LOW);
   pinMode(Igniter, OUTPUT);
   digitalWrite(Igniter, LOW);
   //********************
 
+
   //Serial_Startup
   Serial.begin(9600);
+  //time in ms the serail blocks waiting for data
   Serial.setTimeout(10);
   //*********************************************
 
-  //Auto_Home(On Start up)
-  // Serial.println("VCA,CF,Initalizing_to_safe_state:(Not_Implimented)");
-  // digitalWrite(Solenoid, LOW);
-
+  Serial.println("VCA,STATUS,STARTUP,SUCCESS");
+  Serial.println("VCA,CF,Initalizing_to_safe_state:(ALL Closed)");
   sendState();
   delay(1000);
-
-  Serial.println("MOVING TO ALL-CLOSE");
-
+  //Set all target states to closed
   for(int i = 0; i<8; i++)
   {
     TargetState[i] = 1;
@@ -116,40 +117,49 @@ void setup() {
 
 
 void loop() {
+  
   if (Serial.available())
-  {
+  {//if a message has been recieved
+    //read all serial data
     String rxBuffer = Serial.readString();
+    /*Should the buffer be cleared before entire message is sent/recieved
+    a fragment will be created and not parsed. An end flag should be checked
+    to ensure this case does not occur.*/
     String Command = "";
     String TYPE = "";
     String SOURCE = "";
-
+    //read source of data
     SOURCE = readCSV(&rxBuffer);
+    //read type of data
     TYPE = readCSV(&rxBuffer);
-
+    //Send acknolodgement
     Serial.print("VCA, ACK,");
+    /* Currently there is no error correcting or proper acknoledgement handling
+    This ACK is for debugging only. Proper protocols should be developed to ensure
+    a message is handled properly*/
     if (TYPE == "ABORT")
     {
+      ABORT = true;
       Serial.println(TYPE);
       Serial.println("VCA,CF,ABORT");
       digitalWrite(Igniter, LOW);
       digitalWrite(Solenoid, LOW);
 
-      while(1)
-      {
-        delay(1000);
-        Serial.println("VCA,ABORTED");
-        sendState();
-      }
+      //implement abort code
+      
+      Serial.println("VCA,ABORTED");
+      sendState();
+      
     } else if (TYPE == "CTRL")
     {
-      Serial.println(TYPE);
       
+      Serial.println(TYPE);
       setTarget(rxBuffer);
       
     } else if (TYPE == "STATUS")
     {
-      Serial.println(TYPE);
       
+      Serial.println(TYPE);
       sendState();
       
     } else
@@ -157,6 +167,8 @@ void loop() {
       Serial.println("UNKOWN");
     }
   }
+
+  //called every loop to step motors if necessary
   MoveToTarget();
 }
 
@@ -241,7 +253,6 @@ void setTarget (String valveCommands)
     } else
     {
       TargetState[index] = 0;
-      //Serial.println("VCA, NACK");
     }
 
   }
@@ -254,7 +265,6 @@ void setTarget (String valveCommands)
 void MoveToTarget()
 {
 
- // delay(100);
   if ( N2OF.state() != TargetState[0] && TargetState[0]!=0)
   {
     //Serial.println(TargetState[0]);
@@ -305,14 +315,13 @@ void MoveToTarget()
   }
 
 
-
   if ( RTV.state() != TargetState[5] && TargetState[5]!=0)
   {
-    //RTV.moveStep(TargetState[5]);
+    RTV.moveStep(TargetState[5]);
   }
   if ( RTV.getChange())
   {
-  //  sendState();
+    sendState();
   }
 
   if (IgniterState != TargetState[6] && TargetState[6]!=0)
@@ -325,6 +334,6 @@ void MoveToTarget()
       //digitalWrite(Igniter, HIGH);
       IgniterState = 0;
     }
-    //sendState();
+    sendState();
   }
 }
