@@ -18,13 +18,13 @@ import qt.debug
 
 #multi-threading processes
 def thread_recieve():
-    while True:
+    while not window.isTerminated:
         if vc.messagePending():
             vc.recieve()
         if mcb.messagePending():
             mcb.recieve()
 def thread_active_process():
-        while True:
+        while not window.isTerminated:
             if vc.message_queue.qsize() != 0:
                 vc.processCommand(vc.message_queue.get())
                 window.ui.l_PINGDYN.setText(datetime.now().strftime("%H:%M:%S"))
@@ -33,7 +33,7 @@ def thread_active_process():
                 window.ui.l_PINGDYN.setText(datetime.now().strftime("%H:%M:%S"))
             time.sleep(0.3)
 def thread_ping_status():
-    while True:
+    while not window.isTerminated:
         try:
             if vc.connected:
                 vc.send("MCC,SUMMARY")
@@ -64,7 +64,7 @@ def thread_ping_status():
             pass
         time.sleep(1)
 def thread_control_queue_process():
-    while True:
+    while not window.isTerminated:
         ctrlcmd = mcb.control_queue.get()
         if ctrlcmd[0] not in mcb.desyncList:
             vc.send("MCC,CTRL,"+ctrlcmd[0]+","+ctrlcmd[1])
@@ -138,6 +138,10 @@ class MainWindow(QMainWindow):
         self.ui.actionDebug_Console.triggered.connect(lambda: debugcon.show())
         self.ui.actionVC_Logs.triggered.connect(lambda: vc.clearLog())
         self.ui.actionMCB_Logs.triggered.connect(lambda: mcb.clearLog())
+    def closeEvent(self, *args, **kwargs):
+        super(QMainWindow, self).closeEvent(*args, **kwargs)
+        self.isTerminated=True
+        os._exit(0)
 class PortSelector(QDialog):
     def __init__(self):
         super(PortSelector, self).__init__()
@@ -197,6 +201,7 @@ if __name__ == '__main__':
     #setup QApplication
     app = QApplication([])
     window = MainWindow()
+    window.isTerminated=False
     portsel = PortSelector()
     confirm = ConfirmDiag()
     debugcon = DebugConsole()
