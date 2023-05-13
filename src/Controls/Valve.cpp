@@ -1,25 +1,25 @@
 #include "Valve.h"
 
 // Constructor
-Valve::Valve(int upperBound, int lowerBound) {
-  this->upperBound = upperBound;
-  this->lowerBound = lowerBound;
+Valve::Valve(int OpenLimit, int CloseLimit) {
+  this->OpenLimit = OpenLimit;
+  this->CloseLimit = CloseLimit;
   this->change = 0;
-  this->prevState = 0;//!digitalRead(upperBound) | !digitalRead(lowerBound);
-  pinMode(upperBound, INPUT_PULLUP);
-  pinMode(lowerBound, INPUT_PULLUP);
+  this->prevState = 0;//!digitalRead(OpenLimit) | !digitalRead(CloseLimit);
+  pinMode(OpenLimit, INPUT_PULLUP);
+  pinMode(CloseLimit, INPUT_PULLUP);
 }
 
-Valve::Valve(int upperBound, int lowerBound, int StepPin, int DirPin, int StepSpeed) {
-  this->upperBound = upperBound;
-  this->lowerBound = lowerBound;
+Valve::Valve(int OpenLimit, int CloseLimit, int StepPin, int DirPin, int StepSpeed) {
+  this->OpenLimit = OpenLimit;
+  this->CloseLimit = CloseLimit;
   this->StepPin = StepPin;
   this->DirPin = DirPin;
   this->StepSpeed = StepSpeed;
   this->change = 0;
-  this->prevState = 0;//!digitalRead(upperBound) | !digitalRead(lowerBound);
-  pinMode(upperBound, INPUT_PULLUP);
-  pinMode(lowerBound, INPUT_PULLUP);
+  this->prevState = 0;//!digitalRead(OpenLimit) | !digitalRead(CloseLimit);
+  pinMode(OpenLimit, INPUT_PULLUP);
+  pinMode(CloseLimit, INPUT_PULLUP);
   pinMode(DirPin, OUTPUT);
   pinMode(StepPin, OUTPUT);
   StepTime = millis();
@@ -27,11 +27,11 @@ Valve::Valve(int upperBound, int lowerBound, int StepPin, int DirPin, int StepSp
 
 //*********State functions*********
 int Valve::state() {
-  if (digitalRead(upperBound) == LOW) {
+  if (digitalRead(OpenLimit) == LOW) {
     change = (prevState != -1);
     prevState = -1;
     return -1;
-  } else if (digitalRead(lowerBound) == LOW) {
+  } else if (digitalRead(CloseLimit) == LOW) {
     change = (prevState != 1);
     prevState = 1;
     return 1;
@@ -43,11 +43,11 @@ int Valve::state() {
 }
 
 String Valve::strState() {
-  if (digitalRead(upperBound) == LOW) {
+  if (digitalRead(OpenLimit) == LOW) {
     change = (prevState != -1);
     prevState = -1;
     return "OPEN";
-  } else if (digitalRead(lowerBound) == LOW) {
+  } else if (digitalRead(CloseLimit) == LOW) {
     change = (prevState != 1);
     prevState = 1;
     return "CLOSE";
@@ -60,9 +60,14 @@ String Valve::strState() {
 
 
 bool Valve::moveStep(int Dir)
-{ Serial.println(Dir);
+{ 
+  //Serial.print("Stepping Pin:");
+  //Serial.println(StepPin);
   if ((millis() - StepTime) > StepSpeed)
   {
+    //Serial.println(millis());
+    //Serial.println(StepTime);
+    //Serial.println(millis()-StepTime);
      if(Dir==1)
     {
        digitalWrite(DirPin, 1);
@@ -70,24 +75,27 @@ bool Valve::moveStep(int Dir)
     {
       digitalWrite(DirPin, 0);
     }
-   //digitalWrite(DirPin, Dir);
+    delayMicroseconds(50);
+    digitalWrite(StepPin, 1);
     delayMicroseconds(50);
     digitalWrite(StepPin, 0);
-    delayMicroseconds(10);
-    digitalWrite(StepPin, 1);
-    
     StepTime=millis();
     return true;
+    
+  }else if(StepTime>millis())
+  {
+    //overflow of 32bit millis number
+    StepTime=millis();
   }
   return false;
 }
 //*********Getters*********
-int Valve::getUpperbound() {
-  return this->upperBound;
+int Valve::getOpenLimit() {
+  return this->OpenLimit;
 }
 
-int Valve::getlowerBound() {
-  return this->lowerBound;
+int Valve::getCloseLimit() {
+  return this->CloseLimit;
 }
 
 
