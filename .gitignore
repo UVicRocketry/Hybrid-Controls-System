@@ -2,3 +2,8 @@
 .idea
 # Pychache
 __pycache__/
+*.DS_Store
+*.save
+build/
+*.spec
+*.log

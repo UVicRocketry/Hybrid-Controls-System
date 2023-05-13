@@ -1,0 +1,13 @@
+- [] Buzzer 
+
+Next meeting:
+- GUI (rough)
+- Get in contact with cebert
+- Communication between MCB and valve cart
+    - No networking, serial only
+- No blocking states
+- Figure out multi-threading
+
+Decisions:
+- MCB is dumb, GUI does all the logic
+- Status updates for 

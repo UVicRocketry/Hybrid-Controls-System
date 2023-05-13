@@ -1,167 +1,67 @@
 # Hybrid-Controls-System (HB - Project Acronym)
 
+## Project Information
+
 UVic Rocketry's hybrid controls system is designed to actuate and monitor the states of stepper motor driven valves located on a high-pressure oxidizer feed system. The controls system includes the following components:
-- Controls Box : A physical panel with toggle switches, momentary buttons, indicator lights, and a buzzer
-  - Sends commands to MC Computer based on user input through switches/buttons
-  - turns on indicator light once valve state has been confirmed
-- MC Computer : The "server" in the client-server communication model
-  - Sends commands to R Pi based on controls box input 
-  - Recieves valve state confirmation from R Pi
-  - Sends valve state confirmation to Controls Box
-- Raspberry Pi : The "client" in the client-server communication model
-  - Recieves command from MC Computer
-  - Relays command to Arduino
-  - Recieves confirmation of valve state from arduino
-  - Relays confirmation back to MC computer
-  - Collects and Logs Data from LABJACK DAQ
-  - Sends Logs to MC Computer
-- Valve Control Arduino : Actuates all valves on the test stand
-  - Recieves command from R Pi
+- Mission Control Board (MCB) : A physical panel with toggle switches, momentary buttons, indicator lights, and a buzzer
+  - Sends commands to Mission Control Computer based on user input through switches/buttons
+- Mission Control Computer (MCC) : The main controller and communication method with the valve cart
+  - Manages commands from the MCB and forwards them to the valve cart 
+  - Confirms valve status from the valve cart
+  - Also able to be used as an override in case the MCB stops working
+- Valve Control Cart (VC) : Actuates all valves on the test stand
+  - Recieves command from Mission Control Computer
   - Executes valve movements
   - Obtains confirmation or error from limit switches
-  - sends confirmed valve states or error back to the R Pi
+  - sends confirmed valve states or error back to the Mission Control Computer
 
 ![System_Control_Flow_Diagram](./images/high_level_data_flow.drawio.png)  
 _Note: If you get the draw.io extension for vs code you can edit this picture directly._
-
-## Control Box Arduino
-The Control Box Arduino is used for including physical switches, buttons, and safety measures that integrate with the virtual controls offered by the GUI software. The Arduino will be connected via USB to the Controls laptop and have the serial input interpreted by the GUI software. 
-
-### Objectives
-- maximize visibility
-- maximize safety
-- maximize response time
-### Constraints
-- e-stop press sends system to safe state
-- physical control for arming system
-- visual indicator for system armed
-- visual and auditory indicator for system in auto mode
-- max operating voltage is 5V
-- max available GPIO dictated by Arduino
-
-### Notes
-- there are 8 available pins on the Nano, A2-A7, D11, D13
-  - D11 was reading high when it should not have been, so should not be trusted with critical functions
-  - D13 is wired to the Nano's LED and cannot be used for input unless the LED and resistor are desoldered
-- there are 6 available outs on the shift registers left if more LEDs need to be added
-- 4 valve switches are wired up but unused
+**Possibly out of date and needs review!**
 
 
-## MCC
-The Mission Control Laptop display data on the system to the user and relays communication from the Control Box to the R-PI.
+## Installation and Setup of the GUI
+The GUI for the Mission Control Computer is the brains of both the Valve Cart and the Mission Control Board, as well as the communication between them. 
 
-### Objectives
-- Display Valve states
-- Display instrumentation data
-### Constraints
-- Relays Control Box data to the R-PI
+There are two options for installing the GUI and communication libraries: downloading a released compiled version, or downloading directly from source and running as a python script.
 
-## R-PI
-The R-PI is the local connection for the Hybrid test stand. It records and logs the data from the LABJACK DAQ and sends this data to the MCC for display. More importantly, currently the R-PI relays data to the Valve Control Arduino from the MCC
-### Objectives
-- Sends data logs to MCC
-- Sends valve data to MCC and Control Box
-### Constraints
-- Relays Control Box data to the Valve Control Arduino
-- Logs data from instrumentation
+### Downloading and Running a Release
+Releases of the GUI are bundled into a single file using PyInstaller, and built for x86_64 architecture **only**. If you need an x86 version, refer to the compiling from source instructions of this document.
 
+1. To find the latest release, go to <https://github.com/UVicRocketry/Hybrid-Controls-System/releases> and download the executable for your system.
 
+2. Once downloaded, you may need to enable execution of the executable (refer to your system's documentation). On Linux, this is `chmod +x HybridControlsGUI`
 
-## Valve Control Arduino
+3. Finally, just run the GUI by either double-clicking or executing from the terminal.
 
-The Arduino in charge of valve control accepts commands from the R Pi over serial. The arduino is then in charge of rotating the stepper motors until limit switches are contacted, allowing the Arduino to send back a confirmation of the valve state. 
+### Downloading and Running from Source
+Running from source is necessary if you want to be bleeding edge, or if there's no release for your system. This method is bit finicky, but if you follow the steps below, you'll be good to go
 
-### Objectives
-- provide mission control with accurate valve states as often as necessary
-### Constraints
-- execute commands given by R Pi
-- confirm valve state 
-- must initialize valves to safe state (ie. allows for short power loss or e-stop reset to put system into safe state)
-- must identify stuck valves and relay to Mission Control (can use timer)
-- Must initiate abort system when safety checks fail
-### Wiring
-![Wiring Diagram](./images/ControlsWiringDiagram.drawio.png)  
-_Note: If you get the draw.io extension for vs code you can edit this picture directly._
+1. **Make sure you have the right Python version**, you must have Python 3.9 or above for the libraries you need to work.
+2. **Install pre-requisites**: Use the following command to install all the pre-requisites you need for the GUI: `pip3 install betterconfigs pyserial PyQt5`
+3. **Download from Source**: You can pull the bleeding commit from the git repo using `git pull https://github.com/UVicRocketry/Hybrid-Controls-System.git`
+4. **Checkout the right branch**: Make sure you're in the right branch by cd-ing into the git repo you just downloaded and using `git checkout *branchname*` (replace branchname with the right branch name)
+5. **Run the GUI**: If you've done everything right, you can run the GUI by cd'ing into `./src/MCC_GUI/` and running `python3 gui_valve.py`. If you get an error, refer to the *Common Errors* section below
 
-## Communication Protocol
-Both serial and ethernet communication are used in the system. Since the data sent through these networks is very similar, they share the same communication protocal.
+## Common Issues & Errors
+**If you can open the GUI, and you're having issues with communication, use the debug console to help troubleshoot**
+<details><summary>The GUI opened, but I can't see any serial devices to select</summary>
+1. Is the device plugged in and receiving power? (It's okay I do it all the time too). Also, try hitting the refresh button.<br>
+2. If you're getting power to the device, check the OS's device manager and see if it's showing up. If it is, you might have a permissions error with the applications. Linux especially has this issue (Your user might need to be added to the dialout group).<br>
+</details>
 
-### Standard Protocol
+<details><summary>I'm not able to run the GUI</summary>
+Try running in your terminal and seeing if it gives you any errors. Otherwise, your window manager might not be able to run Qt applications (looking at you GTK+!)
+</details>
 
-All data should take the STANDARD FORMAT:    ID,TAG,label,value, ....,TERMINATOR
-For example: CBX,CD,stepper1,OPEN,stepper2,CLOSE,\n
+<details><summary>Pip won't let me install the library betterconfigs</summary>
+I've seen this error before, but not really sure why it happens even though the Python version is correct. You can go to PyPi and install manually if it's giving you trouble.
+</details>
 
-The detailed description of each entry type are below:
+<details><summary>I'm not sure which branch to pull from</summary>
+Ask the maintainers! If you've got access to the Discord, just message @Propulsion and someone should be able to help you out. If nobody knows, probably the latest push is the best.
+</details>
 
-- ID: a identifier for the message being sent which gives information about the sender.
-  - Code (description),
-  - CBX (Control Box)
-  - MCC (Mission Control Laptop)
-  - RPI (R-Pi Server)
-  - VCA (Valuve Control Arduino)  
-
-- TAG: Specifies type of message
-  - Code (description),
-  - CD (control data),
-  - RQ (request),
-  - ER (error message)
-  - FD (feed back data)]
-  - CF (Confirm message recieved "value")
-
-- label: specifies type of control data, request, error ect.
-
-- value: Value corresponding to the immediatly PRECEDING label.
-  
-- TERMINATOR: Indicates the end of a message packet currently set to : \n
-
-### Error Protocol
-
-- COMMUNICATION ERROR: A communication error occurs when one subsystems fails to get confirmation from another. When this occur, a two way ERROR message is sent to every available subsystem.
-
-### Abort Protocol
-- ABORT (high priority message): The ABORT message needs to bipass regular message handling and be relayed as quickly as possible to the Valve Control Arduino.
-
-### Ignition Protocol
-- IGNITE (priority message): The ignition sequence is a special state which requires a button to be held and a repeating stream of data to be sent through the communication system to the valve control arduino. When the stream of data stops (indicated by a timeout period) ignition ceases and regular control is resumed. This protocol allows for a continuous ignition process.
-
-### Mission Control Laptop & Raspberry Pi Communications
-The communication between Mission control and the Test Stand is facilitated by a python-written server-client model. The client and server send commands to each other in order to control the test stand. The commands take the form of a parameter and a state separated by a space. For example, to close the MEV, the server would send the following message: “MEV closed”. The client would receive that command and update the arduino accordingly. After receiving confirmation that the MEV had been closed successfully, the client would send a confirmation message back to the server which would take the same form as the original command e.g. “MEV closed”
-
-#### Implementation (How to Establish Connection)
-
-The hybrid_test_backend.py file imports a Server object from the server.py file. Make sure that both of those files are present in the same folder when running the software
-
-The controller.py file imports a Client object from the client.py file. Make sure that both of those files are present in the same folder when running the software.
-
-At the top of the controller.py file are two values HOST and PORT. 
-The HOST value is the IP of the computer that is running the server (hybrid_test_backend.py)
-
-To determine the correct IP:
-1. On the computer that is running hybrid_test_backend.py open command prompt
-2. Type in ipconfig and hit enter
-3. Find line labelled IPv4 Address. That is the correct IP address
-![IPconnection](./images/IPconnection.png)
-
-You should make sure that the HOST value in controller.py matches the value of the IPv4 address before you attempt to run the software
-
-There is a PORT value in both hybrid_test_backend.py and in controller.py, make sure they are the same before attempting to run the software
-
-#### Common Issues
-If you are having trouble getting the connection to establish:
-Double check that the IPv4 address matches HOST
-Double check that the two PORT values match
-
-Your computer’s firewall will likely block the connection initially. If your connection is failing and none of the above fixes work try the following steps.
-
-1. Disable the firewall on both devices (the raspberry pi likely doesn’t have a firewall so don’t worry about that) 
-2. Attempt the connection again
-3. If it works this time and you don’t want to permanently leave your firewall off follow the steps in the following tutorial to open your firewall to that port https://www.tomshardware.com/news/how-to-open-firewall-ports-in-windows-10,36451.html
-
-
-
-## Testing and Requirements
-![Wiring Diagram](./images/ControlsWiringDiagram.drawio.png)
-
-See HCS_Requirements_Documentation.xlsx for specific Testing and Requirements information
-
-
+<details><summary>It's still broken</summary>
+If nobody in propulsion can help, contact <a href="mailto:iainrosen@uvic.ca">iainrosen@uvic.ca</a> and he should be able to help you out!
+</details>
