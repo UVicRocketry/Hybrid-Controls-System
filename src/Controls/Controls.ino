@@ -164,7 +164,7 @@ void loop() {
       
     } else
     {
-      Serial.println("UNKNOWN");
+      Serial.println("UNKOWN");
     }
   }
 
@@ -266,7 +266,9 @@ void MoveToTarget()
 {
 
   if ( N2OF.state() != TargetState[0] && TargetState[0]!=0)
-  {    N2OF.moveStep(TargetState[0]);
+  {
+    //Serial.println(TargetState[0]);
+    N2OF.moveStep(TargetState[0]);
   }
   if ( N2OF.getChange())
   {
@@ -275,7 +277,8 @@ void MoveToTarget()
 
   if ( N2OV.state() != TargetState[1] && TargetState[1]!=0)
   {
-   N2OV.moveStep(TargetState[1]);
+  //  delay(1);
+   // N2OV.moveStep(TargetState[1]);
   }
   if ( N2OV.getChange())
   {
