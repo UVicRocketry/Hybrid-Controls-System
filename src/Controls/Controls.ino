@@ -20,8 +20,8 @@
 #define CloseLimitERV 34
 #define OpenLimitN2OF 33
 #define CloseLimitN2OF 32
-#define OpenLimitNCV 29
-#define CloseLimitNCV 28
+#define OpenLimitNCV 28
+#define CloseLimitNCV 29
 //****************************
 
 //******Enable Pins **********
@@ -52,7 +52,7 @@
 
 
 int IgniterState = 0;
-int TargetState [8];
+int TargetState [9];
 
 void MoveToTarget();
 void setTarget (String valveCommands);
@@ -109,7 +109,7 @@ void setup() {
   sendState();
   delay(1000);
   //Set all target states to closed
-  for(int i = 0; i<8; i++)
+  for(int i = 0; i<9; i++)
   {
     TargetState[i] = 1;
   }
@@ -224,7 +224,6 @@ void setTarget (String valveCommands)
     } else if (Label ==  "N2F")
     {
       index = 2;
-    
     } else if (Label ==  "ERV")
     {
       index = 3;
@@ -237,9 +236,12 @@ void setTarget (String valveCommands)
     } else if (Label ==  "IGNITE")
     {
       index = 6;
-    } else
+    } else if (Label == "NCV")
     {
       index = 7;
+    } else
+    {
+      index = 8;
       Serial.println("VCA,BADVAL");
     }
 
@@ -319,6 +321,18 @@ void MoveToTarget()
   if ( RTV.getChange())
   {
     sendState();
+  }
+
+  if (NCV.state() != TargetState[7] && TargetState[7]!=0)
+  {
+    if (TargetState[7] == 1)
+    {
+      digitalWrite(Solenoid, LOW);
+    } else if (TargetState[7] == -1)
+    {
+      digitalWrite(Solenoid, HIGH);
+    }
+   sendState();
   }
 
   if (IgniterState != TargetState[6] && TargetState[6]!=0)
