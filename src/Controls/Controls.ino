@@ -146,6 +146,14 @@ void loop() {
       digitalWrite(Solenoid, LOW);
 
       //implement abort code
+      TargetState[0] = 1;  //Close N2OF
+      TargetState[1] = -1; //Open N2OV
+      TargetState[2] = 1;  //Close N2F
+      TargetState[3] = -1; //Open Relief Valve
+      TargetState[4] = 1;  //Close MEV
+      TargetState[5] = 1;  //Close RTV
+      TargetState[6] = 1;  //Close Igniter
+      TargetState[7] = 1;  //Close NCV
       
       Serial.println("VCA,ABORTED");
       sendState();
@@ -322,6 +330,19 @@ void MoveToTarget()
   {
     sendState();
   }
+  
+  if (IgniterState != TargetState[6] && TargetState[6]!=0)
+  {
+    if (TargetState[6] == 1)
+    {
+      digitalWrite(Igniter, LOW);
+      IgniterState = 1;
+    } else if (TargetState[6] == 0) {
+      digitalWrite(Igniter, HIGH);
+      IgniterState = 0;
+    }
+    sendState();
+  }
 
   if (NCV.state() != TargetState[7] && TargetState[7]!=0)
   {
@@ -332,19 +353,9 @@ void MoveToTarget()
     {
       digitalWrite(Solenoid, HIGH);
     }
-   sendState();
   }
-
-  if (IgniterState != TargetState[6] && TargetState[6]!=0)
+  if (NCV.getChange())
   {
-    if (TargetState[6] == 1)
-    {
-      //digitalWrite(Igniter, HIGH);
-      IgniterState = 1;
-    } else if (TargetState[6] == 0) {
-      //digitalWrite(Igniter, HIGH);
-      IgniterState = 0;
-    }
     sendState();
   }
 }
