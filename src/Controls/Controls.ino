@@ -10,8 +10,8 @@
 //*********Limit Pins*********
 #define OpenLimitMEV 30
 #define CloseLimitMEV 31
-#define OpenLimitN2OV 40
-#define CloseLimitN2OV 41
+#define OpenLimitN2OV 41
+#define CloseLimitN2OV 40
 #define OpenLimitRTV 39
 #define CloseLimitRTV 38
 #define OpenLimitN2F 42
@@ -27,7 +27,6 @@
 //******Enable Pins **********
 #define N2OFEnab 46
 #define N2OVEnab 47
-#define RTVEnab 48
 #define N2FEnab 49
 #define ERVEnab 50
 #define MEVEnab 51
@@ -48,6 +47,7 @@
 //solonoid and ignitor pin aclocation
 #define Solenoid 44
 #define Igniter 45
+#define RTVEnab 37
 //****************************
 
 
@@ -80,7 +80,6 @@ void setup() {
   pinMode(N2FEnab, OUTPUT);
   pinMode(ERVEnab, OUTPUT);
   pinMode(MEVEnab, OUTPUT);
-  pinMode(RTVEnab, OUTPUT);
 
   //Currently does not effect motors??
   digitalWrite(N2OFEnab, HIGH);
@@ -88,13 +87,14 @@ void setup() {
   digitalWrite(N2FEnab, HIGH);
   digitalWrite(ERVEnab, HIGH);
   digitalWrite(MEVEnab, HIGH);
-  digitalWrite(RTVEnab, LOW);
 
   //Unsure how these operate
   pinMode(Solenoid, OUTPUT);
   digitalWrite(Solenoid, LOW);
   pinMode(Igniter, OUTPUT);
   digitalWrite(Igniter, LOW);
+  pinMode(RTVEnab, OUTPUT);
+  digitalWrite(RTVEnab, LOW);
   //********************
 
 
@@ -133,11 +133,14 @@ void loop() {
     //read type of data
     TYPE = readCSV(&rxBuffer);
     //Send acknolodgement
-    Serial.print("VCA, ACK,");
+    Serial.print("VCA,ACK,");
     /* Currently there is no error correcting or proper acknoledgement handling
     This ACK is for debugging only. Proper protocols should be developed to ensure
     a message is handled properly*/
-    if (TYPE == "ABORT")
+    if (TYPE == "UNABORT")
+    {
+      ABORT = false;
+    } else if (TYPE == "ABORT" || ABORT == true)
     {
       ABORT = true;
       Serial.println(TYPE);
@@ -160,16 +163,12 @@ void loop() {
       
     } else if (TYPE == "CTRL")
     {
-      
       Serial.println(TYPE);
       setTarget(rxBuffer);
-      
     } else if (TYPE == "STATUS")
     {
-      
       Serial.println(TYPE);
       sendState();
-      
     } else
     {
       Serial.println("UNKNOWN");
@@ -312,10 +311,8 @@ void MoveToTarget()
 
   if ( MEV.state() != TargetState[4] && TargetState[4]!=0)
   {
-    delay(1);
     MEV.moveStep(TargetState[4]);
   }
-  
   if ( MEV.getChange())
   {
     sendState();
@@ -324,9 +321,15 @@ void MoveToTarget()
 
   if ( RTV.state() != TargetState[5] && TargetState[5]!=0)
   {
-    RTV.moveStep(TargetState[5]);
+    if (TargetState[5] == 1)
+    {
+      digitalWrite(RTVEnab, LOW);
+    } else if (TargetState[5] == -1)
+    {
+      digitalWrite(RTVEnab, HIGH);
+    }
   }
-  if ( RTV.getChange())
+  if (RTV.getChange())
   {
     sendState();
   }
@@ -337,11 +340,10 @@ void MoveToTarget()
     {
       digitalWrite(Igniter, LOW);
       IgniterState = 1;
-    } else if (TargetState[6] == 0) {
+    } else if (TargetState[6] == -1) {
       digitalWrite(Igniter, HIGH);
-      IgniterState = 0;
+      IgniterState = -1;
     }
-    sendState();
   }
 
   if (NCV.state() != TargetState[7] && TargetState[7]!=0)
