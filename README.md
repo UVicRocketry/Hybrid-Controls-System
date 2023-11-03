@@ -43,6 +43,22 @@ Running from source is necessary if you want to be bleeding edge, or if there's 
 4. **Checkout the right branch**: Make sure you're in the right branch by cd-ing into the git repo you just downloaded and using `git checkout *branchname*` (replace branchname with the right branch name)
 5. **Run the GUI**: If you've done everything right, you can run the GUI by cd'ing into `./src/MCC_GUI/` and running `python3 gui_valve.py`. If you get an error, refer to the *Common Errors* section below
 
+## Command Structure Examples
+Command structure breakdown:
+
+VC,Command,Modifier,Modifier,etc
+
+EX:
+
+VC,CTRL,MEV,OPEN - opens MEV valve
+
+VC,CTRL,N2OF,CLOSE - closes N2OF valve
+
+VC,STATUS - reports status of all valves
+
+VC,ABORT - initiates abort seequence
+
+
 ## Common Issues & Errors
 **If you can open the GUI, and you're having issues with communication, use the debug console to help troubleshoot**
 <details><summary>The GUI opened, but I can't see any serial devices to select</summary>
