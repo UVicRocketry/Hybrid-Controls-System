@@ -16,8 +16,8 @@
 #define CloseLimitRTV 38
 #define OpenLimitN2F 42
 #define CloseLimitN2F 43
-#define OpenLimitERV 35
-#define CloseLimitERV 34
+#define OpenLimitERV 34
+#define CloseLimitERV 35
 #define OpenLimitN2OF 33
 #define CloseLimitN2OF 32
 #define OpenLimitNCV 28
@@ -34,8 +34,8 @@
 //*********Driver Pins********
 #define StepMEV 19
 #define DirMEV  18
-#define StepN2OV 8
-#define DirN2OV  7
+#define StepN2OV 4
+#define DirN2OV  3
 #define StepN2F 10
 #define DirN2F  9
 #define StepERV 15
@@ -63,9 +63,9 @@ bool ABORT = 0;
 //Assining Valves
 //Stepper Valves
 Valve N2F = Valve(OpenLimitN2F, CloseLimitN2F, StepN2F, DirN2F, 20);
-Valve N2OV = Valve(OpenLimitN2OV, CloseLimitN2OV, StepN2OV, DirN2OV, 8);
-Valve N2OF  = Valve(OpenLimitN2OF, CloseLimitN2OF, StepN2OF, DirN2OF, 8);
-Valve ERV  = Valve(OpenLimitERV, CloseLimitERV, StepERV, DirERV, 8);
+Valve N2OV = Valve(OpenLimitN2OV, CloseLimitN2OV, StepN2OV, DirN2OV, 4);
+Valve N2OF  = Valve(OpenLimitN2OF, CloseLimitN2OF, StepN2OF, DirN2OF, 4);
+Valve ERV  = Valve(OpenLimitERV, CloseLimitERV, StepERV, DirERV, 2);
 Valve MEV  = Valve(OpenLimitMEV, CloseLimitMEV, StepMEV, DirMEV, 100);
 
 //Other Valves
@@ -73,7 +73,7 @@ Valve NCV  = Valve(OpenLimitNCV, CloseLimitNCV);
 Valve RTV  = Valve(OpenLimitRTV, CloseLimitRTV);
 
 void setup() {
-  // Sets Limmit Pins
+  // Sets Limit Pins
   //enable set up
   pinMode(N2OFEnab, OUTPUT);
   pinMode(N2OVEnab, OUTPUT);
@@ -275,7 +275,8 @@ void MoveToTarget()
 {
 
   if ( N2OF.state() != TargetState[0] && TargetState[0]!=0)
-  {    N2OF.moveStep(TargetState[0]);
+  {    
+    N2OF.moveStep(TargetState[0]);
   }
   if ( N2OF.getChange())
   {
@@ -284,7 +285,7 @@ void MoveToTarget()
 
   if ( N2OV.state() != TargetState[1] && TargetState[1]!=0)
   {
-   N2OV.moveStep(TargetState[1]);
+   N2OV.moveStep(-TargetState[1]);
   }
   if ( N2OV.getChange())
   {
@@ -302,7 +303,7 @@ void MoveToTarget()
 
   if ( ERV.state() != TargetState[3] && TargetState[3]!=0)
   {
-    ERV.moveStep(TargetState[3]);
+    ERV.moveStep(-TargetState[3]);
   }
   if ( ERV.getChange())
   {
