@@ -1,5 +1,7 @@
 # Hybrid-Controls-System (HB - Project Acronym)
 
+**This project is in a release cycle, please submit bug reports to the Issues tab**
+
 ## Project Information
 
 UVic Rocketry's hybrid controls system is designed to actuate and monitor the states of stepper motor driven valves located on a high-pressure oxidizer feed system. The controls system includes the following components:
