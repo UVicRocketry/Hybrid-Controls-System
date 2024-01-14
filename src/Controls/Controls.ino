@@ -66,7 +66,7 @@ Valve N2F = Valve(OpenLimitN2F, CloseLimitN2F, StepN2F, DirN2F, 20);
 Valve N2OV = Valve(OpenLimitN2OV, CloseLimitN2OV, StepN2OV, DirN2OV, 4);
 Valve N2OF  = Valve(OpenLimitN2OF, CloseLimitN2OF, StepN2OF, DirN2OF, 4);
 Valve ERV  = Valve(OpenLimitERV, CloseLimitERV, StepERV, DirERV, 2);
-Valve MEV  = Valve(OpenLimitMEV, CloseLimitMEV, StepMEV, DirMEV, 100);
+Valve MEV  = Valve(OpenLimitMEV, CloseLimitMEV, StepMEV, DirMEV, 4);
 
 //Other Valves
 Valve NCV  = Valve(OpenLimitNCV, CloseLimitNCV);
@@ -99,13 +99,13 @@ void setup() {
 
 
   //Serial_Startup
-  Serial.begin(9600);
+  Serial.begin(115200);
   //time in ms the serail blocks waiting for data
   Serial.setTimeout(10);
   //*********************************************
 
-  Serial.println("VCA,STATUS,STARTUP,SUCCESS");
-  Serial.println("VCA,CF,Initalizing_to_safe_state:(ALL Closed)");
+  Serial.println("VC,STATUS,STARTUP,SUCCESS");
+  Serial.println("VC,CF,Initalizing_to_safe_state:(ALL Closed)");
   sendState();
   delay(1000);
   //Set all target states to closed
@@ -133,7 +133,7 @@ void loop() {
     //read type of data
     TYPE = readCSV(&rxBuffer);
     //Send acknolodgement
-    Serial.print("VCA,ACK,");
+    //CCSerial.println("VC,ACK,");
     /* Currently there is no error correcting or proper acknoledgement handling
     This ACK is for debugging only. Proper protocols should be developed to ensure
     a message is handled properly*/
@@ -143,8 +143,8 @@ void loop() {
     } else if (TYPE == "ABORT" || ABORT == true)
     {
       ABORT = true;
-      Serial.println(TYPE);
-      Serial.println("VCA,CF,ABORT");
+      //Serial.println(TYPE);
+      Serial.println("VC,STATUS,ABORTED");
       digitalWrite(Igniter, LOW);
       digitalWrite(Solenoid, LOW);
 
@@ -158,20 +158,24 @@ void loop() {
       TargetState[6] = 1;  //Close Igniter
       TargetState[7] = 1;  //Close NCV
       
-      Serial.println("VCA,ABORTED");
+      Serial.println("VC,STATUS,ABORTED");
       sendState();
       
     } else if (TYPE == "CTRL")
     {
-      Serial.println(TYPE);
+      //Serial.println(TYPE);
       setTarget(rxBuffer);
-    } else if (TYPE == "STATUS")
+    } else if (TYPE == "CONNECT")
     {
-      Serial.println(TYPE);
+      Serial.println("VC,STATUS,ESTABLISH");
+      sendState();
+    } else if (TYPE == "SUMMARY")
+    { 
+      //Serial.println(TYPE);
       sendState();
     } else
     {
-      Serial.println("UNKNOWN");
+      Serial.println("VC,ERROR,UNKNOWNCOMMAND");
     }
   }
 
@@ -185,7 +189,7 @@ void loop() {
 
 void sendState (void)
 {
-  Serial.print("VCA,STATUS" );
+  Serial.print("VC,SUMMARY");
   Serial.print(",N2OF," +  N2OF.strState());
   Serial.print(",N2OV," +  N2OV.strState());
   Serial.print(",N2F," +  N2F.strState());
@@ -240,7 +244,7 @@ void setTarget (String valveCommands)
     } else if (Label ==  "RTV")
     {
       index = 5;
-    } else if (Label ==  "IGNITE")
+    } else if (Label ==  "IGPRIME")
     {
       index = 6;
     } else if (Label == "NCV")
@@ -249,7 +253,7 @@ void setTarget (String valveCommands)
     } else
     {
       index = 8;
-      Serial.println("VCA,BADVAL");
+      Serial.println("VC,ERROR,UNKOWNVALVE");
     }
 
     if (Value == "OPEN")
@@ -312,7 +316,7 @@ void MoveToTarget()
 
   if ( MEV.state() != TargetState[4] && TargetState[4]!=0)
   {
-    MEV.moveStep(TargetState[4]);
+    MEV.moveStep(-TargetState[4]);
   }
   if ( MEV.getChange())
   {
