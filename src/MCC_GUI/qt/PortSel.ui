@@ -108,6 +108,19 @@
     <string>Refresh</string>
    </property>
   </widget>
+  <widget class="QCheckBox" name="disableDesyncBox">
+   <property name="geometry">
+    <rect>
+     <x>80</x>
+     <y>70</y>
+     <width>131</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Disable DeSync</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections>

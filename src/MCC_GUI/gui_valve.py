@@ -60,13 +60,15 @@ def thread_ping_status():
                     mcb.desyncList.append(i)
                     
             window.ui.l_dyn_desync.setText(str(mcb.desyncList))
+            if portsel.ui.disableDesyncBox.isChecked()==False:
+                window.ui.l_dyn_desync.setText("Disabled.")
         except:
             pass
         time.sleep(1)
 def thread_control_queue_process():
     while not window.isTerminated:
         ctrlcmd = mcb.control_queue.get()
-        if ctrlcmd[0] not in mcb.desyncList:
+        if ctrlcmd[0] not in mcb.desyncList and portsel.ui.disableDesyncBox.isChecked()==False:
             vc.send("MCC,CTRL,"+ctrlcmd[0]+","+ctrlcmd[1])
 
 def change_port(vcPort, mcbPort):
