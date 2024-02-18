@@ -22,6 +22,7 @@ class connection():
         self.status="DCONN"
         self.valves=["N2OF", "N2OV", "N2F", "RTV", "NCV", "EVV", "IGPRIME", "IGFIRE", "MEV"]
         self.init_stream()
+
     def init_stream(self):
         try:
             self.port=self.conf["port"]
@@ -30,14 +31,17 @@ class connection():
         except:
             self.log.log("WARN", "Unable to connect to port "+self.port)
             pass
+
     def dummyData(self, data):
         self.message_queue.put(data)
         self.log.log("INFO","Dummy Data In: "+data)
+    
     def doAbort(self):
         with self.message_queue.mutex:
             self.message_queue.queue.clear()
         self.send("MCC,ABORT")
         self.log.log("WARN","Abort Signal Triggered!")
+    
     def send(self, message):
         try:
             self.stream.write(message.encode())
@@ -47,6 +51,7 @@ class connection():
         except:
             self.log.log("WARN", "Tried to send: "+message)
             return 1
+        
     def recieve(self):#this process should NEVER be called without being in a seperate thread, it will cause hanging
         message = ""
         try:
@@ -63,6 +68,7 @@ class connection():
         except:
             self.log.log("WARN", "Unable to decode message: "+message)
             return 1
+
     def processCommand(self,message):
         if self.verbose:
             self.log.log("INFO","Recieved Serial Data: "+message)
@@ -136,6 +142,7 @@ class connection():
                 return False   
         except:
             pass    
+    
     def close(self):
         try:
             self.stream.close()
@@ -150,12 +157,14 @@ class connection():
                 return mcblog.read()
         except:
             return "No Log Found."
+        
     def clearLog(self):
         try:
             os.remove(self.device+'.log')
             self.log.log("INFO", "Cleared log file")
         except:
             self.log.log("WARN", "Tried to delete log but file was busy")
+    
     def setVerbose(self, set):
         self.log.log("INFO", "Set Logging Verbose to "+str(set))
         self.verbose=set
