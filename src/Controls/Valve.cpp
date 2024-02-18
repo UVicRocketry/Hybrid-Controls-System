@@ -1,3 +1,4 @@
+#include "Arduino.h"
 #include "Valve.h"
 
 // Constructor
@@ -25,6 +26,19 @@ Valve::Valve(int OpenLimit, int CloseLimit, int StepPin, int DirPin, int StepSpe
   StepTime = millis();
 }
 
+Valve::Valve(int OpenLimit, int CloseLimit, int SolEnab) {
+  this->OpenLimit = OpenLimit;
+  this->CloseLimit = CloseLimit;
+  this->SolEnab = SolEnab;
+  this->change = 0;
+  this->activated = 1;
+  this->prevState = 0;//!digitalRead(OpenLimit) | !digitalRead(CloseLimit);
+  pinMode(OpenLimit, INPUT_PULLUP);
+  pinMode(CloseLimit, INPUT_PULLUP);
+  pinMode(SolEnab, OUTPUT);
+  digitalWrite(SolEnab, LOW);  
+}
+
 //*********State functions*********
 int Valve::state() {
   if (digitalRead(OpenLimit) == LOW) {
@@ -35,6 +49,22 @@ int Valve::state() {
     change = (prevState != 1);
     prevState = 1;
     return 1;
+  } else {
+    change = (prevState != 0);
+    prevState = 0;
+    return 0;
+  }
+}
+
+int Valve::solState() {
+  if(activated == 1) {
+    change = (prevState != 1);
+    prevState = 1;
+    return 1;
+  } else if (activated == -1) {
+    change = (prevState != -1);
+    prevState = -1;
+    return -1;
   } else {
     change = (prevState != 0);
     prevState = 0;
@@ -58,6 +88,21 @@ String Valve::strState() {
   }
 }
 
+String Valve::solStrState() {
+  if(activated == 1) {
+    change = (prevState != 1);
+    prevState = 1;
+    return "CLOSE";
+  } else if (activated == -1) {
+    change = (prevState != -1);
+    prevState = -1;
+    return "OPEN";
+  } else {
+    change = (prevState != 0);
+    prevState = 0;
+    return "TRANSIT";    
+  }
+}
 
 bool Valve::moveStep(int Dir)
 { 
@@ -89,6 +134,21 @@ bool Valve::moveStep(int Dir)
   }
   return false;
 }
+
+bool Valve::moveSol(int State)
+{
+  if (State == 1)
+  {
+    digitalWrite(SolEnab, 0);
+    activated = 1;
+  } else
+  {
+    digitalWrite(SolEnab, 1);
+    activated = -1;
+  }
+  return true;
+}
+
 //*********Getters*********
 int Valve::getOpenLimit() {
   return this->OpenLimit;

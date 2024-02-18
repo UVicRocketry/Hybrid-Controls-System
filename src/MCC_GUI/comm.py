@@ -22,7 +22,6 @@ class connection():
         self.status="DCONN"
         self.valves=["N2OF", "N2OV", "N2F", "RTV", "NCV", "EVV", "IGPRIME", "IGFIRE", "MEV"]
         self.init_stream()
-
     def init_stream(self):
         try:
             self.port=self.conf["port"]
@@ -31,17 +30,14 @@ class connection():
         except:
             self.log.log("WARN", "Unable to connect to port "+self.port)
             pass
-
     def dummyData(self, data):
         self.message_queue.put(data)
         self.log.log("INFO","Dummy Data In: "+data)
-    
     def doAbort(self):
         with self.message_queue.mutex:
             self.message_queue.queue.clear()
-        self.send("MCC,ABORT")
+        self.send("MCC,ABORT,")
         self.log.log("WARN","Abort Signal Triggered!")
-    
     def send(self, message):
         try:
             self.stream.write(message.encode())
@@ -51,7 +47,6 @@ class connection():
         except:
             self.log.log("WARN", "Tried to send: "+message)
             return 1
-        
     def recieve(self):#this process should NEVER be called without being in a seperate thread, it will cause hanging
         message = ""
         try:
@@ -68,10 +63,7 @@ class connection():
         except:
             self.log.log("WARN", "Unable to decode message: "+message)
             return 1
-
     def processCommand(self,message):
-        if self.verbose:
-            self.log.log("INFO","Recieved Serial Data: "+message)
         if "," in message:
             mArr = message.split(",")
             if mArr[0]!=self.device:
@@ -87,23 +79,20 @@ class connection():
             elif mArr[1]=="SUMMARY":
                 if self.verbose:
                     self.log.log("INFO","Recieved Switch Summary")
-                for i in range(2,20,2):
+                for i in range(2,len(mArr),2):
                     self.conf[mArr[i]]=mArr[i+1]
                     if self.verbose:
-                        self.log.log("INFO",mArr[i]+mArr[i+1])
+                        self.log.log("INFO",mArr[i]+ " " +mArr[i+1])
             elif mArr[1]=="STATUS":
                 if mArr[2]=="STARTUP":
                     self.connected=False
                     self.log.log("INFO","Recieved startup signal, initializing connection.")
-                    if self.device=="MCB":
-                        self.connected=True #don't init connection if mcb
-                    else:
-                        self.initConnection()
+                    self.initConnection()
                 elif mArr[2]=="DISARMED":
                     self.log.log("INFO","Recieved Disarm Signal")
                     self.status="DISARMED"
                 elif mArr[2]=="ARMED":
-                    self.log.log("WARN","Recieved Arm Signal")
+                    self.log.log("WARN","Recieved Disarm Signal")
                     self.status="ARMED"
                 elif mArr[2]=="ABORTED":
                     self.log.log("WARN","Recieved Abort Signal")
@@ -113,7 +102,7 @@ class connection():
                 print("PONG!")
             elif mArr[1]=="ERROR":
                 if mArr[2]=="UNKNOWNCOMMAND":
-                    self.log.log("ERROR", "Device reported unknown command")
+                    self.log.log("ERROR", "Device reported unknown command: "+message)
             else:
                 self.log.log("ERROR", "Recieved unknown message: "+message)
         else:
@@ -121,7 +110,7 @@ class connection():
         
     def initConnection(self):
             while True:
-                self.send("MCC,CONNECT")
+                self.send("MCC,CONNECT,")
                 with self.message_queue.mutex:
                     self.message_queue.queue.clear()
                 try:
@@ -142,7 +131,6 @@ class connection():
                 return False   
         except:
             pass    
-    
     def close(self):
         try:
             self.stream.close()
@@ -157,14 +145,12 @@ class connection():
                 return mcblog.read()
         except:
             return "No Log Found."
-        
     def clearLog(self):
         try:
             os.remove(self.device+'.log')
             self.log.log("INFO", "Cleared log file")
         except:
             self.log.log("WARN", "Tried to delete log but file was busy")
-    
     def setVerbose(self, set):
         self.log.log("INFO", "Set Logging Verbose to "+str(set))
         self.verbose=set

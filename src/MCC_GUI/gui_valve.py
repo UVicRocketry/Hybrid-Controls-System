@@ -7,7 +7,7 @@ import sys
 import os
 from PyQt5.QtWidgets import *
 from qt.main import Ui_MainWindow
-import commlib.comm as comm
+import comm
 import threading
 import time
 import serial.tools.list_ports
@@ -36,7 +36,7 @@ def thread_ping_status():
     while not window.isTerminated:
         try:
             if vc.connected:
-                vc.send("MCC,SUMMARY")
+                vc.send("MCC,SUMMARY,")
         except:
             pass
         try:
@@ -69,7 +69,7 @@ def thread_control_queue_process():
     while not window.isTerminated:
         ctrlcmd = mcb.control_queue.get()
         if ctrlcmd[0] not in mcb.desyncList and portsel.ui.disableDesyncBox.isChecked()==False:
-            vc.send("MCC,CTRL,"+ctrlcmd[0]+","+ctrlcmd[1])
+            vc.send("MCC,CTRL,"+ctrlcmd[0]+","+ctrlcmd[1] + ",")
 
 def change_port(vcPort, mcbPort):
     vc.conf["port"]=vcPort
@@ -110,7 +110,7 @@ def flip_switch(switchID):
         return
     else:
         try:
-            vc.send("MCC,CTRL,"+switchID+","+dState)
+            vc.send("MCC,CTRL,"+switchID+","+dState+",")
         except:
             pass
     
