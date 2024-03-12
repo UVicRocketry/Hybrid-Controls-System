@@ -91,69 +91,71 @@ void loop()
   status_t NewSTATUS = CurSTATUS;
 
 
-
-  while (!ABORT)
-  {
-
-
-    if (Serial.read() > 0)
+while(1)
+{
+    while (!ABORT)
     {
-      if (CurSTATUS == DISARMED)
+
+
+      if (Serial.read() > 0)
       {
-        if (CurSTATUS == DISARMED) Serial.print("MCB,STATUS,DISARMED\n");
-        return;
-      } else
-      {
-        if (CurSTATUS == ARMED) Serial.print("MCB,STATUS,ARMED\n");
-        sendStates(CurState);
+        if (CurSTATUS == DISARMED)
+        {
+          if (CurSTATUS == DISARMED) Serial.print("MCB,STATUS,DISARMED\n");
+          return;
+        } else
+        {
+          if (CurSTATUS == ARMED) Serial.print("MCB,STATUS,ARMED\n");
+          sendStates(CurState);
+        }
+    
       }
-   
+
+      NewSTATUS = getSTATUS();
+      delay(50);//debounce
+      if (NewSTATUS == getSTATUS())
+      {
+        if (NewSTATUS != CurSTATUS)
+        {
+          CurSTATUS = NewSTATUS;
+          if (CurSTATUS == DISARMED) Serial.print("MCB,STATUS,DISARMED\n");
+          if (CurSTATUS == ARMED) Serial.print("MCB,STATUS,ARMED\n");
+        }//IF CHANGE STATUS
+      }//IF DEBOUNCE
+
+
+
+      if (CurSTATUS)
+      {
+        NewState = getState();
+        delay(50);//debounce
+        if (NewState == getState())
+        {
+          if ((NewState != CurState))
+          {
+            if (getSTATUS())
+            {
+              sendStates(NewState);
+              CurState = NewState;
+            }
+          }//IF CHANGE STATE
+        }//IF DEBOUNCE
+      }//IF STATUS
+
+      
+    }//WHILE !ABORT
+
+
+
+
+  //When ABORT PRESSED
+    while (ABORT)
+    {
+      Serial.print("MCB,ABORTED\n");
+      delay(100);
     }
 
-    NewSTATUS = getSTATUS();
-    delay(50);//debounce
-    if (NewSTATUS == getSTATUS())
-    {
-      if (NewSTATUS != CurSTATUS)
-      {
-        CurSTATUS = NewSTATUS;
-        if (CurSTATUS == DISARMED) Serial.print("MCB,STATUS,DISARMED\n");
-        if (CurSTATUS == ARMED) Serial.print("MCB,STATUS,ARMED\n");
-      }//IF CHANGE STATUS
-    }//IF DEBOUNCE
-
-
-
-    if (CurSTATUS)
-    {
-      NewState = getState();
-      delay(50);//debounce
-      if (NewState == getState())
-      {
-        if ((NewState != CurState))
-        {
-          if (getSTATUS())
-          {
-            sendStates(NewState);
-            CurState = NewState;
-          }
-        }//IF CHANGE STATE
-      }//IF DEBOUNCE
-    }//IF STATUS
-
-    
-  }//WHILE !ABORT
-
-
-
-
-//When ABORT PRESSED
-  while (1)
-  {
-    Serial.print("MCB,ABORTED\n");
-    delay(100);
-  }
-
+}
 }//loop
 
 
@@ -262,11 +264,14 @@ ISR (PCINT2_vect) {
 
 ISR(INT0_vect)
 {
-
   for (int i = 0; i < 1000; i++)
   {
     if ((PIND & maskABORT) == 0)
     {
+      ABORT = false;
+      Serial.print("MCB,ABORT,\n");
+      TCNT1 = 0;
+      TCCR1B |= _BV(CS12) | _BV(CS10);
       return;
     }
   }
