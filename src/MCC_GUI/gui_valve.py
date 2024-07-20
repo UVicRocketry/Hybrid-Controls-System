@@ -7,7 +7,7 @@ import sys
 import os
 from PyQt5.QtWidgets import *
 from qt.main import Ui_MainWindow
-import commlib.comm as comm
+import comm
 import threading
 import time
 import serial.tools.list_ports
@@ -36,7 +36,7 @@ def thread_ping_status():
     while not window.isTerminated:
         try:
             if vc.connected:
-                vc.send("MCC,SUMMARY")
+                vc.send("MCC,SUMMARY,")
         except:
             pass
         try:
@@ -47,7 +47,7 @@ def thread_ping_status():
             window.ui.l_N2Flow.setText(vc.conf["N2F"])
             window.ui.l_RTV.setText(vc.conf["RTV"])
             window.ui.l_NCV.setText(vc.conf["NCV"])
-            window.ui.l_EVV.setText(vc.conf["EVV"])
+            window.ui.l_EVV.setText(vc.conf["ERV"])
             window.ui.l_IGPRIME.setText(vc.conf["IGPRIME"])
             window.ui.l_IGFIRE.setText(vc.conf["IGFIRE"])
             window.ui.l_MEV.setText(vc.conf["MEV"])
@@ -60,14 +60,16 @@ def thread_ping_status():
                     mcb.desyncList.append(i)
                     
             window.ui.l_dyn_desync.setText(str(mcb.desyncList))
+            if portsel.ui.disableDesyncBox.isChecked()==False:
+                window.ui.l_dyn_desync.setText("Disabled.")
         except:
             pass
         time.sleep(1)
 def thread_control_queue_process():
     while not window.isTerminated:
         ctrlcmd = mcb.control_queue.get()
-        if ctrlcmd[0] not in mcb.desyncList:
-            vc.send("MCC,CTRL,"+ctrlcmd[0]+","+ctrlcmd[1])
+        if ctrlcmd[0] not in mcb.desyncList and portsel.ui.disableDesyncBox.isChecked()==False:
+            vc.send("MCC,CTRL,"+ctrlcmd[0]+","+ctrlcmd[1] + ",")
 
 def change_port(vcPort, mcbPort):
     vc.conf["port"]=vcPort
@@ -108,7 +110,7 @@ def flip_switch(switchID):
         return
     else:
         try:
-            vc.send("MCC,CTRL,"+switchID+","+dState)
+            vc.send("MCC,CTRL,"+switchID+","+dState+",")
         except:
             pass
     
@@ -130,7 +132,7 @@ class MainWindow(QMainWindow):
         self.ui.b_N2Flow.clicked.connect(lambda: flip_switch("N2F"))
         self.ui.b_RTV.clicked.connect(lambda: flip_switch("RTV"))
         self.ui.b_NCV.clicked.connect(lambda: flip_switch("NCV"))
-        self.ui.b_EVV.clicked.connect(lambda: flip_switch("EVV"))
+        self.ui.b_EVV.clicked.connect(lambda: flip_switch("ERV"))
         self.ui.b_IGPRIME.clicked.connect(lambda: flip_switch("IGPRIME"))
         self.ui.b_IGFIRE.clicked.connect(lambda: flip_switch("IGFIRE"))
         self.ui.b_MEV.clicked.connect(lambda: flip_switch("MEV"))

@@ -3,13 +3,14 @@
    Matthew Ebert
    Logan Sewell
    JJ
+   Joshua Piuti
    Organization: UVic Rocketry
 */
 #include "Valve.h"
 
 //*********Limit Pins*********
 #define OpenLimitMEV 30
-#define CloseLimitMEV 31
+#define CloseLimitMEV 27
 #define OpenLimitN2OV 41
 #define CloseLimitN2OV 40
 #define OpenLimitRTV 39
@@ -33,7 +34,7 @@
 
 //*********Driver Pins********
 #define StepMEV 19
-#define DirMEV  18
+#define DirMEV  20
 #define StepN2OV 4
 #define DirN2OV  3
 #define StepN2F 10
@@ -44,10 +45,15 @@
 #define DirN2OF  16
 //****************************
 
-//solonoid and ignitor pin aclocation
-#define Solenoid 44
+//***Solenoid & Igniter Pins***
 #define Igniter 45
+#define Solenoid 48
 #define RTVEnab 37
+//****************************
+
+//*********Safety Pins********
+#define KeySwitch 5
+#define EStop 6
 //****************************
 
 
@@ -59,18 +65,18 @@ void setTarget (String valveCommands);
 String readCSV(String * rxBuf);
 void sendState (void);
 
-bool ABORT = 0;
+bool ABORT = false;
 //Assining Valves
 //Stepper Valves
 Valve N2F = Valve(OpenLimitN2F, CloseLimitN2F, StepN2F, DirN2F, 20);
 Valve N2OV = Valve(OpenLimitN2OV, CloseLimitN2OV, StepN2OV, DirN2OV, 4);
 Valve N2OF  = Valve(OpenLimitN2OF, CloseLimitN2OF, StepN2OF, DirN2OF, 4);
 Valve ERV  = Valve(OpenLimitERV, CloseLimitERV, StepERV, DirERV, 2);
-Valve MEV  = Valve(OpenLimitMEV, CloseLimitMEV, StepMEV, DirMEV, 100);
+Valve MEV  = Valve(OpenLimitMEV, CloseLimitMEV, StepMEV, DirMEV, 4);
 
 //Other Valves
 Valve NCV  = Valve(OpenLimitNCV, CloseLimitNCV);
-Valve RTV  = Valve(OpenLimitRTV, CloseLimitRTV);
+Valve RTV  = Valve(OpenLimitRTV, CloseLimitRTV, RTVEnab);
 
 void setup() {
   // Sets Limit Pins
@@ -93,19 +99,21 @@ void setup() {
   digitalWrite(Solenoid, LOW);
   pinMode(Igniter, OUTPUT);
   digitalWrite(Igniter, LOW);
-  pinMode(RTVEnab, OUTPUT);
-  digitalWrite(RTVEnab, LOW);
   //********************
+
+  //Sets up EStop and Keyswitch
+  pinMode(EStop, INPUT_PULLUP);
+  pinMode(KeySwitch, INPUT_PULLUP);
 
 
   //Serial_Startup
-  Serial.begin(9600);
-  //time in ms the serail blocks waiting for data
+  Serial.begin(115200);
+  //time in ms the serial blocks waiting for data
   Serial.setTimeout(10);
   //*********************************************
 
-  Serial.println("VCA,STATUS,STARTUP,SUCCESS");
-  Serial.println("VCA,CF,Initalizing_to_safe_state:(ALL Closed)");
+  Serial.println("VC,STATUS,STARTUP,SUCCESS");
+  Serial.println("VC,CF,Initalizing_to_safe_state:(ALL Closed)");
   sendState();
   delay(1000);
   //Set all target states to closed
@@ -118,7 +126,7 @@ void setup() {
 
 void loop() {
   
-  if (Serial.available())
+  if (Serial.available() || digitalRead(EStop) == HIGH)
   {//if a message has been recieved
     //read all serial data
     String rxBuffer = Serial.readString();
@@ -133,18 +141,19 @@ void loop() {
     //read type of data
     TYPE = readCSV(&rxBuffer);
     //Send acknolodgement
-    Serial.print("VCA,ACK,");
+    //CCSerial.println("VC,ACK,");
     /* Currently there is no error correcting or proper acknoledgement handling
     This ACK is for debugging only. Proper protocols should be developed to ensure
     a message is handled properly*/
-    if (TYPE == "UNABORT")
+    if (TYPE == "UNABORT" && ABORT)
     {
+      Serial.println("VC,STATUS,CANCELLED ABORT");
       ABORT = false;
-    } else if (TYPE == "ABORT" || ABORT == true)
+    } else if (TYPE == "ABORT" || ABORT == true || digitalRead(EStop) == HIGH)
     {
       ABORT = true;
-      Serial.println(TYPE);
-      Serial.println("VCA,CF,ABORT");
+      //Serial.println(TYPE);
+      Serial.println("VC,STATUS,ABORTED");
       digitalWrite(Igniter, LOW);
       digitalWrite(Solenoid, LOW);
 
@@ -158,25 +167,29 @@ void loop() {
       TargetState[6] = 1;  //Close Igniter
       TargetState[7] = 1;  //Close NCV
       
-      Serial.println("VCA,ABORTED");
-      sendState();
-      
     } else if (TYPE == "CTRL")
     {
-      Serial.println(TYPE);
+      //Serial.println(TYPE);
       setTarget(rxBuffer);
-    } else if (TYPE == "STATUS")
+    } else if (TYPE == "CONNECT")
     {
-      Serial.println(TYPE);
+      Serial.println("VC,STATUS,ESTABLISH");
+      sendState();
+    } else if (TYPE == "SUMMARY")
+    { 
+      //Serial.println(TYPE);
       sendState();
     } else
     {
-      Serial.println("UNKNOWN");
+      Serial.println("VC,ERROR,UNKNOWNCOMMAND," + SOURCE + "," + TYPE + "," + Command);
     }
   }
 
   //called every loop to step motors if necessary
-  MoveToTarget();
+  //disabled by keyswitch lockout on VC unless being aborted
+  if(digitalRead(KeySwitch) == LOW || ABORT)  {
+    MoveToTarget();
+  }
 }
 
 
@@ -185,11 +198,11 @@ void loop() {
 
 void sendState (void)
 {
-  Serial.print("VCA,STATUS" );
+  Serial.print("VC,SUMMARY");
   Serial.print(",N2OF," +  N2OF.strState());
   Serial.print(",N2OV," +  N2OV.strState());
   Serial.print(",N2F," +  N2F.strState());
-  Serial.print(",RTV," +  RTV.strState());
+  Serial.print(",RTV," +  RTV.solStrState());
   Serial.print(",ERV," +  ERV.strState());
   Serial.print(",MEV," +  MEV.strState());
   Serial.print(",NCV," +  NCV.strState());
@@ -240,7 +253,7 @@ void setTarget (String valveCommands)
     } else if (Label ==  "RTV")
     {
       index = 5;
-    } else if (Label ==  "IGNITE")
+    } else if (Label ==  "IGPRIME")
     {
       index = 6;
     } else if (Label == "NCV")
@@ -249,7 +262,7 @@ void setTarget (String valveCommands)
     } else
     {
       index = 8;
-      Serial.println("VCA,BADVAL");
+      Serial.println("VC,ERROR,UNKOWNVALVE");
     }
 
     if (Value == "OPEN")
@@ -312,7 +325,7 @@ void MoveToTarget()
 
   if ( MEV.state() != TargetState[4] && TargetState[4]!=0)
   {
-    MEV.moveStep(TargetState[4]);
+    MEV.moveStep(-TargetState[4]);
   }
   if ( MEV.getChange())
   {
@@ -320,19 +333,10 @@ void MoveToTarget()
   }
 
 
-  if ( RTV.state() != TargetState[5] && TargetState[5]!=0)
+  if (RTV.solState() != TargetState[5] && TargetState[5]!=0)
   {
-    if (TargetState[5] == 1)
-    {
-      digitalWrite(RTVEnab, LOW);
-    } else if (TargetState[5] == -1)
-    {
-      digitalWrite(RTVEnab, HIGH);
-    }
-  }
-  if (RTV.getChange())
-  {
-    sendState();
+    RTV.moveSol(TargetState[5]);   
+    sendState();     
   }
   
   if (IgniterState != TargetState[6] && TargetState[6]!=0)

@@ -36,7 +36,7 @@ class connection():
     def doAbort(self):
         with self.message_queue.mutex:
             self.message_queue.queue.clear()
-        self.send("MCC,ABORT")
+        self.send("MCC,ABORT,")
         self.log.log("WARN","Abort Signal Triggered!")
     def send(self, message):
         try:
@@ -79,10 +79,10 @@ class connection():
             elif mArr[1]=="SUMMARY":
                 if self.verbose:
                     self.log.log("INFO","Recieved Switch Summary")
-                for i in range(2,11):
-                    self.conf[self.valves[i-2]]=mArr[i]
+                for i in range(2,len(mArr),2):
+                    self.conf[mArr[i]]=mArr[i+1]
                     if self.verbose:
-                        self.log.log("INFO",self.valves[i-2]+mArr[i])
+                        self.log.log("INFO",mArr[i]+ " " +mArr[i+1])
             elif mArr[1]=="STATUS":
                 if mArr[2]=="STARTUP":
                     self.connected=False
@@ -102,7 +102,7 @@ class connection():
                 print("PONG!")
             elif mArr[1]=="ERROR":
                 if mArr[2]=="UNKNOWNCOMMAND":
-                    self.log.log("ERROR", "Device reported unknown command")
+                    self.log.log("ERROR", "Device reported unknown command: "+message)
             else:
                 self.log.log("ERROR", "Recieved unknown message: "+message)
         else:
@@ -110,7 +110,7 @@ class connection():
         
     def initConnection(self):
             while True:
-                self.send("MCC,CONNECT")
+                self.send("MCC,CONNECT,")
                 with self.message_queue.mutex:
                     self.message_queue.queue.clear()
                 try:
