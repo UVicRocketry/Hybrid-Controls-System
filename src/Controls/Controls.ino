@@ -10,7 +10,7 @@
 
 //*********Limit Pins*********
 #define OpenLimitMEV 30
-#define CloseLimitMEV 31
+#define CloseLimitMEV 27
 #define OpenLimitN2OV 41
 #define CloseLimitN2OV 40
 #define OpenLimitRTV 39
@@ -34,7 +34,7 @@
 
 //*********Driver Pins********
 #define StepMEV 19
-#define DirMEV  18
+#define DirMEV  20
 #define StepN2OV 4
 #define DirN2OV  3
 #define StepN2F 10
@@ -46,8 +46,8 @@
 //****************************
 
 //***Solenoid & Igniter Pins***
-#define Solenoid 44
 #define Igniter 45
+#define Solenoid 48
 #define RTVEnab 37
 //****************************
 
